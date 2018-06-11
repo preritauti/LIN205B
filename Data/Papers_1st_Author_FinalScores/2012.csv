@@ -1,0 +1,138 @@
+sentence,yngve_score,frazier_score,dependency_distance_score
+"We describe an approach to speed-up inference with latent-variable PCFGs, which have been shown to be highly effective for natural language parsing.",2,1.0416666666666667,3
+Our approach is based on a tensor formulation recently introduced for spectral estimation of latent-variable PCFGs coupled with a tensor decomposition algorithm well-known in the multilinear algebra literature.,2,0.7413793103448276,2
+"We also describe an error bound for this approximation, which gives guarantees showing that if the underlying tensors are well approximated, then the probability distribution over trees will also be well approximated.",3,1.0714285714285714,4
+Empirical evaluation on real-world natural language parsing data demonstrates a signicant speed-up at minimal cost for parsing performance.,2,0.6578947368421053,3
+"Latent variable models have shown great success in various elds, including computational linguistics and machine learning.",2,0.6388888888888888,2
+"In computational linguistics, for example, latent-variable models are widely used for natural language parsing using models called latent-variable PCFGs (L-PCFGs; [14]).",3,0.8620689655172413,4
+"The mainstay for estimation of L-PCFGs has been the expectation-maximization algorithm [14, 16], though other algorithms, such as spectral algorithms, have been devised [5].",3,0.8484848484848485,4
+A by-product of the spectral algorithm presented in [5] is a tensor formulation for computing the inside-outside probabilities of a L-PCFG.,2,0.875,3
+"Tensor products (or matrix-vector products, in certain cases) are used as the basic operation for marginalization over the latent annotations of the L-PCFG.",3,0.7592592592592593,3
+"The computational complexity with the tensor formulation (or with plain CKY, for that matter) is cubic in the number of latent states in the L-PCFG.",3,0.7758620689655172,3
+This multiplicative factor can be prohibitive for a large number of hidden states; various heuristics are used in practice to avoid this problem [16].,3,0.7678571428571429,2
+"In this paper, we show that tensor decomposition can be used to signicantly speed-up the parsing performance with L-PCFGs.",2,0.9285714285714286,3
+Our approach is also provided with a theoretical guarantee.,2,0.75,1
+"given the accuracy of the tensor decomposition, one can compute how accurate the approximate parser is.",3,0.8888888888888888,2
+The rest of this paper is organized as follows.,2,1.1,1
+"We give notation and background in 23, and then present the main approach in 4.",4,0,4
+We describe experimental results in 5 and conclude in 6.,2,0.9545454545454546,3
+This section gives a denition of the L-PCFG formalism used in this paper; we follow the denitions given in [5].,3,0,2
+"An L-PCFG is a 5-tuple (N, I, P, m, n) where.",4,0.9166666666666666,3
+ N is the set of non-terminal symbols in the grammar.,1,0.9545454545454546,3
+I  N is a nite set of in-terminals.,2,0.9444444444444444,3
+P  N is a nite set of pre-terminals.,2,0.8333333333333334,2
+"We assume that N = I  P, and I  P = .",3,0,2
+Hence we have partitioned the set of non-terminals into two subsets.,2,0.9583333333333334,2
+"Note that for any binary rule, a  b c, it holds that a  I, and for any unary rule a  x, it holds that a  P. The set of skeletal rules is dened as R = {a  b c .",5,0,6
+"a  I, b  N, c  N}.",2,0,2
+The parameters of the model are as follows.,2,1.1111111111111112,1
+An L-PCFG corresponds to a regular PCFG with non-terminals annotated with latent states.,2,0.8214285714285714,2
+"For each triplet of latent states and a rule a  b c, we have a rule probability p(a(h1)  b(h2) c(h3)|a(h1)) = t(a  b c, h2, h3|h1, a).",5,0.7407407407407407,2
+"Similarly, we also have parameters p(a(h)  x|a(h)) = q(a  x|h, a).",3,0.8,2
+"In addition, there are initial probabilities of generating a non-terminal with a latent at the top of the tree, denoted by (a, h).",2,0.9310344827586207,4
+L-PCFGs induce distributions over two type of trees.,1,1.1666666666666667,2
+"skeletal trees, i.e.",1,0,1
+"trees without values for latent states (these trees are observed in data), and full trees (trees with values for latent states).",3,0.9814814814814815,3
+A skeletal tree consists of a sequence of rules r1 .,2,0.7727272727272727,2
+.,0,1,0
+.,0,1,0
+rN where ri  R or ri = a  x.,2,1,2
+See Figure 3.1 for an example.,1,0.9285714285714286,2
+"We now turn to the problem of computing the probability of a skeletal tree, by marginalizing out the latent states of full trees.",3,0.94,3
+Let r1 .,1,1.1666666666666667,1
+.,0,1,0
+.,0,1,0
+"rN be a derivation, and let ai be the non-terminal on the left hand-side of rule ri.",2,0.8947368421052632,3
+"For any ri = a  b c, dene h(2) to be the latent state associated with the left child of the rule ri and h(3) The distribution over full trees is then.",4,0.8,2
+" For each a  P, x  [n], we dene Qax  R1m to be the vector with values q(a  x|h, a)  For each a  I, we dene the vector a  Rm where [a]h = (a, h).",4,0.8846153846153846,2
+"Parameter Estimation Several ways to estimate the parameters T ab c, Qax and a have been suggested in the literature.",3,0.8181818181818182,2
+"For example, vanilla EM has been used in [14], hierarchical state splitting EM has been suggested in [16], and a spectral algorithm is proposed in [5].",4,0.7222222222222222,3
+"In the rest of the paper, we assume that the parameters for these tensors have been identied, and focus mostly on the problem of inference  i.e.",2,1.0,2
+parsing unseen sentences.,1,1.125,1
+The reason for this is two-fold.,2,1.0714285714285714,2
+"(a) in real-world applications, training can be done off-line to identify a set of parameters once, and therefore its computational efciency is of lesser interest; (b) our approach can speed-up the inference problems existing in the EM algorithm, but the speed-up is of lesser interest, because the inference problem in the EM algorithm is linear in the tree size (and not cubic, as in the case of parsing).",4,0.6975308641975309,4
+The reason for this linear complexity is that the skeletal trees are observed during EM training.,2,0.8235294117647058,2
+"Still, EM stays cubic in the number of states.",2,1.0454545454545454,1
+There are several ways to parse a sentence with latent-variable PCFGs.,2,0.9166666666666666,2
+"Most of these approaches are taken by using an inside-outside algorithm [12] which computes marginals for various non-terminals and spans in the sentence, and then eventually nding a parse tree which maximizes a score which is the sum of the marginals of the spans that appear in the tree.",3,1.0754716981132075,4
+"Given the marginals (a, i, j), one can use the dynamic programming algorithm described in [7] in order to nd this highest scoring tree.",3,0.78125,2
+"A key question is how to compute the marginals (a, i, j) using the inside-outside algorithm.",3,0.9285714285714286,3
+Dynamic programming solutions are available for this end as well.,2,0.6818181818181818,2
+The complexity of a nave implementation of the dynamic programming algorithm for this problem is cubic in the number of latent states.,2,0.8478260869565217,2
+This is where we suggest an alternative to the traditional dynamic programming solutions.,2,0.8571428571428571,2
+"Our alternative relies on an existing tensor formulation for the inside-outside algorithm [5], which re-formalizes the dynamic programming algorithm using tensor, matrix and vector product operations.",3,0.6774193548387096,4
+Algorithm 2 presents the re-formulation of the inside-outside algorithm using tensors.,2,0.875,4
+"For more details and proofs of correctness, refer to [5].",3,0.6785714285714286,1
+"As mentioned earlier, most computation for the inside-outside algorithm is spent on the tensor calculation of T ab c on the intermediate inside/outside quantities.",2,0.7692307692307693,4
+"These computations, appearing as T ab c(b,i,k, c,k+1,j), T bc a (1,3) (b,i,k, c,j+1,k) output a vector of length m, where computation of each element in the vector is O(m2).",5,0.8046875,4
+"Therefore, the inside-outside has a multiplicative O(m3) factor in its computational complexity, which we aim to reduce.",3,0.8043478260869565,3
+"For the rest of this section, x a binary grammar rule a  b c and consider the tensor T (cid.44) T ab c associated with it.",4,0.7258064516129032,2
+"Consider a pair of two vectors y1, y2  Rm, associated with the distributions over latent-states for the left (y1) and right child (y2) of a given node in a parse tree.",3,0.881578947368421,3
+Our method for improving the speed of this tensor computation relies on a simple observation.,2,0.875,2
+"Given an integer r  1, assume that the tensor T had the following special form, which is also called Kruskal form, i , i.e.",2,0.9814814814814815,3
+"it would be the sum of r tensors, each is the tensor product of three vectors.",3,0,2
+The total complexity of this computation is O(mr).,2,0.875,1
+"We see later that our approach can be used effectively for r as small as 2, turning the inside-outside algorithm for latent-variable PCFGs into a linear algorithm in the number of hidden states.",2,0.9571428571428572,3
+We note that it is well-known that an exact tensor decomposition can be achieved by using r = m2 [11].,2,1.0,3
+"In that case, there is no computational gain.",2,0.65,2
+"The minimal r required for an exact solution can be smaller than m2, but identifying that minimal r is NP-hard [9].",3,0.74,2
+"In the general case, for a xed r, our latent-variable PCFG tensors will not have the exact decomposed form from the previous section.",3,0.4807692307692308,4
+"Still, by using decomposition algorithms from multilinear algebra, we can approximate the latent-variable tensors, where the quality of approximation is measured according to some norm over the set of tensors Rmmm.",3,0.9285714285714286,3
+"An example of such a decomposition is the canonical polyadic decomposition (CPD), also known as CANDECOMP/PARAFAC decomposition [3, 8, 10].",3,0.6428571428571429,3
+"Given an integer r, least squares CPD aims to nd the nearest tensor in Kruskal form according to the analogous norm (for tensors) to the Frobenius norm (for matrices).",3,0.8,4
+"There are various algorithms to perform CPD, such as alternating least squares, direct linear decomposition, alternating trilinear decomposition and pseudo alternating least squares [6].",2,0.8833333333333333,2
+Most of these implementations treat the problem of identifying the approximate tensor as an optimization problem.,2,0.8823529411764706,2
+These algorithms are not exact.,1,0.75,1
+Any of these implementations can be used in our approach.,2,0.9545454545454546,1
+"We note that the decomposition optimization problem is hard, and often has multiple local maxima.",3,0.7647058823529411,3
+"Therefore, the algorithms mentioned above are inexact.",2,0.9444444444444444,2
+"In our experiments, we use the alternating least squares algorithm.",2,1.0416666666666667,2
+"This method works by iteratively improving U, V and W from Eq.",2,0.7857142857142857,2
+"1 (until convergence), each time solving a least squares problem.",3,0,3
+We next present a theoretical guarantee about the quality of the CP-approximated tensor formulation of the inside-outside algorithm.,2,0.7105263157894737,4
+We measure the propagation of errors in probability calculations through a given parse tree.,2,0.8333333333333334,2
+We derive a similar result for the marginals.,2,0.8333333333333334,2
+"We denote by p the distribution induced over trees (skeletal and full), where we approximate each T ab c using the tensor T ab c. Similarly, we denote by (a, i, j) the approximated marginals.",5,0.8636363636363636,2
+"For the rst part, the proof is using structural induction on the structure of the test tree.",2,0.6578947368421053,2
+"Assume a xed skeletal tree r1, .",3,0.5625,3
+.,0,1,0
+.,0,1,0
+", rN .",1,0,0
+"The probability p(r1, .",2,1,1
+.,0,1,0
+.,0,1,0
+", rN ) can be computed by using a sequence of applications of T ab c on distribution over latent states for left and right children.",2,0.9259259259259259,2
+Figure 3.,1,1,1
+"Speed and performance of parsing with tensor decomposition for m  {8, 16, 20} (left plots, middle plots and right plots respectively).",3,0.8103448275862069,3
+"The left y axis is running time (red circles), the right y axis is F1 performance of the parser (blue squares), the x axis corresponds to log t. Solid lines describe decomposition with r = 2, dashed lines describe decomposition with r = 8.",3,0.8365384615384616,3
+"In addition, we include the numerical results for various m for r = 8.",2,0.96875,2
+"As expected, the longer a sentence is, or the deeper a parse tree is, the better we need the tensor approximation to be (smaller ) for the inside-outside to be more accurate.",4,0.8378378378378378,3
+We devote this section to empirical evaluation of our approach.,2,0.8636363636363636,2
+Our goal is to evaluate the trade-off between the accuracy of the tensor decomposition and the speed-up in the parsing algorithm.,2,0.8636363636363636,4
+"Whenever we report parsing accuracy, we use the traditional F1 measure from the Parseval metric [2].",3,0.925,2
+"It computes the F1 measure of spans (a, i, j) appearing in the gold standard and the hypothesized trees.",3,0.8125,3
+"The total number of tensors extracted from the training data using EM was 7,236 (corresponding to the number of grammar rules).",3,0.9583333333333334,2
+Let ab c = ||T ab c  T ab c||F .,2,0.8125,1
+"In our experiments, we vary a threshold t  {0.1, 0.001, 105, 106, 108, 0}  an approximate tensor T ab c is used instead of T ab c only if ab c  t. The value t = 0 implies using vanilla inference, without any approximate tensors.",4,0.6341463414634146,3
+"We describe experiments with r  {2, 8}.",2,1.0454545454545454,1
+"For the tensor approximation, we use the implementation provided in the Matlab tensor toolbox from [1].",3,0.675,2
+The toolbox implements the alternating least squares method.,1,1.1666666666666667,1
+"As is common, we use a pruning technique to make the parser faster  items in the dynamic programming chart are pruned if their value according to a base vanilla maximum likelihood model is less than 0.00005 [4].",3,0.9390243902439024,4
+We report running times considering this pruning as part of the execution.,2,1.1923076923076923,2
+The parser was run on a single Intel Xeon 2.67GHz CPU.,3,0.5,2
+We note that the performance of the parser improves as we add more latent states.,2,1.09375,3
+The performance of the parser with vanilla PCFG (m = 1) is 70.26 F1 measure.,3,0.9444444444444444,2
+"Experimental Results Table 3 describes F1 performance and running time as we vary t. It is interesting to note that the speed-up, for the same threshold t, seems to be larger when using r = 8 instead of r = 2.",2,0.9333333333333333,8
+At rst this may sound counter-intuitive.,2,1.0714285714285714,2
+"The reason for this happening is that with r = 8, more of the tensors have an approximation error which is smaller than t, and therefore more approximate tensors are used than in the case of r = 2.",3,0.9523809523809523,3
+"Using t = 0.1, the speed-up is signicant over non-approximate version of the parser.",2,0,3
+"More specifically, for r = 8, it takes 72% of the time (without considering the pruning phase) of the nonapproximate parser to parse section 22 with m = 8, 24% of the time with m = 16 and 21% of the time with m = 20.",3,0.9727272727272728,3
+"The larger m is, the more signicant the speed-up is.",2,0.9166666666666666,2
+"The loss in performance because of the approximation, on the other hand, is negligible.",4,0.8529411764705882,2
+"More specically, for r = 8, performance is decreased by 0.12% for m = 8, 0.11% for m = 16 and 0.08% for m = 20.",5,0.8939393939393939,3
+We described an approach to signicantly improve the speed of inference with latent-variable PCFGs.,2,1.0666666666666667,2
+The approach approximates tensors which are used in the inside-outside algorithm.,1,1.0833333333333333,3
+The approximation comes with a minimal cost to the performance of the parser.,2,0.75,2
+Our algorithm can be used in tandem with estimation algorithms such as EM or spectral algorithms [5].,2,0.825,2
+"We note that tensor formulations are used with graphical models [15], for which our technique is also applicable.",2,1.0681818181818181,3
+"Similarly, our technique can be applied to other dynamic programming algorithms which compute marginals of a given statistical model.",2,0.8571428571428571,2

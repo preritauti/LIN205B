@@ -1,0 +1,414 @@
+sentence,yngve_score,frazier_score,dependency_distance_score
+Abstract.,0,1,0
+We give a unied account of boosting and logistic regression in which each learning problem is cast in terms of optimization of Bregman distances.,2,1.22,2
+"The striking similarity of the two problems in this framework allows us to design and analyze algorithms for both simultaneously, and to easily adapt algorithms designed for one problem to the other.",3,0.9117647058823529,3
+"For both problems, we give new algorithms and explain their potential advantages over existing methods.",2,0.6764705882352942,2
+These algorithms are iterative and can be divided into two types based on whether the parameters are updated sequentially (one at a time) or in parallel (all at once).,3,1.0,3
+"We also describe a parameterized family of algorithms that includes both a sequential- and a parallel-update algorithm as special cases, thus showing how the sequential and parallel approaches can themselves be unied.",4,0.9428571428571428,4
+"For all of the algorithms, we give convergence proofs using a general formalization of the auxiliary-function proof technique.",2,0.825,2
+"As one of our sequential-update algorithms is equivalent to AdaBoost, this provides the rst general proof of convergence for AdaBoost.",3,0.9545454545454546,3
+"We show that all of our algorithms generalize easily to the multiclass case, and we contrast the new algorithms with the iterative scaling algorithm.",3,0.7115384615384616,3
+We conclude with a few experimental results with synthetic data that highlight the behavior of the old and newly proposed algorithms in different settings.,2,0.84,3
+We give a unied account of boosting and logistic regression in which we show that both learning problems can be cast in terms of optimization of Bregman distances.,2,1.1551724137931034,3
+"In our framework, the two problems become very similar, the only real difference being in the choice of Bregman distance.",2,0.6521739130434783,2
+"unnormalized relative entropy for boosting, and binary relative entropy for logistic regression.",3,0.75,2
+The similarity of the two problems in our framework allows us to design and analyze algorithms for both simultaneously.,2,1.0,2
+"We are now able to borrow methods from the maximumentropy literature for logistic regression and apply them to the exponential loss used by AdaBoost, especially convergence-proof techniques.",2,0.9310344827586207,3
+"Conversely, we can now easily adapt boosting methods to the problem of minimizing the logistic loss used in logistic regression.",2,0.9772727272727273,2
+The result is a family of new algorithms for both problems together with convergence proofs for the new algorithms as well as AdaBoost.,3,0.8125,2
+"For both AdaBoost and logistic regression, we attempt to choose the parameters or weights associated with a given family of functions called features or, in the boosting literature, weak hypotheses.",3,0.7941176470588235,3
+AdaBoost works by sequentially updating these parameters one by one.,2,1.0909090909090908,2
+"That is, on each of a series of iterations, a single feature (weak hypothesis) is chosen and the parameter associated with that single feature is adjusted.",4,0.7580645161290323,3
+"In contrast, methods for logistic regression, most notably iterative scaling (Darroch & Ratcliff, 1972; Della Pietra, Della Pietra, & Lafferty, 1997), update all parameters in parallel on each iteration.",5,0.7375,4
+Our rst new algorithm is a method for optimizing the exponential loss using parallel updates.,2,0.84375,2
+"It seems plausible that a parallel-update method will often converge faster than a sequential-update method, provided that the number of features is not so large as to make parallel updates infeasible.",2,1.0606060606060606,4
+A few experiments described at the end of this paper suggest that this is the case.,2,0.9411764705882353,2
+Our second algorithm is a parallel-update method for the logistic loss.,2,0.625,2
+"Although parallelupdate algorithms are well known for this function, the updates that we derive are new.",3,1.0277777777777777,2
+"Because of the unied treatment we give to the exponential and logistic loss functions, we are able to present and prove the convergence of the algorithms for these two losses simultaneously.",4,0.7878787878787878,3
+The same is true for the other algorithms presented in this paper as well.,2,0.7666666666666667,2
+We next describe and analyze sequential-update algorithms for the two loss functions.,2,0.5769230769230769,3
+"For exponential loss, this algorithm is equivalent to the AdaBoost algorithm of Freund and Schapire (1997).",3,0.675,2
+"By viewing the algorithm in our framework, we are able to prove that AdaBoost correctly converges to the minimum of the exponential loss function.",2,0.9615384615384616,2
+This is a new result.,1,0.75,1
+Although Kivinen and Warmuth (1999) and Mason et al.,2,1,2
+"(1999) have given convergence proofs for AdaBoost, their proofs depend on assumptions about the given minimization problem which may not hold in all cases.",3,0.8392857142857143,2
+Our proof holds in general without such assumptions.,2,0.8333333333333334,1
+Our unied view leads directly to a sequential-update algorithm for logistic regression that is only a minor modication of AdaBoost and which is very similar to the algorithm proposed by Duffy and Helmbold (1999).,3,0.9054054054054054,3
+"Like AdaBoost, this algorithm can be used in conjunction with any classication algorithm, usually called the weak learning algorithm, that can accept a distribution over examples and return a weak hypothesis with low error rate with respect to the distribution.",3,0.7954545454545454,3
+"However, this new algorithm provably minimizes the logistic loss rather than the arguably less natural exponential loss used by AdaBoost.",3,0.6590909090909091,2
+"A potentially important advantage of the new algorithm for logistic regression is that the weights that it places on examples are bounded in [0, 1].",2,0.8793103448275862,3
+This suggests that it may be possible to use the new algorithm in a setting in which the boosting algorithm selects examples to present to the weak learning algorithm by ltering a stream of examples (such as a very large dataset).,3,0.9772727272727273,3
+"As pointed out by Watanabe (1999) and Domingo and Watanabe (2000), this is not possible with AdaBoost since its weights may become extremely large.",4,0.85,3
+They provide a modication of AdaBoost for this purpose in which the weights are truncated at 1.,2,1.1111111111111112,2
+We speculate that our new algorithm may lead to a viable and mathematically cleaner alternative.,2,0.9375,3
+We next describe a parameterized family of iterative algorithms that includes both parallel- and sequential-update algorithms as well as a whole range of algorithms between  these two extremes.,3,0.8333333333333334,3
+The convergence proof that we give holds for this entire family of algorithms.,2,1.0,2
+"Although most of this paper considers only the binary case in which there are just two possible labels associated with each example, it turns out that the multiclass case requires no additional work.",4,0.8857142857142857,2
+"That is, all of the algorithms and convergence proofs that we give for the binary case turn out to be directly applicable to the multiclass case without modication.",3,0.8666666666666667,3
+"For comparison, we also describe the generalized iterative scaling algorithm of Darroch and Ratcliff (1972).",2,0.868421052631579,2
+"In rederiving this procedure in our setting, we are able to relax one of the main assumptions usually required by this algorithm.",3,0.9791666666666666,2
+The paper is organized as follows.,1,1.1428571428571428,1
+Section 2 describes the boosting and logistic regression models as they are usually formulated.,2,0.8666666666666667,3
+"Section 3 gives background on optimization using Bregman distances, and Section 4 then describes how boosting and logistic regression can be cast within this framework.",3,0.7962962962962963,2
+"Section 5 gives our parallel-update algorithms and proofs of their convergence, while Section 6 gives the sequential-update algorithms and convergence proofs.",3,0.5652173913043478,4
+The parameterized family of iterative algorithms is described in Section 7.,2,1.0416666666666667,1
+The extension to multiclass problems is given in Section 8.,2,0.8636363636363636,1
+"In Section 9, we contrast our methods with the iterative scaling algorithm.",2,0.6071428571428571,2
+"In Section 10, we discuss various notions of convergence of AdaBoost and relate our results to previous work on boosting.",3,0.9545454545454546,2
+"In Section 11, we give some initial experiments that demonstrate the qualitative behavior of the various algorithms in different settings.",2,0.9090909090909091,2
+"Variants of our sequential-update algorithms t into the general family of arcing algorithms presented by Breiman (1999, 1997a), as well as Mason et al.s AnyBoost family of algorithms (Mason et al., 1999).",3,0.8414634146341463,5
+"The information-geometric view that we take also shows that some of the algorithms we study, including AdaBoost, t into a family of algorithms described in 1967 by Bregman (1967), and elaborated upon by Censor and Lent (1981), for satisfying a set of constraints.1  Our work is based directly on the general setting of Lafferty, Della Pietra, and Della Pietra (1997) in which one attempts to solve optimization problems based on general Bregman distances.",4,0.9425287356321839,3
+They gave a method for deriving and analyzing parallel-update algorithms in this setting through the use of auxiliary functions.,2,0.95,3
+All of our algorithms and convergence proofs are based on this method.,2,0.8846153846153846,2
+Our work builds on several previous papers which have compared boosting approaches to logistic regression.,2,1.09375,2
+"Friedman, Hastie, and Tibshirani (2000) rst noted the similarity between the boosting and logistic regression loss functions, and derived the sequential-update algorithm LogitBoost for the logistic loss.",4,0.5303030303030303,4
+"However, unlike our algorithm, theirs requires that the weak learner solve least-squares problems rather than classication problems.",3,0.75,3
+Duffy and Helmbold (1999) gave conditions under which a loss function gives a boosting algorithm.,2,0.8888888888888888,2
+They showed that minimizing logistic loss does lead to a boosting algorithm in the PAC sense.,2,0.7941176470588235,2
+"This suggests that the logistic loss algorithm of Section 6 of this paper, which is close to theirs, may turn out also to have the PAC boosting property.",3,1.032258064516129,4
+We leave this as an open problem.,1,0.9375,2
+Lafferty (1999) went further in studying the relationship between logistic regression and the exponential loss through the use of a family of Bregman distances.,2,0.9259259259259259,3
+"However, the setting described in his paper apparently cannot be extended to precisely include the exponential loss.",2,0.85,3
+The use of Bregman distances that we describe has important differences leading to a natural treatment of the exponential loss and a new view of logistic regression.,3,0.8571428571428571,2
+"Our work builds heavily on that of Kivinen and Warmuth (1999) who, along with Lafferty, were the rst to make a connection between AdaBoost and information geometry.",2,0.953125,3
+"They showed that the update used by AdaBoost is a form of entropy projection. However, the Bregman distance that they used differed slightly from the one that we have chosen (normalized relative entropy rather than unnormalized relative entropy) so that AdaBoosts t in this model was not quite complete; in particular, their convergence proof depended on an assumption that does not hold in general.2 Kivinen and Warmuth also described updates for general Bregman distances including, as one of their examples, the Bregman distance that we use to capture logistic regression.",2,1.0666666666666667,23
+"Cesa-Bianchi, Krogh, and Warmuth (1994) describe an algorithm for a closely related problem to ours.",3,0.675,3
+minimization of a relative entropy subject to linear constraints.,2,0,2
+"In related work, Littlestone, Long, and Warmuth (1995) describe algorithms where convergence properties are analyzed through a method that is similar to the auxiliary function techniques.",2,0.953125,3
+"A variety of work in the online learning literature, such as the work by Littlestone, Long, and Warmuth (1995) and the work by Kivinen and Warmuth (1997, 2001) on exponentiated gradient methods, also use Bregman divergences, and techniques that are related to the auxiliary function method.",6,0.8070175438596491,4
+"Let S = (cid.4)(x1, y1), .",3,0.75,2
+.,0,1,0
+.,0,1,0
+", (xm , ym )(cid.5) be a set of training examples where each instance xi belongs to a domain or instance space X , and each label yi  {1,+1}.",3,1.0384615384615385,3
+"We assume that we are also given a set of real-valued functions on X , h1, .",2,1.0,3
+.,0,1,0
+.,0,1,0
+", hn.",1,0,0
+"Following convention in the Maximum-Entropy literature, we call these functions features; in the boosting literature, these would be called weak or base hypotheses.",4,0,3
+f(xi ) = (cid.2) We study the problem of approximating the yi s using a linear combination of features.,3,1.12,1
+"That is, we are interested in the problem of nding a vector of parameters   Rn such that  j h j (xi ) is a good approximation of yi .",3,0.8387096774193549,4
+"Although minimization of the number of classication errors may be a worthwhile goal, in its most general form, the problem is intractable (see, for instance, Hoffgen & Simon, 1992).",4,0.7972972972972973,3
+It is therefore often advantageous to instead minimize some other nonnegative loss function.,2,0.7857142857142857,2
+AdaBoost is usually described as a procedure that works together with an oracle or subroutine called the weak learner.,2,0.975,2
+"Briey, on each of a series of rounds, the weak learner picks one feature (weak hypothesis) h j .",3,0.7608695652173914,2
+"Note that the features h1, .",2,0.6428571428571429,2
+.,0,1,0
+.,0,1,0
+", hn correspond to the entire space of weak hypotheses rather than merely the weak hypotheses that were previously found up to that point by the weak learner.",2,0.8620689655172413,2
+"Of course, this will often be an enormous space, but one, nevertheless, that can be discussed mathematically.",3,0.9090909090909091,3
+"In practice, it may often be necessary to rely on a weak learner that can only approximately search the entire space.",2,0.9782608695652174,2
+"For instance, greedy algorithms such as C4.5 are often used for this purpose to nd a good decision tree from the space of all possible decision trees.",2,0.7333333333333333,3
+"To simplify the discussion, let us suppose for the moment that all of the weak hypotheses are Boolean, i.e., with range {1,+1}.",2,0.9833333333333333,2
+"In this case, the weak learner attempts to choose the weak hypothesis with smallest error rate, that is, with the smallest weighted number of mistakes (in which h j (xi ) (cid.12)= yi ) relative to a distribution over training examples selected by AdaBoost.",4,0.8611111111111112,3
+"Given the choice of weak hypothesis h j , AdaBoost then updates the associated parameter  j by adding some value  to it where  is a simple formula of this weighted error rate (note that a parameter may be updated more than once in this framework).",3,0.8020833333333334,3
+"As mentioned above, in practice, the weak learner may not always succeed in nding the best h j (in the sense of minimizing weighted error rate), for instance, if the size of the space of weak hypotheses precludes an exhaustive search.",3,0.84375,5
+"However, in this paper, we make the idealized assumption that the weak learner always chooses the best h j .",3,0.6363636363636364,3
+"Given this assumption, it has been noted by Breiman (1997a, 1999) and various later authors (Friedman, Hastie, & Tibshirani, 2000; Mason et al., 1999; Ratsch, Onoda, & Muller, 2001; Schapire & Singer, 1999) that the choice of both h j and  are done in such a way as to cause the greatest decrease in the exponential loss induced by , given that only a single component of  is to be updated.",4,0.8202247191011236,5
+"In this paper, we show for the rst time that AdaBoost is in fact a provably effective method for nding parameters  which minimize the exponential loss (assuming, as noted above, that the weak learner always chooses the best h j ).",3,0.8913043478260869,3
+"In practice, early stopping (limiting the number of rounds of boosting, rather than running the algorithm to convergence) is often used to mitigate problems with overtraining.",3,1.096774193548387,4
+"In this case the sequential algorithms in this paper can be considered to be feature selection methods, in that only a subset of the parameters will obtain non-zero values.",2,0.8548387096774194,3
+"Thus, the sequential methods can be used both for feature selection, or for search for the minimum of the loss function.",2,0.7291666666666666,3
+"We also give an entirely new algorithm for minimizing exponential loss in which, on each round, all of the parameters  j are updated in parallel rather than one at a time.",3,0.9852941176470589,4
+Our hope is that in some situations this parallel-update algorithm will be faster than the sequential-update algorithm.,2,0.7777777777777778,4
+See Section 11 for preliminary experiments in this regard.,1,0.95,2
+"Instead of using f as a classication rule, we might instead postulate that the yi s were generated stochastically as a function of the xi s and attempt to use f(x) to estimate the probability of the associated label y.  Generalized and improved iterative scaling (Darroch & Ratcliff, 1972; Della Pietra, Della Pietra, & Lafferty, 1997) are popular parallel-update methods for minimizing this loss.",6,0.9210526315789473,2
+"In this paper, we give an alternative parallel-update algorithm which we compare to iterative scaling techniques in preliminary experiments in Section 11.",2,0.8333333333333334,3
+"In this section, we give background on optimization using Bregman distances.",2,0.8846153846153846,2
+This will form the unifying basis for our study of boosting and logistic regression.,2,0.9333333333333333,2
+"The particular set-up that we follow is taken primarily from Lafferty, Della Pietra, and Della Pietra (1997).",3,0.8181818181818182,2
+Let F .,1,1.1666666666666667,1
+" R be a strictly convex function dened on a closed, convex set  Rm.",2,0.7,3
+"Assume F is differentiable at all points of int, the interior of , which we assume is nonempty.",4,1.05,2
+"Generally, although not always a metric or even symmetric, it can be shown that every Bregman distance is nonnegative and is equal to zero if and only if its two arguments are equal.",3,0.8472222222222222,3
+We assume that BF can be extended to a continuous extended real-valued function over all of   .,2,1.0,3
+"There is a natural optimization problem that can be associated with a Bregman distance, namely, to nd the vector p   that is closest to a given vector q0   subject to a set of linear constraints.",3,0.8947368421052632,3
+"In other words, the problem is to project q0 onto a linear subspace.",2,0.6333333333333333,2
+The constraints dening the linear subspace are specied by some m  n matrix M and some vector p  .,3,0.6052631578947368,3
+"At this point, we introduce a function LF and a set Q   which are intimately related to the optimization problem in Eqs.",2,0.875,2
+(6) and (7).,2,1,2
+"After giving formal denitions, we give informal argumentsthrough the use of Lagrange multipliersfor the relationships between P, Q and LF .",2,1.0217391304347827,3
+"Finally, we state Theorem 1, which gives a complete connection between these concepts, and whose results will be used throughout this paper.",3,0.9038461538461539,3
+Let us dene the function LF .,1,1.0,2
+"int  Rm  int to be  In order for this to be mathematically sound, we assume that  F is a bijective (one-to-one and onto) mapping from int to Rm so that its inverse ( F )1 is dened.",4,1.0238095238095237,5
+It is straightforward to verify that LF has the following additive property.,2,0.9230769230769231,3
+We now return to the optimization problem in Eqs.,2,0.95,1
+"(6) and (7), and describe informally how it can be solved in some cases using the method of Lagrange multipliers.",2,0.9807692307692307,3
+"To use this method, we start by forming the Lagrangian.",2,0.7916666666666666,1
+"By the usual theory of Lagrange multipliers, the solution to the original optimization problem is determined by the saddle point of this Lagrangian, where the minimum should be taken with respect to the parameters p, and the maximum should be taken with respect to the Lagrange multipliers .  Differentiating K (p, ) with respect to  and setting the result equal to zero simply implies that p must satisfy the constraints in Eq.",4,0.7450980392156863,5
+"(5), and hence that p  P. So we have shown that nding a saddle point of the Lagrangianand thereby solving the constrained optimization problem in Eqs.",2,0.75,9
+(6) and (7)is equivalent to nding a point in P  Q.,2,1.21875,2
+"Finally, if we plug Eq.",2,0.9285714285714286,1
+(13) into the Lagrangian in Eq.,2,1,1
+"(11), we are left with the problem  of maximizing.",2,1.0769230769230769,2
+"In other words, because BF (p(cid.17) q0) is constant (relative to ), the original optimization problem has been reduced to the dual problem of minimizing BF (p(cid.17) q) over q  Q.",3,0.8586956521739131,3
+"To summarize, we have argued informally that if there is a point q(cid.11) in P  Q then this point minimizes BF (p(cid.17) q0) over p  P and also minimizes BF (p(cid.17) q0) over q  Q.",3,0.9038461538461539,2
+"It turns out, however, that P  Q can sometimes be empty, in which case this method does not yield a solution.",3,0.7,3
+"Nevertheless, if we instead use the closure of Q, which, intuitively, has the effect of allowing some or all of the Lagrange multipliers to be innite, then there will always exist a unique solution.",5,1.0125,4
+"That is, as stated in the next theorem, for a large family of Bregman distances, P  Q always contains exactly one point, and that one point is the  unique solution of both optimization problems (where we also extend the constraint set of the dual problem from Q to Q).",4,0.8482142857142857,4
+"We take Theorem 1 from Lafferty, Della Pietra, and Della Pietra (1997).",3,0.7352941176470589,2
+We do not give the full details of the conditions that F must satisfy for this theorem to hold since these go beyond the scope of the present paper.,2,1.0333333333333334,2
+"Instead, we refer the reader to Della Pietra, Della Pietra, and Lafferty (2001) for a precise formulation of these conditions and a complete proof.",3,0.65,3
+"A proof for the case of (normalized) relative entropy is given by Della Pietra, Della Pietra, and Lafferty (1997).",3,0.75,2
+"Moreover, their proof requires very minor modications for all of the cases considered in the present paper.",2,0.8157894736842105,2
+"Closely related results are given by Censor and Lent (1981) and Csiszar (1991, 1995).",3,0.725,2
+See also Censor and Zenioss book (1997).,2,0.95,3
+Theorem 1.,1,1,1
+"Let p, q0, M, , F, BF ,P and Q be as above.",6,0.631578947368421,4
+Assume BF (p(cid.17) q0) < .,3,1.1666666666666667,1
+"Then for a large family of functions F, including all functions considered in this paper, there exists a unique q(cid.11)   satisfying.",4,0.7321428571428571,3
+"Moreover, any one of these four properties determines q(cid.11) uniquely.",2,0.78125,2
+Proof sketch.,1,1,0
+"As noted above, a complete and general proof is given by Della Pietra, Della Pietra, and Lafferty (2001).",3,0.7083333333333334,2
+"However, the proof given by Della Pietra, Della Pietra, and Lafferty (1997) for normalized relative entropy can be modied very easily for all of the cases of interest in the present paper.",3,0.8421052631578947,3
+The only step that needs slight modication is in showing that the minimum in part 3 exists.,2,1.1666666666666667,2
+"For this, we note in each case that the set  is bounded.",2,0.9285714285714286,3
+"Therefore, we can restrict the minimum in part 3 to the intersection of Q with the closure of this set.",2,0.8863636363636364,2
+"Since this smaller set is compact and since BF (p(cid.17)) is continuous, the minimum must be attained at some point q.",3,0.9464285714285714,2
+The rest of the proof is essentially identical (modulo supercial changes in notation).,2,0.78125,2
+This theorem will be extremely useful in proving the convergence of the algorithms described below.,2,1.0,2
+We will show in the next section how boosting and logistic regression can be viewed as optimization problems of the type given in part 3 of the theorem.,2,0.8448275862068966,2
+"Then, to prove optimality, we only need to show that our algorithms converge to a point in P  Q.",2,1.1428571428571428,3
+"Part 2 of Theorem 1 is a kind of Pythagorean theorem that is often very useful (for  instance, in the proof of the theorem), though not used directly in this paper.",3,0.9305555555555556,4
+"We return now to the boosting and logistic regression problems outlined in Section 2, and show how these can be cast in the form of the optimization problems outlined above.",3,0.90625,4
+"To view this problem in the form given in Section 3, we let p = 0, q0 = 1 (the all 0s and all  j yi h j (xi ).",3,0,2
+We let the space  = Rm+.,2,0.875,2
+"Finally, we take F to be as in Eq.",2,1.0909090909090908,1
+(4) so that BF is the unnormalized relative entropy.,2,0.5416666666666666,2
+Logistic regression can be reduced to an optimization problem of this form in nearly the  same way.,2,0.75,3
+"For shorthand, we call this the LogLoss problem.",2,0.9,2
+We dene p and M exactly as for exponential loss.,2,0.6818181818181818,2
+"The vector q0 is still constant, but now is dened to be (1/2)1, and the space  is now restricted to be [0, 1]m. These are minor differences, however.",4,0.8181818181818182,2
+.,0,1,0
+"Thus, DB (0(cid.17)LF (q0, M)) is equal to Eq.",4,1.0,3
+(17) so minimizing DB (0(cid.17) q) over q  Q is equivalent to minimizing Eq.,3,1.0,2
+(17).,1,0,1
+"As before, this is the same as nding q  Q satisfying the constraints in Eq.",2,0.8529411764705882,2
+(16).,1,0,1
+"Thus, the exponential loss and logistic loss problems t into our general framework using nearly identical settings of the parameters.",3,0,2
+The main difference is in the choice of Bregman distanceunnormalized relative entropy for exponential loss and binary relative entropy for logistic loss.,2,0.782608695652174,3
+"The former measures distance between nonnegative vectors representing weights over the instances, while the latter measures distance between distributions on possible labels, summed over all of the instances.",3,0.8709677419354839,2
+"In this section, we describe a new algorithm for the ExpLoss and LogLoss problems using an iterative method in which all weights  j are updated on each iteration.",3,0.7833333333333333,3
+The algorithm is shown in gure 1.,1,0.8125,1
+The algorithm can be used with any function F satisfying certain conditions described below.,2,0.9,1
+"In particular, we will see that it can be used with the choices of F given in Section 4.",2,1.0,2
+"Thus, this is really a single algorithm that can be used for both loss-minimization problems by setting the parameters appropriately.",2,0.9772727272727273,3
+"Note that, without loss of generality, we assume in this section that for all instances i.",2,1.0277777777777777,3
+The algorithm is very simple.,1,0.75,1
+"On each iteration, the vector t is computed as shown and added to the parameter vector t .",2,0.631578947368421,2
+We assume for all our algorithms that the inputs are such that innite-valued updates never occur.,2,0.9705882352941176,3
+This algorithm is new for both minimization problems.,1,0.7222222222222222,1
+"Optimization methods for Exploss, notably AdaBoost, have generally involved updates of one feature at a time.",3,0.9736842105263158,2
+"Parallel-update  methods for LogLoss are well known (see, for example, Darroch & Ratcliff, 1972; Della Pietra, Della Pietra, & Lafferty, 1997)).",4,0.75,3
+"However, our updates take a different form from the usual updates derived for logistic models.",2,0.6764705882352942,2
+We discuss the differences in Section 9.,1,0.9375,1
+We will prove next that the algorithm given in Fig.,1,1.0909090909090908,1
+1 converges to optimality for either loss.,1,1.0625,1
+"We prove this abstractly for any matrix M and vector q0, and for any function F satisfying Theorem 1 and the following conditions.",3,0.64,3
+We will show later that the choices of F given in Section 4 satisfy these conditions which  will allow us to prove convergence for ExpLoss and LogLoss.,2,1.1428571428571428,3
+"To prove convergence, we use the auxiliary-function technique of Della Pietra, Della Pietra, and Lafferty (1997).",3,0,2
+"Very roughly, the idea of the proof is to derive a nonnegative lower bound called an auxiliary function on how much the loss decreases on each iteration.",2,0.9655172413793104,2
+"Since the loss never increases and is lower bounded by zero, the auxiliary function must converge to zero.",3,0.9,2
+"The nal step is to show that when the auxiliary function is zero, the constraints dening the set P must be satised, and therefore, by Theorem 1, we must have converged to optimality.",4,0.8026315789473685,4
+"Before proving convergence of specic algorithms, we prove the following lemma which shows, roughly, that if a sequence has an auxiliary function, then the sequence converges to the optimum point q(cid.11).",3,0.8375,4
+"Thus, proving convergence of a specic algorithm reduces to simply nding an auxiliary function.",2,0.875,2
+Note that the qt s will lie in a compact subspace of Q if Condition 2 holds and BF (0(cid.17) q1) <.,3,0.896551724137931,2
+"In the algorithm in gure 1, and in general in the algorithms in this paper, 1 = 0, so that q1 = q0 and the condition BF (0(cid.17) q0) < implies BF (0(cid.17) q1) <.",5,0.9117647058823529,3
+BF (0(cid.17) q0) < is an input condition for all of the algorithms in this paper.,3,0.9347826086956522,2
+Proof.,0,0,0
+"By condition (22), BF (0(cid.17) qt ) is a nonincreasing sequence.",3,0.875,2
+"As is the case for all Bregman distances, BF (0(cid.17) qt ) is also bounded below by zero.",3,0.96,2
+Using the condition of Eq.,1,1.0833333333333333,1
+"(22), this means that A(qt ) must also converge to zero.",2,1.0588235294117647,2
+"Because we assume that the qt s lie in a compact space, the sequence of qt s must have a subsequence converging to some point q  .",3,0.875,2
+"By continuity of A, we have A(q) = 0.",2,1.0357142857142858,1
+"Therefore, q  P from the condition given by Eq.",2,0.9545454545454546,2
+"(23), where P is as in Eq.",2,1.1363636363636365,2
+(7).,1,0,1
+"On the other hand, q is the limit of a sequence of points in Q so q  Q.",1,0.9736842105263158,2
+"Thus, q  P  Q so q = q(cid.11) by Theorem 1.",2,0.6764705882352942,2
+This argument and the uniqueness of q(cid.11) show that the qt s have only a single limit point q(cid.11).,3,0.7142857142857143,2
+Suppose that the entire sequence did not converge to q(cid.11).,2,0.9,3
+"Then we could nd an open set B containing q(cid.11) such that {q1, q2, .",3,0.9545454545454546,2
+.,0,1,0
+.},0,0,0
+ B contains innitely many points and therefore has a limit point which must be in the closed set   B and so must be different from q(cid.11).,3,0.8709677419354839,3
+"This, we have already argued, is impossible.",2,1.1,2
+"Therefore, the entire sequence converges to q(cid.11).",2,0.7692307692307693,1
+We can now apply this lemma to prove the convergence of the algorithm of gure 1.,2,1.0,2
+Theorem 3.,1,1,1
+"Let F satisfy Theorem 1 and Conditions 1 and 2, and assume that BF (0(cid.17) q0) <.",3,0.9,3
+"Let the sequences 1, 2, .",2,1.0,2
+.,0,1,0
+.,0,1,0
+"and q1, q2, .",2,0,1
+.,0,1,0
+.,0,1,0
+be generated by the algorithm of gure 1.,1,0.9444444444444444,1
+"To apply this theorem to the ExpLoss and LogLoss problems, we only need to verify that  Conditions 1 and 2 are satised.",4,0.875,3
+The rst and second equalities use Eqs.,2,0.8125,1
+"(18) and (19), respectively.",2,0,3
+The nal inequality uses 1 + x  ex for all x.,1,0.8636363636363636,2
+"Condition 2 holds trivially for LogLoss since  = [0, 1]m is bounded.",3,0.8235294117647058,2
+"Note that while Condition 1 holds for the loss functions we are considering, it may not hold for all Bregman distances.",3,1.065217391304348,4
+"Lafferty, Della Pietra, and Della Pietra (1997) describe parallel update algorithms for Bregman distances, using the auxiliary function technique.",3,0.9,3
+"Their method does not require Condition 1, and therefore applies to arbitrary Bregman distances; however, each iteration of the algorithm requires solution of a system of equations that requires a numerical search technique such as Newtons method.",3,0.7682926829268293,3
+"In this section, we describe another algorithm for the minimization problems described in Section 4.",2,0.7941176470588235,2
+"However, unlike the algorithm of Section 5, the one that we present now only updates the weight of one feature at a time.",2,0.9423076923076923,3
+"While the parallel-update algorithm may give faster convergence when there are not too many features, the sequential-update algorithm can be used when there are a very large number of features using an oracle for selecting which feature to update next.",3,1.130952380952381,3
+"For instance, AdaBoost, which is essentially equivalent to the sequential-update algorithm for ExpLoss, uses an assumed weak learning algorithm to select a weak hypothesis, i.e., one of the features.",3,0.8142857142857143,4
+The sequential algorithm that we present for LogLoss can be used in exactly the same way.,2,0.8823529411764706,2
+The algorithm is shown in gure 2.,1,0.8125,1
+"On each round, a single feature jt is rst chosen to maximize the inner product of the corresponding column of the matrix M with the vector qt .",3,0.7413793103448276,3
+The quantity t is then computed and added to the jt th component of .,2,0.6333333333333333,1
+"It may seem surprising or even paradoxical that the algorithm does not explicitly guarantee that all of the components of  are eventually updated, and yet we are able to prove convergence to optimality.",4,0.9857142857142858,4
+"Apparently, all components which need to be nonzero will eventually be selected by the algorithm for updating.",2,1.2105263157894737,3
+"Moreover, on each iteration, although only one component is actually updated, in fact, all of the components are considered for updating which means that all of them are implicitly used in the computation of the eventual update to . Theorem 4.",3,1.1162790697674418,4
+"Given the assumptions of Theorem 3, the algorithm of gure 2 converges to optimality in the sense of Theorem 3.",3,0.8409090909090909,3
+"As mentioned above, this algorithm is essentially equivalent to AdaBoost, specically, the version of AdaBoost rst presented by Freund and Schapire (1997).",4,0.6964285714285714,3
+"In AdaBoost, on each iteration, a distribution Dt over the training examples is computed and the weak learner seeks a weak hypothesis with low error with respect to this distribution.",3,0.6818181818181818,2
+"The algorithm presented in this section assumes that the space of weak hypotheses consists of the features h1, .",2,0.85,3
+.,0,1,0
+.,0,1,0
+", hn, and that the weak learner always succeeds in selecting the feature with lowest error (or, more accurately, with error farthest from 1/2).",3,1.1333333333333333,4
+Theorem 4 then is the rst proof that AdaBoost always converges to the minimum of the exponential loss (assuming an idealized weak learner of the form above).,3,0.8833333333333333,3
+"Note that when q(cid.11) (cid.12)= 0, this theorem also tells us the exact form of lim Dt .",3,1.0,2
+"However, we do not know what the limiting behavior of Dt is when q(cid.11) = 0, nor do we know about the limiting behavior of the parameters t (whether or not q(cid.11) = 0).",3,0.9148936170212766,5
+We have also presented in this section a new algorithm for logistic regression.,2,0.8214285714285714,2
+"In fact, this algorithm is the same as one given by Duffy and Helmbold (1999) except for the choice of t .",2,0.86,2
+"In practical terms, very little work would be required to alter an existing learning system based on AdaBoost so that it uses logistic loss rather than exponential lossthe only difference is in the manner in which qt is computed from t .",3,0.9651162790697675,2
+"Thus, we could easily convert any system such as SLIPPER (Cohen & Singer, 1999), BoosTexter (Schapire & Singer, 2000) or alternating trees (Freund & Mason, 1999) to use logistic loss.",5,0.7142857142857143,4
+"We can even do this for systems based on condence-rated boosting (Schapire & Singer, 1999) in which t and jt are chosen together on each round to minimize Eq.",3,1.0151515151515151,3
+(30) rather than an approximation of this expression as used in the algorithm of gure 2.,2,0.8157894736842105,2
+(Note that the proof of Theorem 4 can easily be modied to prove the convergence of such an algorithm using the same auxiliary function.),3,0.8888888888888888,4
+"In previous sections, we described separate parallel-update and sequential-update algorithms.",3,0.5416666666666666,4
+"In this section, we describe a parameterized family of algorithms that includes the parallel-update algorithm of Section 5 as well as a sequential-update algorithm that is different from the one in Section 6.",2,0.9571428571428572,3
+"Thus, in this section, we show how the parallel and sequential viewpoints can themselves be unied in a manner that admits a unied presentation and unied convergence proofs.",2,0.8870967741935484,3
+"Moreover, the family of algorithms that we present includes a number of new algorithms including, as just mentioned, a sequential-update algorithm that, in our experiments, consistently performed better than the one in Section 6.",2,0.975,4
+This family of  algorithms also includes other algorithms that may in certain situations be more appropriate than any of the algorithms presented up to this point.,2,1.0925925925925926,2
+"For instance, one of these algorithms is tailored for the case when the Euclidean norm of each row of the matrix M is bounded by a constant, in other words, for when the feature-vectors associated with the examples are known to lie in a Euclidean ball (centered at the origin) of bounded radius.",4,0.9576271186440678,3
+"On each round, the quantities W t, j are computed as before, and the vector dt is computed as t was computed in gure 1.",4,0.7241379310344828,2
+"Now, however, this vector dt is not added directly to t .",2,0.6785714285714286,3
+"Instead, another vector at is selected which provides a scaling of the features.",2,1.0,2
+This vector is chosen to maximize a measure of progress while restricted to belong to the set AM.,2,1.0263157894736843,2
+"The allowed form of these scaling vectors is given by the set A, a parameter of the algorithm.",2,0.725,2
+The parallel-update algorithm of gure 1 is obtained by choosing A = {1} and assuming |Mi j|  1 for all i.,2,1.0,2
+"(Equivalently, we can make no such assumption, and choose that A = {c1| c > 0}.)",4,0.7291666666666666,2
+"An alternative is to not restrict the scaling vectors at all, i.e., we set A to be Rn+.",4,0.9318181818181818,2
+"In this case, nding at is a linear programming problem with n variables and m constraints, and the features are dynamically scaled to make optimal progress on each iteration.",4,0.65625,3
+"There may be computational reasons for doing this, in that the rate of convergence may depend on the relative scaling of the features.",2,1.06,3
+"We can obtain a sequential-update algorithm by choosing A to be the set of unit vectors (i.e., with one component equal to 1 and all others equal to 0), and assuming that Mi j  [1,+1] for all i, j.",3,0.8541666666666666,4
+"In this section, we show how all of our results can be extended to the multiclass case.",2,0.9473684210526315,3
+"Because of the generality of the preceding results, we will see that no new algorithms need be devised and no new convergence proofs need be proved for this case.",3,0.6612903225806451,3
+"Rather, all of the preceding algorithms and proofs can be directly applied to the multiclass case.",2,0.8055555555555556,3
+"In the multiclass case, the label set Y has cardinality k.   This distance measures the relative entropy between the distributions over labels for instance i dened by p and q, summed over all instances i.",3,0.7307692307692307,10
+"Now let M(i,(cid.17)), j = h j (xi , yi ) h j (xi , (cid.17)), and let q0 = (1/k)1.",5,0.6951219512195121,3
+"Plugging in these denitions gives that BF (0(cid.17)LF (q0, M)) is equal to Eq.",3,0.98,2
+(35).,1,0,1
+"Thus, the algorithms of Sections 57 can all be used to solve this minimization problem, and the corresponding convergence proofs are also directly applicable.",4,0.7777777777777778,3
+"Choosing M as we did for multiclass logistic regression and q0 = 1, we have that BF (0(cid.17)LF (q0, M)) is equal to the loss in Eq.",3,0.9743589743589743,1
+(37).,1,0,1
+We can thus use the preceding algorithms to solve this multiclass problem as well.,2,0.8,2
+"In particular, the sequential-update algorithm gives AdaBoost.M2.",2,0.7222222222222222,3
+"In this section, we describe the generalized iterative scaling (GIS) procedure of Darroch and Ratcliff (1972) for comparison to our algorithms.",4,0.8333333333333334,2
+"We largely follow the description of GIS given by Berger, Della Pietra, and Della Pietra (1996) for the multiclass case.",2,0.82,2
+"To make the comparison as stark as possible, we present GIS in our notation and prove its convergence using the methods developed in previous sections.",3,0.8703703703703703,2
+"In doing so, we are also able to relax one of the key assumptions traditionally used in studying GIS.",2,1.1904761904761905,2
+We adopt the notation and set-up used for multiclass logistic regression in Section 8.,2,0.7666666666666667,2
+"(To our knowledge, there is no analog of GIS for the exponential loss so we only consider the = 1  qi so that qi,(cid.17) is case of logistic loss.)",4,0.7368421052631579,2
+"We also extend this notation by dening qi,yi now dened for all (cid.17)  Y.",1,1.0526315789473684,2
+"Moreover, it can be veried that qi,(cid.17) = Pr[(cid.17)| xi ] as dened in Eq.",3,0.8214285714285714,1
+"(34) if q = LF (q0, M).",2,0,3
+"In GIS, the following assumptions regarding the features are usually made.",2,0.8076923076923077,2
+"Since, in the multiclass case, a constant can be added to all features h j without changing the model or loss function, and since the features can be scaled by any constant, the two assumptions we consider clearly can be made to hold without loss of generality.",6,0.8653846153846154,3
+"The improved iterative scaling algorithm of Della Pietra, Della Pietra, and Lafferty (1997) also requires only these milder assumptions but is more complicated to implement, requiring a numerical search (such as Newton-Raphson) for each feature on each iteration.",5,0.7282608695652174,3
+"GIS works much like the parallel-update algorithm of Section 5 with F, M and q0 as dened for multiclass logistic regression in Section 8.",3,0.7115384615384616,4
+"The only difference is in the computation of the vector of updates t , for which GIS requires direct access to the features h j .",2,0.8461538461538461,2
+Equation (44) follows from the log bound ln x  x  1.,2,0.8214285714285714,1
+Equation (46) uses Eq.,2,1.0714285714285714,1
+(29) and our assumption on the form of the h j s.,2,0,2
+Equation (47) follows from our denition of the update .,2,1.3333333333333333,2
+"Finally, combining Eqs.",1,0,1
+"(40), (42), (43) and (48) gives Eq.",5,0.8055555555555556,4
+(41) completing the proof.,2,1.0714285714285714,1
+It is clear that the differences between GIS and the updates given in this paper stem from Eq.,2,0.9473684210526315,2
+"(42), which is derived from ln x = C + ln(eC x), with C = i (yi ) on the ith term in the sum.",3,0.8676470588235294,2
+This choice of C effectively means that the log bound is taken at a different point (ln x = C + ln(eC x)  C + eC x  1).,3,0.9411764705882353,3
+"In this more general case, the bound is exact at x = e C; hence, varying C varies where the bound is taken, and thereby varies the updates.",3,0.8787878787878788,3
+"In this section we discuss various notions of convergence of AdaBoost, relating the work in this paper to previous work on boosting, and in particular to previous work on the convergence properties of AdaBoost.",3,1.0405405405405406,3
+"The algorithms in this paper dene a sequence of parameter settings 1, 2, .",2,0.90625,2
+.,0,1,0
+.,0,1,0
+.,0,1,0
+"There are various functions of the parameter settings, for which sequences are therefore also dened and for which convergence properties may be of interest.",3,1.0576923076923077,3
+"For instance, one can investigate convergence in value, i.e., convergence of the exponential loss function, as dened in Eq.",3,0.875,3
+"(14); convergence of either the unnormalized distributions qt or the normalized i qt distributions qt /( ), over the training examples; and convergence in parameters, that i is, convergence of t .",5,0.875,2
+"In this paper, we have shown that AdaBoost, and the other algorithms proposed, converge to the inmum of the exponential loss function.",3,0.6923076923076923,3
+We have also shown that the unnormalized distribution converges to the distribution q(cid.11) as dened in Theorem 1.,2,0.8913043478260869,2
+"The normalized distribution converges, provided that q(cid.11) (cid.12)= 0.",2,1.105263157894737,1
+In the case q(cid.11) = 0 the limit of qt /( ) is clearly not well dened.,3,0.8478260869565217,2
+that q(cid.11) (cid.12)= 0.,3,0,0
+"Here Pm is the simplex over the m training examples (i.e., the space of possible normalized distributions); DR (q(cid.17) q0) is the relative entropy between distributions q and q0; and q0 is the uniform distribution over the training examples, q0 = (1/m)1.",5,0.8448275862068966,3
+This paper has discussed the properties of the unnormalized distribution.,2,0.7727272727272727,1
+it is interesting that Kivinen and Warmuths results imply analogous relations for the normalized distribution.,2,1.15625,3
+"We should note that we have implicitly assumed in the algorithms that the weak learner can make use of an unnormalized distribution, rather than the normalized distribution over training examples that is usually used by boosting algorithms.",2,1.0897435897435896,2
+We think this is a minor point though.,2,1.1111111111111112,2
+"indeed, there is nothing to prevent the normalized distribution being given to the weak learner instead (the algorithms would not change, and the normalized distribution is qi = 0, in which case the algorithm has already converged).",3,0.9418604651162791,3
+"In our view, the use of the unnormalized rather than the normalized distribution is a minor change, although the use of the normalized distribution is perhaps more intuitive (for instance, the edge of a weak learner is dened with respect to the normalized distribution).",3,0.96,4
+"Finally, the convergence of the parameter values t is problematic.",2,0.7083333333333334,3
+"In the case that q(cid.11) = 0, some of the parameter values must diverge to + or .",3,1.0,2
+"In fact, the parameter values can diverge even if q(cid.11) (cid.12)= 0. all that is needed is that one or more of the components of q(cid.11) be equal to zero.",3,0.8636363636363636,5
+"Even if q(cid.11) is on the interior of , there is no guarantee of convergence of the parameter values, for if the constraints are not linearly independent, there may be several parameter values which give the optimal point.",3,0.9,2
+"Thus, the parameters may diverge under our assumptions, or even under the assumption that q(cid.11) (cid.12)= 0.",3,0.8214285714285714,2
+"This is problematic, as the values for  are used to dene the nal hypothesis that is applied to test data examples.",2,1.1956521739130435,3
+"In this section, we briey describe some experiments using synthetic data.",2,1.0384615384615385,2
+We stress that these experiments are preliminary and are only intended to suggest the possibility of these algorithms having practical value.,2,1.0681818181818181,2
+"More systematic experiments are clearly needed using both real-world and synthetic data, and comparing the new algorithms to other commonly used procedures.",3,0.6666666666666666,3
+"In our experiments, we generated random data and classied it using a very noisy hyperplane.",2,0.8235294117647058,2
+"More specically, in the 2-class case, we rst generated a random hyperplane in 100-dimensional space represented by a vector w  R100 (chosen uniformly at random from the unit sphere).",3,0,3
+We then chose 1000 points x  R100.,2,0.9375,2
+"In the case of real-valued features, each point was normally distributed x  N (0, I).",3,0.775,3
+"In the case of Boolean features, each point x was chosen uniformly at random from the Boolean hypercube {1,+1}100.",3,0.7115384615384616,2
+"We next assigned a label y to each point depending on whether it fell above or below the chosen hyperplane, i.e., y = sign(w  x).",2,0.7419354838709677,2
+"After each label was chosen, we perturbed each point x.",2,1.0,1
+"In the case of real-valued features, we did this by adding a random amount  to x where   N (0, 0.8 I).",4,1.1923076923076923,2
+"For Boolean features, we ipped each coordinate of x independently with probability 0.05.",3,0.8333333333333334,2
+Note that both of these forms of perturbation have the effect of causing the labels of points near the separating hyperplane to be more noisy than points that are farther from it.,2,1.2272727272727273,2
+The features were identied with coordinates of x.,1,1.25,0
+"For real-valued features, we also conducted a similar experiment involving ten classes rather than two.",3,0.7941176470588235,2
+"In this case, we generated ten random hyperplanes w1, .",3,0.7916666666666666,2
+.,0,1,0
+.,0,1,0
+", w10, each chosen uniformly at random from the unit sphere, and classied each point x by arg maxy wy  x (prior to perturbing x).",3,0.9166666666666666,3
+"Finally, in some of the experiments, we limited each weight vector to depend on just 4  of the 100 possible features.",3,0.8333333333333334,3
+"In the rst set of experiments, we tested the algorithms to see how effective they are at minimizing the logistic loss on the training data.",2,0.9629629629629629,2
+"(We did not run corresponding experiments for exponential loss since typically we are not interested in minimizing exponential loss per se, but rather in using it as a proxy for some other quantity that we do want to minimize, such as the classication error rate.)",4,0.88,4
+"We ran the parallel-update algorithm of Section 5 (denoted par in the gures), as well as the sequential-update algorithm that is a special case of the parameterized family described in Section 7 (denoted seq).",3,0.85,6
+"Finally, we ran the iterative scaling algorithm described in Section 9 (i.s.).",2,0.59375,2
+"(We did not run the sequential-update algorithm of Section 6 since, in preliminary experiments, it seemed to consistently perform worse than the sequential-update algorithm of Section 7).",3,0.796875,4
+"As noted in Section 9, GIS requires that all features be nonnegative.",2,1.0357142857142858,2
+"Given features that do not satisfy this constraint, one can subtract a constant c j from each feature h j without changing the model.",3,0.8269230769230769,3
+"Like the former approach, this causes h j to be nonnegative without affecting the model of (both denominator and numerator of Eq.",3,0.86,2
+"In a preliminary version of this paper,3 we did experiments using only the former approach and found that GIS performed uniformly and considerably worse than any of the other algorithms tested.",3,0.8939393939393939,2
+"After the publication of that version, we tried the latter method of making the features nonnegative and obtained much better performance.",3,0.9347826086956522,3
+"All of the experiments in the current paper, therefore, use this latter approach.",4,0.65625,2
+The results of the rst set of experiments are shown in gure 4.,2,0.8928571428571429,1
+Each plot of this gure shows the logistic loss on the training set for each of the three methods as a function of the number of iterations.,2,0.875,2
+(The loss has been normalized to be 1 when  = 0.),2,1.0714285714285714,3
+"Each plot corresponds to a different variation on generating the data, as described above.",3,0.90625,3
+"When there are only a small number of relevant features, the sequential-update algorithms seems to have a clear advantage, but when there are many relevant features, none of the methods seems to be best across-the-board.",5,0.8717948717948718,3
+"Of course, all methods eventually converge to the same level of loss.",2,0.8214285714285714,2
+"In the second experiment, we tested how effective the new competitors of AdaBoost are at minimizing the test misclassication error.",2,0.8863636363636364,2
+Figure 5.,1,1,1
+The test misclassication error on data generated by noisy hyperplanes.,2,0.7727272727272727,1
+Many thanks to Manfred Warmuth for rst teaching us about Bregman distances and for many comments on an earlier draft.,2,0,3
+"John Lafferty was also extraordinarily helpful, both in the feedback that he gave us on our results, and in helping us with Theorem 1.",3,0.8703703703703703,3
+"Thanks also to Michael Cameron-Jones, Sanjoy Dasgupta, Nigel Duffy, David Helmbold, Raj Iyer and the anonymous reviewers of this paper for helpful discussions and suggestions.",5,0,3
+Some of this research was done while Yoram Singer was at AT&T Labs.,2,1.0,2
+1.,0,1.25,0
+"More specically, Bregman (1967) and later Censor and Lent (1981) describe optimization methods based on Bregman distances where one constraint is satised at each iteration, for example, a method where the constraint which makes the most impact on the objective function is greedily chosen at each iteration.",3,0.9454545454545454,4
+"The simplest version of AdaBoost, which assumes weak hypotheses with values in {1,+1}, is an algorithm of this type if we assume that the weak learner is always able to choose the weak hypothesis with minimum weighted error.",3,0.9222222222222223,2
+2.,0,1.25,0
+"Specically, their assumption is equivalent to the inmum of the exponential loss being strictly positive (when  the data is separable it can be shown that the inmum is zero).",2,1.0303030303030303,3
+3.,0,1.25,0
+"Appeared in Proceedings of the Thirteenth Annual Conference on Computational Learning Theory, 2000.",2,0.7666666666666667,2

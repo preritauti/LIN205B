@@ -1,0 +1,328 @@
+We describe the application of kernel methods to Natural Language Pro-
+cessing (NLP) problems. In many NLP tasks the objects being modeled
+are strings, trees, graphs or other discrete structures which require some
+mechanism to convert them into feature vectors. We describe kernels for
+various natural language structures, allowing rich, high dimensional rep-
+resentations of these structures. We show how a kernel over trees can
+be applied to parsing using the voted perceptron algorithm, and we give
+experimental results on the ATIS corpus of parse trees.
+
+Kernel methods have been widely used to extend the applicability of many well-known al-
+gorithms, such as the Perceptron [1], Support Vector Machines [6], or Principal Component
+Analysis [15]. A key property of these algorithms is that the only operation they require
+is the evaluation of dot products between pairs of examples. 
+
+This paper describes the application of kernel methods to Natural Language Processing
+(NLP) problems. In many NLP tasks the input domain cannot be neatly formulated as a sub. Instead, the objects being modeled are strings, trees or other discrete structures
+set of
+which require some mechanism to convert them into feature vectors. We describe kernels
+for various NLP structures, and show that they allow computationally feasible representa-
+tions in very high dimensional feature spaces, for example a parse tree representation that
+tracks all subtrees. We show how a tree kernel can be applied to parsing using the percep-
+tron algorithm, giving experimental results on the ATIS corpus of parses. The kernels we
+describe are instances of “Convolution Kernels”, which were introduced by Haussler [10]
+and Watkins [16], and which involve a recursive calculation over the “parts” of a discrete
+structure. Although we concentrate on NLP tasks in this paper, the kernels should also be
+useful in computational biology, which shares similar problems and structures.
+
+Figure 1 shows some typical structures from NLP tasks. Each structure involves an “ob-
+served” string (a sentence), and some hidden structure (an underlying state sequence or
+tree).
+
+Figure 1: Three NLP tasks where a function is learned from a string to some hidden struc-
+ture. In (a), the hidden structure is a parse tree. In (b), the hidden structure is an under-
+lying sequence of states representing named entity boundaries (SP = Start person, CP =
+Continue person, SC = Start company, N= No entity). In (c), the hidden states represent
+part-of-speech tags (N = noun, V = verb, P = preposition,).
+
+the mapping from an input string to its hidden structure. We refer to tasks that involve trees
+as parsing problems, and tasks that involve hidden state sequences as tagging problems.
+
+In many of these problems ambiguity is the key issue: although only one analysis is plau-
+sible, there may be very many possible analyses. A common way to deal with ambiguity
+is to use a stochastic grammar, for example a Probabilistic Context Free Grammar (PCFG)
+for parsing, or a Hidden Markov Model (HMM) for tagging. Probabilities are attached to
+rules in the grammar – context-free rules in the case of PCFGs, state transition probabili-
+ties and state emission probabilities for HMMs. Rule probabilities are typically estimated
+using maximum likelihood estimation, which gives simple relative frequency estimates.
+Competing analyses for the same sentence are ranked using these probabilities. See [3] for
+an introduction to these methods.
+
+This paper proposes an alternative to generative models such as PCFGs and HMMs. Instead
+of identifying parameters with rules of the grammar, we show how kernels can be used to
+form representations that are sensitive to larger sub-structures of trees or state sequences.
+The parameter estimation methods we describe are discriminative, optimizing a criterion
+that is directly related to error rate.
+
+While we use the parsing problem as a running example in this paper, kernels over NLP
+structures could be used in many ways: for example, in PCA over discrete structures, or
+in classiﬁcation and regression problems. Structured objects such as parse trees are so
+prevalent in NLP that convolution kernels should have many applications.
+
+The previous section introduced PCFGs as a parsing method. This approach essentially
+counts the relative number of occurences of a given rule in the training data and uses these
+counts to represent its learned knowledge. PCFGs make some fairly strong independence
+assumptions, disregarding substantial amounts of structural information. In particular, it
+does not appear reasonable to assume that the rules applied at level
+in the parse tree are
+unrelated to those applied at level
+
+.
+
+As an alternative we attempt to capture considerably more structural information by con-
+sidering all tree fragments that occur in a parse tree. This allows us to capture higher order
+dependencies between grammar rules. See ﬁgure 2 for an example. As in a PCFG the new
+representation tracks the counts of single rules, but it is also sensitive to larger sub-trees.
+
+Figure 2: a) An example tree. b) The sub-trees of the NP covering the apple. The tree in
+(a) contains all of these sub-trees, and many others. We deﬁne a sub-tree to be any sub-
+graph which includes more than one node, with the restriction that entire (not partial) rule
+productions must be included. For example, the fragment [NP [D the ]] is excluded
+because it contains only part of the production NP
+
+D N.
+
+Note that
+will be huge (a given tree will have a number of subtrees that is exponential in
+its size). Because of this we would like design algorithms whose computational complexity
+does not depend on.
+
+Representations of this kind have been studied extensively by Bod [2]. However, the work
+in [2] involves training and decoding algorithms that depend computationally on the num-
+ber of subtrees involved.The parameter estimation techniques described in [2] do not
+correspond to maximum-likelihood estimation or a discriminative criterion: see [11] for
+discussion. The methods we propose show that the score for a parse can be calculated in
+polynomial time in spite of an exponentially large number of subtrees, and that efﬁcient pa-
+rameter estimation techniques exist which optimize discriminative criteria that have been
+well-studied theoretically.
+
+Goodman [9] gives an ingenious conversion of the model in [2] to an equivalent PCFG
+whose number of rules is linear in the size of the training data, thus solving many of the
+computational issues. An exact implementation of Bod’s parsing method is still infeasible,
+but Goodman gives an approximation that can be implemented efﬁciently. However, the
+method still suffers from the lack of justiﬁcation of the parameter estimation techniques.
+The key to our efﬁcient use of this high dimensional representation is the deﬁnition of an
+and
+appropriate kernel. We begin by examining the inner product between two trees
+
+to be
+
+the set of nodes in trees
+
+respectively. We deﬁne the indicator
+and 0 otherwise. It follows
+that
+. The ﬁrst step to efﬁcient
+computation of the inner product is the following property (which can be proved with some
+simple algebra):
+
+In training, a parameter is explicitly estimated for each sub-tree. In searching for the best parse,
+Pre-terminals are nodes directly above words in the surface string, for example the N, V, and D
+
+calculating the score for a parse in principle requires summing over an exponential number of deriva-
+tions underlying a tree, and in practice is approximated using Monte-Carlo techniques.
+
+To see that this recursive deﬁnition is correct, note that?
+
+simply counts the number
+. The ﬁrst two cases are trivially
+of common subtrees that are found rooted at both
+correct. The last, recursive, deﬁnition follows because a common subtree for
+can
+be formed by taking the production at
+, together with a choice at each child of simply
+taking the non-terminal at that child, or any one of the common sub-trees at that child.
+Thus there are
+’th child. (Note
+that a similar recursion is described by Goodman [9], Goodman’s application being the
+conversion of Bod’s model [2] to an equivalent PCFG.)
+
+This can be a pessimistic estimate of
+the runtime. A more useful characterization is that it runs in time linear in the number of
+are the same. In our
+members
+data we have found a typically linear number of nodes with identical productions, so that
+
+such that the productions at
+
+can be calculated in
+
+are 0, and the running time is close to linear in the size of the trees.
+
+This recursive kernel structure, where a kernel between two objects is deﬁned in terms
+of kernels between its parts is quite a general idea. Haussler [10] goes into some detail
+describing which construction operations are valid in this context, i.e. which operations
+maintain the essential Mercer conditions. This paper and previous work by Lodhi et al. [12]
+examining the application of convolution kernels to strings provide some evidence that
+convolution kernels may provide an extremely useful tool for applying modern machine
+learning techniques to highly structured objects. The key idea here is that one may take
+a structured object and split it up into parts. If one can construct kernels over the parts
+then one can combine these into a kernel over the whole object. Clearly, this idea can be
+extended recursively so that one only needs to construct kernels over the “atomic” parts of
+a structured object. The recursive combination of the kernels over parts of an object retains
+information regarding the structure of that object.
+
+Several issues remain with the kernel we describe over trees and convolution kernels in.
+
+Second, the value of the kernel when
+applied to two copies of the same tree can be extremely large (in our experiments on the
+order of
+) while the value of the kernel between two different trees is typically much
+smaller (in our experiments the typical pairwise comparison is of order 100). By analogy
+with a Gaussian kernel we say that the kernel is very peaked. If one constructs a model
+which is a linear combination of trees, as one would with an SVM [6] or the perceptron,
+the output will be dominated by the most similar tree and so the model will behave like
+a nearest neighbor rule. There are several possible solutions to this problem. Following
+Haussler [10] we may radialize the kernel, however, it is not always clear that the result is
+still a valid kernel. Radializing did not appear to help in our experiments.
+
+These problems motivate two simple modiﬁcations to the tree kernel. Since there will
+be many more tree fragments of larger size – say depth four versus depth three – and symbols in Figure 2.
+
+This can be achieved by introducing a parameter
+and modifying the base case and recursive case of the deﬁnitions of ?
+This corresponds to a modiﬁed kernel
+of tree fragments exponentially with their size.
+It is straightforward to design similar kernels for tagging problems (see ﬁgure 1) and for
+another common structure found in NLP, dependency structures. See [5] for details. In the
+tagging kernel, the implicit feature representation tracks all features consisting of a subse-
+quence of state labels, each with or without an underlying word. For example, the paired se-
+quence
+would include features such as
+SP CP is/N N of/N
+and so on.
+
+This section formalizes the use of kernels for parsing and tagging problems. The method
+is derived by the transformation from ranking problems to a margin-based classiﬁcation
+problem in [8]. It is also related to the Markov Random Field methods for parsing suggested
+in [13], and the boosting methods for parsing in [4]. We consider the following set-up:
+
+is represented by a feature vector
+
+’th sentence in training data, and
+
+is the correct tree for that sentence.
+
+
+Training data is a set of example input/output pairs. We assume some way of enumerating a set of candidates for a particular sentence. We
+B Without loss of generality we take
+B Each candidate
+eters of the model are also a vector
+example as
+candidate. The output of the model on a training or test example
+, note that a ranking func-
+When considering approaches to training the parameter vector
+tion that correctly ranked the correct parse above all competing candidates would satisfy
+. It is simple to modify the Perceptron
+the conditions
+and Support Vector Machine algorithms to treat this problem. For example, the SVM opti-
+mization problem (hard margin version) is to ﬁnd the
+subject to
+!98 which minimizes
+the constraints. 
+
+This can be achieved using a modiﬁed dynamic programming table where <
+in [13]) or to take the5 most probable parses from an existing probabilistic parser (as in [4]).
+
+A A context-free grammar – perhaps taken straight from the training examples – is one way of
+enumerating candidates. 
+
+Table 1: Score shows how the parse score varies with the maximum depth of sub-tree
+considered by the perceptron. Improvement is the relative reduction in error in comparison
+to the PCFG, which scored 74%. The numbers reported are the mean and standard deviation
+over the 10 development sets.
+
+for “dual parameters”.
+It follows that the score of a parse can be
+calculated using the dual parameters, and inner products between feature vectors, without
+having to explicitly deal with feature or parameter vectors in the space
+
+as shorthand for.
+
+For example, see ﬁgure 3 for the perceptron algorithm applied to this problem.
+
+To demonstrate the utility of convolution kernels for natural language we applied our tree
+kernel to the problem of parsing the Penn treebank ATIS corpus [14]. We split the treebank
+randomly into a training set of size 800, a development set of size 200 and a test set of size
+336. This was done 10 different ways to obtain statistically signiﬁcant results. A PCFG
+was trained on the training set, and a beam search was used to give a set of parses, with
+PCFG probabilities, for each of the sentences. We applied a variant of the voted perceptron
+algorithm [7], which is a more robust version of the original perceptron algorithm with
+performance similar to that of SVMs. The voted perceptron can be kernelized in the same
+way that SVMs can but it can be considerably more computationally efﬁcient.
+
+We generated a ranking problem by having the PCFG generate its top 100 candidate parse
+trees for each sentence. The voted perceptron was applied, using the tree kernel described
+previously, to this re-ranking problem. It was trained on 20 trees selected randomly from
+the top 100 for each sentence and had to choose the best candidate from the top 100 on the
+test set. We tested the sensitivity to two parameter settings: ﬁrst, the maximum depth of
+sub-tree examined, and second, the scaling factor used to down-weight deeper trees. For
+each value of the parameters we trained on the training set and tested on the development
+set. We report the results averaged over the development sets in Tables 1 and 2.
+
+We report a parse score which combines precision and recall.
+
+Table 2: Score shows how the parse score varies with the scaling factor for deeper sub-trees
+is varied. Imp. is the relative reduction in error in comparison to the PCFG, which scored
+74%. The numbers reported are the mean and standard deviation over the 10 development
+sets.
+
+The precision and recall on the
+the average precision recall, weighted by the size of the trees
+improvements over the PCFG scores. 
+
+We ﬁnally used the development set for cross-validation to choose the best parameter set-
+tings for each split. We used the best parameter settings (on the development sets) for each
+split to train on both the training and development sets, then tested on the test set. This gave
+with the best choice of maximum depth and a score
+a relative goodness score of
+of
+on the test data.
+All of these results were obtained by running the perceptron through the training data only
+once. As has been noted previously by Freund and Schapire [7], the voted perceptron often
+obtains better results when run multiple times through the training data. Running through
+,
+the data twice with a maximum depth of 3 yielded a relative goodness score of
+while using a larger number of iterations did not improve the results signiﬁcantly.
+
+with the best choice of scaling factor. 
+
+In summary we observe that in these simple experiments the voted perceptron and an appro-
+priate convolution kernel can obtain promising results. However there are other methods
+which perform considerably better than a PCFG for NLP parsing – see [3] for an overview
+– future work will investigate whether the kernels in this paper give performance gains over
+these methods.
+
+When used with algorithms such as the perceptron, convolution kernels may be even more
+computationally attractive than the traditional radial basis or polynomial kernels. The linear
+combination of parse trees constructed by the perceptron algorithm can be viewed as a
+weighted forest. One may then search for subtrees in this weighted forest that occur more
+which contain a common
+than once. Given a linear combination of two trees
+subtree, we may construct a smaller weighted acyclic graph, in which the common subtree
+occurs only once and has weight
+. This process may be repeated until an arbitrary linear
+combination of trees is collapsed into a weighted acyclic graph in which no subtree occurs
+more than once. The perceptron may now be evaluated on a new tree by a straightforward
+generalization of the tree kernel to weighted acyclic graphs of the form produced by this
+procedure.
+
+Given the nature of our data – the parse trees have a high branching factor, the words are
+chosen from a dictionary that is relatively small in comparison to the size of the training
+data, and are drawn from a very skewed distribution, and the ancestors of leaves are part
+of speech tags – there are a relatively small number of subtrees in the lower levels of the
+parse trees that occur frequently and make up the majority of the data. It appears that the
+approach we have described above should save a considerable amount of computation. This
+is something we intend to explore further in future work.
+
+In this paper we described how convolution kernels can be used to apply standard kernel
+based algorithms to problems in natural language. Tree structures are ubiquitous in natu-
+ral language problems and we illustrated the approach by constructing a convolution kernel
+over tree structures. The problem of parsing English sentences provides an appealing exam-
+ple domain and our experiments demonstrate the effectiveness of kernel-based approaches
+to these problems. Convolution kernels combined with such techniques as kernel PCA and
+spectral clustering may provide a computationally attractive approach to many other prob-
+lems in natural language processing. Unfortunately, we are unable to expand on the many
+potential applications in this short note, however, many of these issues are spelled out in a
+longer Technical Report [5].
+

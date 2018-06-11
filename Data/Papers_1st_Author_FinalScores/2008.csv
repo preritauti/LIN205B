@@ -1,0 +1,515 @@
+sentence,yngve_score,frazier_score,dependency_distance_score
+"Log-linear and maximum-margin models are two commonly-used methods in supervised machine learning, and are frequently used in structured prediction problems.",3,0.6136363636363636,4
+"Efcient learning of parameters in these models is therefore an important problem, and becomes a key factor when learning from very large data sets.",3,0.8846153846153846,3
+"This paper describes exponentiated gradient (EG) algorithms for training such models, where EG updates are applied to the convex dual of either the log-linear or maxmargin objective function; the dual in both the log-linear and max-margin cases corresponds to minimizing a convex function with simplex constraints.",4,0.8235294117647058,4
+"We study both batch and online variants of the algorithm, and provide rates of convergence for both cases.",3,1.0,3
+"In the max-margin case, O( 1 e ) EG updates are required to reach a given accuracy e in the dual; in contrast, for log-linear models only O(log( 1 e )) updates are required.",4,0.8837209302325582,3
+"For both the max-margin and log-linear cases, our bounds suggest that the online EG algorithm requires a factor of n less computation to reach a desired accuracy than the batch EG algorithm, where n is the number of training examples.",3,0.8372093023255814,2
+Our experiments conrm that the online algorithms are much faster than the batch algorithms in practice.,2,0.9411764705882353,2
+"We describe how the EG updates factor in a convenient way for structured prediction problems, allowing the algorithms to be efciently applied to problems such as sequence learning or natural language parsing.",3,0.7941176470588235,3
+"We perform extensive evaluation of the algorithms, comparing them to L-BFGS and stochastic gradient descent for log-linear models, and to SVM-Struct for max-margin models.",3,0.8148148148148148,5
+The algorithms are applied to a multi-class problem as well as to a more complex large-scale parsing task.,2,0.6052631578947368,4
+"In all these settings, the EG algorithms presented here outperform the other methods.",3,0.6333333333333333,2
+"Structured prediction problems involve learning to map inputs x to labels y, where the labels have rich internal structure, and where the set of possible labels for a given input is typically exponential in size.",3,1.0,3
+Examples of structured prediction problems include sequence labeling and natural language parsing.,2,0.7307692307692307,2
+"Several models that implement learning in this scenario have been proposed over the last few years, including log-linear models such as conditional random elds (CRFs, Lafferty et al., 2001), and maximum-margin models such as maximum-margin Markov networks (Taskar et al., 2004a).",3,0.8137254901960784,6
+"For both log-linear and max-margin models, learning is framed as minimization of a regularized loss function which is convex.",3,1.0,3
+"In spite of the convexity of the objective function, nding the optimal parameters for these models can be computationally intensive, especially for very large data sets.",3,0.8448275862068966,3
+"This problem is exacerbated in structured prediction problems, where the large size of the set of possible labels adds an additional layer of complexity.",2,0.8846153846153846,3
+The development of efcient optimization algorithms for learning in structured prediction problems is therefore an important problem.,2,0.8333333333333334,2
+In this paper we describe learning algorithms that exploit the structure of the dual optimization problems for log-linear and max-margin models.,2,0.9772727272727273,3
+For both log-linear and max-margin models the dual problem corresponds to the minimization of a convex function Q subject to simplex constraints.,3,0.6739130434782609,3
+Thus each ui is constrained to form a distribution over the set of possible labels.,2,0.9375,2
+The max-margin and log-linear problems differ only in their denition of Q.,1,0.9583333333333334,2
+"The algorithms in this paper make use of exponentiated gradient (EG) updates (Kivinen and Warmuth, 1997) in solving the problem in Eq.",3,0.9642857142857143,3
+"1, in particular for the cases of log-linear or maxmargin models.",2,0,3
+"We focus on two classes of algorithms, which we call batch and online.",2,1.0666666666666667,2
+"In the batch case, the entire set of ui variables is updated simultaneously at each iteration of the algorithm; in the online case, a single ui variable is updated at each step.",4,0,3
+"The online case essentially corresponds to coordinate-descent on the dual function Q, and is similar to the SMO algorithm (Platt, 1998) for training SVMs.",3,0.7413793103448276,3
+"The online algorithm has the advantage of updating the parameters after every sample point, rather than after making a full pass over the training examples; intuitively, this should lead to considerably faster rates of convergence when compared to the batch algorithm, and indeed our experimental and theoretical results support this intuition.",4,0.6875,3
+"A different class of online algorithms consists of stochastic gradient descent (SGD) and its variants (e.g., see LeCun et al., 1998; Vishwanathan et al., 2006).",3,0.8676470588235294,2
+"We describe theoretical results concerning the convergence of the EG algorithms, as well as  experiments.",3,0.7941176470588235,3
+Our key results are as follows.,2,1.0,1
+"(cid.15) For the max-margin case, we show that O( 1  e ) time is required for both the online and batch algorithms to converge to within e of the optimal value of Q(u).",3,0.8571428571428571,4
+"This is qualitatively similar to recent results in the literature for max-margin approaches (e.g., see Shalev-Shwartz et al., 2007).",4,0.9375,4
+"For log-linear models, we show convergence rates of O(log( 1 e )), a signicant improvement over the max-margin case.",3,0.75,3
+"For both the max-margin and log-linear cases, our bounds suggest that the online algorithm requires a factor of n less computation to reach a desired accuracy, where n is the number of training examples.",3,0.8918918918918919,3
+Our experiments conrm that the online algorithms are much faster than the batch algorithms in practice.,2,0.9411764705882353,2
+We describe how the EG algorithms can be efciently applied to an important class of structured prediction problems where the set of labels Y is exponential in size.,2,0.9827586206896551,3
+"In this case the number of dual variables is also exponential in size, making algorithms which deal directly with the ui variables intractable.",3,1.08,2
+Following Bartlett et al.,1,1,2
+"(2005), we focus on a formulation where each label y is represented as a set of parts, for example corresponding to labeled cliques in a max-margin network, or context-free rules in a parse tree.",3,0.9125,5
+"Under an assumption that part-based marginals can be calculated efcientlyfor example using junction tree algorithms for CRFs, or the inside-outside algorithm for context-free parsingthe EG algorithms can be implemented efciently for both max-margin and log-linear models.",3,0.8157894736842105,4
+In our experiments we compare the online EG algorithm to various state-of-the-art algorithms.,2,0.6071428571428571,4
+"For log-linear models, we compare to the L-BFGS algorithm (Byrd et al., 1995) and to stochastic gradient descent.",3,0.717391304347826,3
+For max-margin models we compare to the SVM-Struct algorithm of Tsochantaridis et al.,2,0.8928571428571429,3
+(2004).,1,0,1
+"The methods are applied to a standard multi-class learning problem, as well as to a more complex natural language parsing problem.",3,0.5,4
+In both settings we show that the EG algorithm converges to the optimum much faster than the other algorithms.,2,0.75,2
+"In addition to proving convergence results for the denition of Q(u) used in max-margin and log-linear models, we give theorems which may be useful when optimizing other denitions of Q(u) using EG updates.",5,1.0731707317073171,3
+"In particular, we give conditions for convergence which depend on bounds relating the Bregman divergence derived from Q(u) to the Kullback-Leibler divergence.",3,1.037037037037037,3
+The rest of this paper is organized as follows.,2,1.1,1
+"In Section 2, we introduce the log-linear and max-margin learning problems, and describe their dual optimization problems.",4,0.475,5
+"Section 3 describes the batch and online EG algorithms; in Section 4, we describe how the algorithms can be efciently applied to structured prediction problems.",3,0.625,2
+Section 5 then gives convergence proofs for the batch and  online cases.,2,0.7307692307692307,2
+Section 6 discusses related work.,1,0.75,1
+"Sections 7 and 8 give experiments, and Section 9 discusses our results.",3,0,2
+This work builds on previous work described by Bartlett et al.,2,0.875,1
+(2005) and Globerson et al.,2,0,1
+(2007).,1,0,1
+Bartlett et al.,1,0,1
+"(2005) described the application of the EG algorithm to max-margin parameter estimation, and showed how the method can be applied efciently to part-based formulations.",3,0.8571428571428571,4
+Globerson et al.,1,0,1
+"(2007) extended the approach to log-linear parameter estimation, and gave new convergence proofs for both max-margin and log-linear estimation.",3,0.6739130434782609,5
+The work in the current paper gives several new results.,2,0.6818181818181818,2
+We prove rates of convergence for a randomized version of the EG online algorithm; previous work on EG algorithms had not given convergence rates for the online case.,3,0,2
+"We also report new experiments, including experiments with the randomized strategy.",2,1.0384615384615385,2
+"Finally, the O(log( 1 e )) convergence rates for the log-linear case are new.",4,0.775,3
+The results in Globerson et al.,1,0,1
+"(2007) gave O( 1 e ) rates for the batch algorithm for log-linear models, and did not give any theoretical rates of convergence for the online case.",4,0.828125,4
+In this section we present the log-linear and max-margin optimization problems for supervised learning.,3,0.5666666666666667,4
+"For each problem, we describe the equivalent dual optimization problem, which will form the core of our optimization approach.",3,0.7727272727272727,2
+"Consider a supervised learning setting with objects x 2 X and labels y 2 Y .2 In the structured learning setting, the labels may be sequences, trees, or other high-dimensional data with internal structure.",4,0.6842105263157895,3
+Assume we are given a function f(x; y) .,2,1.1538461538461537,3
+X (cid.2) Y !,2,0,1
+Rd that maps (x; y) pairs to feature vectors.,2,1.1153846153846154,2
+In this paper we will consider two denitions for (w; xi; yi).,2,0.7941176470588235,2
+"The rst denition, originally  introduced by Taskar et al.",2,0.7727272727272727,2
+"(2004a), is a variant of the hinge loss, and is dened as follows.",4,0.8888888888888888,3
+"In general the set of labels for a given example x may be a set Y (x) that depends on x; in fact, in our experiments on dependency parsing Y does depend on x.",2,1.0,3
+"For simplicity, in this paper we use the xed notation Y for all x; it is straightforward to extend our notation to the more general case.",3,0.7586206896551724,3
+Here e(xi; yi; y) is some non-negative measure of the error incurred in predicting y instead of yi as the label of xi.,2,1.0689655172413792,2
+"We assume that e(xi; yi; yi) = 0 for all i, so that no loss is incurred for correct prediction, and therefore MM(w; xi; yi) is always non-negative.",4,0.8902439024390244,5
+"The second loss function that we will consider is based on log-linear models, and is commonly used in conditional random elds (CRFs, Lafferty et al., 2001).",3,0.84375,4
+The function L is convex in w for both denitions MM and LL.,2,0.75,2
+"Furthermore, in both cases minimization of L can be re-cast as optimization of a dual convex problem.",2,0.868421052631579,3
+"The dual problems in the two cases have a similar structure, as we describe in the next two sections.",2,0.6666666666666666,2
+"This is a convex optimization problem, and has an equivalent convex dual which was derived by Lebanon and Lafferty (2002).",3,0.8333333333333334,3
+Denote the dual variables by ui;y where i = 1; .,2,1.0357142857142858,3
+.,0,1,0
+.,0,1,0
+; n and y 2 Y .,1,0,1
+"We also use u to denote the set of all variables, and ui the set of all variables corresponding to a given i.",2,0.9583333333333334,2
+The minimum of D-MM is equal to (cid.0)1 times the minimum of P-MM.,2,0.8611111111111112,2
+(Note that for D-MM the minimizer u(cid.3) may not be unique; in this case we take u(cid.3) to be any member of the set of minimizers of QMM(u)).,3,1.0348837209302326,3
+"The optimal primal parameters are again related to the optimal dual parameters, through Cw(cid.3) = w(u(cid.3)).",3,0.6379310344827587,3
+Here again the constraints are that ui is a distribution over Y for all i.,1,1.2666666666666666,1
+"It can be seen that the D-LL and D-MM problems have a similar structure, in that they both involve minimization of a convex function Q(u) over the set D n. This will allow us to describe algorithms for both problems using a common framework.",4,0.7571428571428571,4
+In this section we describe batch and online algorithms for minimizing a convex function Q(u) subject to the constraints u 2 D n. The algorithms can be applied to both the D-LL and D-MM optimization problems that were introduced in the previous section.,2,0.8703703703703703,5
+"The algorithms we describe are based on exponentiated gradient (EG) updates, originally introduced by Kivinen and Warmuth (1997) in the context of online learning algorithms.3   3.",2,0.9090909090909091,2
+"Kivinen and Warmuth (1997) study the online setting, as opposed to a xed data set which we study here.",3,0.9130434782608695,2
+"They are thus not interested in minimizing a xed objective, but rather study regret type bounds.",2,0.7222222222222222,3
+This leads to algorithms and theoretical analyses that are different from the ones considered in the current work.,2,1.0526315789473684,2
+Pseudo-code for the two schemes is given in Figures 1 and 2.,2,0.7307692307692307,2
+"From here on we will refer to the batch and online EG algorithms applied to the log-linear dual as LLEG-Batch, and LLEG-Online respectively.",5,0,4
+"Similarly, when applied to the max-margin dual, they will be referred to as MMEGBatch and MMEG-Online.",3,0.9210526315789473,4
+Note that another plausible online algorithm would be a deterministic algorithm that repeatedly cycles over the training examples in a xed order.,2,0.8913043478260869,4
+"The motivation for the alternative, randomized, algorithm is two-fold.",4,0.7916666666666666,3
+"First, we are able to prove bounds on the rate of convergence of the randomized algorithm; we have not been able to prove similar bounds for the deterministic variant.",3,0.9375,2
+"Second, our experiments show that the randomized variant converges signicantly faster than the deterministic algorithm.",2,0.9411764705882353,2
+"The EG online algorithm is essentially performing coordinate descent on the dual objective, and is similar to SVM algorithms such as SMO (Platt, 1998).",3,0.7068965517241379,2
+"For binary classication, the exact minimum of the dual objective with respect to a given coordinate can be found in closed form,4 and more complicated algorithms such as the exponentiated-gradient method may be unnecessary.",4,0.7162162162162162,4
+"However for multi-class or structured problems, the exact minimum with respect to a coordinate ui (i.e., a set of jY j dual variables) cannot be found in closed form.",3,0.7285714285714285,5
+this is a key motivation for the use of EG algorithms in this paper.,2,0.9,2
+In Section 5 we give convergence proofs for the batch and online algorithms.,2,0.6785714285714286,2
+"The techniques used in the convergence proofs are quite general, and could potentially be useful in deriving EG algorithms for convex functions Q other than QLL and QMM.",2,0.8,2
+"Before giving convergence results for the algorithms, we describe in the next section how the EG algorithms can be applied to structured problems.",3,0.86,2
+"We now describe how the EG updates can be applied to structured prediction problems, for example parameter estimation in CRFs or natural language parsing.",2,0.8076923076923077,3
+"In structured problems the label set Y is typically very large, but labels can have useful internal structure.",3,0.725,2
+"As one example, in CRFs each  4.",2,1,2
+This is true for the max-margin case.,1,0.8125,3
+"For log-linear models, minimization with respect to a single coordinate is a  little more involved.",2,0.8529411764705882,3
+We follow the framework for structured problems described by Bartlett et al.,2,0.9615384615384616,2
+(2005).,1,0,1
+Each label y is dened to be a set of parts.,2,1.0,2
+We use R to refer to the set of all possible parts.5 We make the assumption that the feature vector for an entire label y decomposes into a sum over feature vectors for individual parts as follows.,2,1.0128205128205128,2
+"Note that we have overloaded f to apply to either labels y or parts r.  As one example, consider a CRF which has an underlying graph with m nodes, and a maximum clique size of 2.",2,1.03125,7
+"Assume that each node can be labeled with one of two labels, 0 or 1.",2,1.0,2
+In this case the labeling of an entire graph is a vector y 2 f0;1gm.,3,0.75,2
+"Each possible input x is usually a vector in X m for some set X , although this does not have to be the case.",3,0.8269230769230769,3
+"Each part corresponds to a tuple (u; v; yu; yv) where (u; v) is an edge in the graph, and yu; yv are the labels for the two vertices u and v. The feature vector f(x; r) can then track any properties of the input x together with the labeled clique r = (u; v; yu; yv).",4,0.8488372093023255,7
+"In CRFs with clique size greater than 2, each part corresponds to a labeled clique in the graph.",3,0.775,2
+"In natural language parsing, each part can correspond to a context-free rule at a particular position in the sentence x (see Bartlett et al., 2005; Taskar et al., 2004b, for more details).",4,0.7875,4
+The label set Y can be extremely large in structured prediction problems.,2,0.8076923076923077,2
+"For example, in a CRF with an underlying graph with m nodes and k possible labels at each node, there are km possible labelings of the entire graph.",4,0.7258064516129032,4
+The algorithms we have presented so far require direct manipulation of dual variables ui;y corresponding to each possible labeling of each training example; they will therefore be intractable in cases where there are an exponential number of possible labels.,3,0.9069767441860465,2
+"However, in this section we describe an approach that does allow an efcient implementation of the algorithms in several cases.",2,0.9545454545454546,2
+The approach is based on the method originally described in Bartlett et al.,2,0.8928571428571429,2
+(2005).,1,0,1
+The key idea is as follows.,2,1.0,1
+"Instead of manipulating the dual variables ui for each i directly, we will make use of alternative data structures si for all i.",3,0.9791666666666666,2
+"Each si is a vector of real values si;r for all r 2 R. In general we will assume that there are a tractable (polynomial) number of possible parts, and therefore that the number of si;r variables is also polynomial.",2,0.7352941176470589,9
+"For example, for a linear chain CRF with m nodes and k labels at every node, each part takes the form r = (u; v; yu; yv), and there are (m (cid.0) 1)k2 possible parts.",6,0.64,5
+"For example, when Y is a sequence of variables, the cost could be the Hamming distance between the correct sequence yi and the predicted sequence y; it is straightforward to decompose the Hamming distance as a sum over parts as shown above.",4,0.8478260869565217,2
+"For brevity, in what follows we use ei;r instead of e(xi; yi; r).",3,1.0909090909090908,2
+"Notice that, for both objective functions, the gradients can be expressed as a sum over parts.",2,0.8157894736842105,4
+"For the QLL objective function, this follows from the fact that ui = p(si) and from the assumption that the feature vector decomposes into parts.",3,0.7666666666666667,3
+"For the QMM objective, it follows from the latter, and the assumption that the loss decomposes into parts.",3,0.7619047619047619,2
+"The following lemma describes how EG updates on the u variables can be restated in terms of updates to the s variables, provided that the gradient decomposes into parts in this way.",3,1.0,3
+6.,0,1,0
+"Note that in the max-margin case, the optimal u values may have zero probabilities which correspond to innite s values.",2,0.9545454545454546,4
+"This does not pose a problem, since the algorithm will indeed converge to innite s values at the limit, but st will not be innite for any nite t. For the log-linear case, the optimal u will never have zero values, as shown in Globerson et al.",3,0.8076923076923077,3
+(2007).,1,0,1
+The main computational challenge in the new algorithms comes in computing the parameter vector w(p(st)).,3,0.7272727272727273,2
+"The value for w(p(st)) can be expressed as a function of the marginal probabilities of the part variables, as follows.",3,0.8928571428571429,2
+The mapping from parameters st i) can be computed efciently in several important cases of structured models.,2,1.0526315789473684,2
+"For example, in CRFs belief propagation can be used to efciently calculate the marginal values, assuming that the tree-width of the underlying graph is small.",3,0.9285714285714286,3
+"In weighted context-free grammars the inside-outside algorithm can be used to calculate marginals, assuming that the set of parts R corresponds to context-free rule productions.",2,0.8888888888888888,4
+"Once marginals are computed, it is straightforward to compute w(p(st)) and thereby implement the part-based EG algorithms.",3,0.94,3
+"In this section, we provide convergence results for the EG batch and online algorithms presented in Section 3.",3,0.775,2
+"Section 5.1 provides the key results, and the following sections give the proofs and the technical details.",3,0,2
+"Our convergence results give bounds on how quickly the error jQ(u)(cid.0)Q(u(cid.3))j decreases with respect to the number of iterations, T , of the algorithms.",3,0.9047619047619048,1
+In all cases we have jQ(u) (cid.0) Q(u(cid.3))j !,3,0.8913043478260869,0
+0 as T !,1,1,1
+ .,0,1,1
+In what follows we use D[pkq] to denote the KL divergence between p;q 2 D n (see Section 5.2).,3,1.0925925925925926,2
+"We also use jAj to denote the maximum magnitude element of A (i.e., jAj = max(i;y);( j;z) jA(i;y);( j;z)j).",6,1.2619047619047619,2
+"The rst theorem provides results for the EG-batch algorithms, and the second for the randomized online algorithms.",3,0,3
+"The randomized online algorithm will produce different results at every run, since different points will be processed on different runs.",2,0.9090909090909091,3
+Our main result for this algorithm characterizes the mean value of the objective Q(uT +1) when averaged over all possible random orderings of points.,3,0.8214285714285714,2
+The result implies that this mean will converge to the optimal value Q(u(cid.3)).,2,0.8095238095238095,2
+"The above result characterizes the average behavior of the randomized algorithm, but does not provide guarantees for any specic run of the algorithm.",3,0.78,3
+"However, by applying the standard approach of repeated sampling (see, for example, Mitzenmacher and Upfal, 2005; Shalev-Shwartz et al., 2007), one can obtain a solution that, with high probability, does not deviate by much from the average behavior.",4,0.82,5
+"In what follows, we briey outline this derivation.",2,1.25,2
+"Thus, for any desired condence 1 (cid.0) d , we can obtain a solution that is within a factor of 2 of the bound for T iterations in Theorem 2 by using T log2( 1 d ) iterations.",3,0.9204545454545454,3
+"In our experiments, we found that repeated trials of the randomized algorithm did not yield signicantly different results.",2,0.95,3
+The rst consequence of the two theorems above is that the batch and randomized online algorithms converge to a u with the optimal value Q(u(cid.3)).,3,0.7424242424242424,3
+This follows since Equations 6 and 7 imply that as T !,2,1.0833333333333333,3
+  the value of Q(uT +1) approaches Q(u(cid.3)).,3,0.8611111111111112,1
+"Crucially, note that these rates suggest that the online algorithms are signicantly more efcient than the batch algorithms; specically, the bounds suggest that the online algorithms require a factor of n less computation in both the QLL and QMM cases.",3,0.75,3
+Thus these results suggest that the randomized online algorithm should converge much faster than the batch algorithm.,2,0.9444444444444444,2
+"Roughly speaking, this is a direct consequence of the learning rate h being a factor of n larger in the online case (see also Section 9).",3,0.7833333333333333,2
+"This prediction is conrmed in our empirical evaluations, which show that the online algorithm is far more efcient than the batch algorithm.",2,0.8541666666666666,2
+"To gain further intuition into the order of magnitude of iterations required, note that the factor D[u(cid.3)ku1] which appears in the above expressions is at most nlog jY j, which can be achieved by i to be the uniform distribution over Y for all i.",2,0.9636363636363636,2
+In the remainder of this section we give proofs of the results in Theorems 1 and 2.,2,0.8611111111111112,2
+"In doing so,  we also give theorems that apply to the optimization of general convex functions Q .",2,1.1842105263157894,2
+D n !,1,0,1
+R.  8.,1,1,2
+"Note that if we run the batch algorithm for T iterations (as in the gure), nT training examples are processed.",4,0.8958333333333334,5
+"In contrast, running the online algorithm for T iterations (again, as shown in the gure) only requires T training examples to be processed.",4,0.8571428571428571,4
+It is important to take this into account when comparing the rates in Theorems 1 and 2; this is the motivation for measuring computation in terms of the number of examples that are processed.,3,1.1111111111111112,2
+In this section we provide a useful lemma that determines when the EG updates in the batch algorithm will result in monotone improvement of Q(u).,2,0.9827586206896551,2
+The lemma requires a condition on the relation between the Bregman and KL divergences which we dene as follows (the second part of the denition will be used in the next section).,3,0.8857142857142857,3
+"The previous section showed that for appropriate choices of the learning rate h , the batch EG updates are guaranteed to improve the QLL and QMM loss functions at each iteration.",3,0.640625,4
+"In this section we build directly on these results, and address the following question.",3,0.71875,3
+how many iterations does the batch for a given e > 0?,2,1.1923076923076923,2
+"We show that as long as EG algorithm require so that the jQ(ut) (cid.0) Q(u)j (cid.20) e Q(u) is t -upper-bounded, the number of iterations required is O( 1 e ).",4,1.0294117647058822,5
+This bound thus holds for both the log-linear and max-margin batch algorithms.,3,0.7692307692307693,5
+"Next, we show that if Q(u) is (;t )-bounded, the rate can be signicantly improved to requiring O(log( 1 e )) iterations.",3,0.9166666666666666,3
+"We conclude by showing that QLL(u) is (;t )-bounded, implying that the O(log( 1  e )) rate holds for LLEG-Batch.",3,0.9242424242424242,4
+The idea of solving regularized loss-minimization problems via their convex duals has been addressed in several previous papers.,2,0.8947368421052632,2
+"Here we review those, specically focusing on the log-linear and max-margin problems.",2,0.75,4
+"Zhang (2002) presented a study of convex duals of general regularized loss functions, and provided a methodology for deriving such duals.",3,0.96,3
+He also considered a general procedure for solving such duals by optimizing one coordinate at a time.,2,0.9722222222222222,2
+"However, it is not clear how to implement this procedure in the structured learning case (i.e., when jY j is large), and convergence rates are not given.",4,0.9393939393939394,4
+"In the specic context of log-linear models, several papers have addressed dual optimization.",3,0.7,2
+"Earlier work (Jaakkola and Haussler, 1999; Keerthi et al., 2005; Zhu and Hastie, 2001) treated the logistic regression model, a simpler version of a CRF.",4,0.75,3
+"In the binary logistic regression case, there is essentially one parameter ui per example with the constraint 0 (cid.20) ui (cid.20) 1, and therefore simple linesearch methods can be used for optimization.",5,0.6951219512195121,2
+Minka (2003) presents empirical results which show that this approach performs similarly to conjugate gradient.,2,1.1388888888888888,2
+"The problem becomes much harder when ui is constrained to be a distribution over many labels, as in the case discussed here.",3,1.0208333333333333,2
+"Recently, Memisevic (2006) addressed this setting, and suggests optimizing ui by transferring probability mass between two labels y1; y2 while keeping the distribution normalized.",2,0.95,3
+"This requires a strategy for choosing these two labels, and the author suggests one which seems to perform well.",3,0.9761904761904762,2
+"While some previous work on log-linear models proved convergence of dual methods (e.g., Keerthi et al., 2005), we are not aware of rates of convergence that have been reported in this context.",4,0.9868421052631579,3
+"Convergence rates for related algorithms, in particular a generalization of EG, known as the Mirror-Descent algorithm, have been studied in a more general context in the optimization literature.",3,0.703125,3
+"For instance, Beck and Teboulle (2003) describe convergence results which apply to quite general denitions of Q(u), but which have only O( 1 e 2 ) convergence rates, as compared to our results of O( 1 e )) for the max-margin and log-linear cases respectively.",5,1.0350877192982457,5
+"Also, their work considers optimization over a single simplex, and does not consider online-like algorithms such as the one we have presented.",3,0.8,3
+"For max-margin models, numerous dual methods have been suggested, an earlier example being the SMO algorithm of Platt (1998).",2,0.75,2
+"Such methods optimize subsets of the u parameters in the dual SVM formulation (see also Crammer and Singer, 2002).",3,0.8260869565217391,3
+"Analysis of a similar algorithm (Hush et al., 2006) results in an O( 1 e ) rate, similar to the one we have here.",3,0.9333333333333333,3
+Another algorithm for solving SVMs via the dual is the multiplicative update method of Sha et al.,2,1.3055555555555556,2
+(2007).,1,0,1
+"These updates are shown to converge to the optimum of the SVM dual, but convergence rate has not been analyzed, and extension to the structured case seems non-trivial.",4,0.7258064516129032,3
+An application of EG to binary SVMs was previously studied by Cristianini et al.,2,0.9666666666666667,2
+(1998).,1,0,1
+"They show convergence rates of O( 1 e 2 ), that are slower than our O( 1  e ), and no extension to structured learning (or multi-class) is discussed.",4,0.9583333333333334,4
+"Recently, several new algorithms have been presented, along with a rate of convergence analysis (Joachims, 2006; Shalev-Shwartz et al., 2007; Teo et al., 2007; Tsochantaridis et al., 2004; Taskar et al., 2006).",5,0.8369565217391305,3
+All of these algorithms are similar to ours in having a relatively low dependence on n in terms of memory and computation.,2,0.9565217391304348,2
+"Among these, Shalev-Shwartz et al.",1,1,2
+"(2007), Teo et al.",2,0,1
+(2007) and Taskar et al.,2,0,1
+"(2006) present an O( 1 e ) rate, but where accuracy is measured in the primal or via the duality gap, and not in the dual as in our analysis.",5,1.1666666666666667,4
+"Thus, it seems that a rate of O( 1 e ) is currently the best known result for algorithms that have a relatively low dependence on n (general QP solvers, which may have O(log( 1 e )) behavior, generally have a larger dependence on n, both in time and space).",3,0.9435483870967742,5
+"Note that, as in our analysis, all these convergence rates depend on jAj  .",3,0.875,4
+"Finally, we emphasize again that the EG algorithm is substantially different from stochastic gradient and stochastic subgradient approaches (LeCun et al., 1998; Nedic and Bertsekas, 2001; Shalev-Shwartz et al., 2007; Vishwanathan et al., 2006).",4,0.7777777777777778,4
+EG and stochastic gradient methods are similar in that they both process a single training example at a time.,2,0.85,2
+"However, EG corresponds to block-coordinate descent in the dual, and uses the exact gradient with respect to the block being updated.",3,0.8125,3
+"In contrast, stochastic gradient methods directly optimize the primal problem, and at each update use a single example to approximate the gradient (or subgradient) of the primal objective function.",3,0.7205882352941176,3
+In this section we analyze the performance of the EG algorithms for optimization of regularized log-likelihood.,2,1.0,2
+We describe experiments on two tasks.,1,1.0714285714285714,1
+"rst, the MNIST digit classication task, which is a multiclass classication task; second, a log-linear model for a structured natural-language dependency-parsing task.",4,0.5740740740740741,5
+"In each case we rst give results for the EG method, and then compare  We do not report results on LLEG-Batch, since we found it to converge much more slowly than the online algorithm.",3,0.918918918918919,3
+"This is expected from our theoretical results, which anticipate a factor of n speed-up for the online algorithm.",2,0.95,2
+"We also report experiments comparing the randomized online algorithm to a deterministic online EG algorithm, where samples are drawn in a xed order (e.g., the algorithm rst visits the rst example, then the second, etc.).",3,0.8214285714285714,2
+"Although EG is guaranteed to converge for an appropriately chosen h  , it turns out to be benecial to use an adaptive learning rate.",3,1.02,2
+Here we use the following simple strategy.,2,0.6875,2
+"we rst consider only 10% of the data-set, and nd a value of h that results in monotone improvement for at least 95% of the samples.",3,0.9666666666666667,3
+Denote this value by h ini (for the experiments in Section 7.1 we simply use ini = 0.5).,2,1.0952380952380953,2
+"For learning over the entire data-set, we keep a learning rate h i for each sample i (where i = 1; .",3,0.94,4
+.,0,1,0
+.,0,1,0
+"; n), and initialize this rate to h i until an improvement in the objective is obtained.",2,0.95,3
+"Finally, after the update, we multiply h i by 1.05, so that it does not decrease monotonically.",2,0.9285714285714286,3
+"It is important that when updating a single example using the online algorithms, the improvement (or decrease) in the dual can be easily evaluated, allowing the halving strategy described in the previous paragraph to be implemented efciently.",3,0.9523809523809523,4
+"The primal parameters w(u) are maintained throughout the algorithm (see Figure 3), so that this change in the dual objective can be calculated efciently.",2,0.8548387096774194,3
+A similar method can be used to calculate the change in the dual objective in the max-margin case.,2,0.7894736842105263,2
+"We measure the performance of each training algorithm (the EG algorithms, as well as the batch gradient and stochastic gradient methods) as a function of the amount of computation spent.",3,0.7647058823529411,2
+"Specically, we measure computation in terms of the number of times each training example is visited.",2,1.1111111111111112,2
+"For EG, an example is considered to be visited for every value of h that is tested on it.",2,1.119047619047619,2
+"For L-BFGS, all examples are visited for every evaluation performed by the line-search routine.",2,0.78125,3
+"We dene the measure of effective iterations to be the number of examples visited, divided by n. In the following sections we compare the algorithms in terms of their performance as a function of the effective number of iterations.",2,1.105263157894737,4
+A comparison in terms of running time is provided in Appendix F; there is little difference between the timed comparisons and the results presented in this section.,3,0.8793103448275862,2
+We rst conducted multi-class classication experiments on the MNIST classication task.,2,0.625,2
+Examples in this data set are images of handwritten digits represented as 784-dimensional vectors.,2,0.9666666666666667,2
+"We used a training set of 59k examples, and a validation set of 10k examples.11 Note that since we  10.",4,0.8913043478260869,3
+"We also experimented with conjugate gradient algorithms, but since these resulted in worse performance than L BFGS, we do not report these results here.",3,0.7222222222222222,3
+11.,0,1,0
+"In reporting results, we consider only validation error; that is, error computed during the training process on a validation set.",3,0.75,2
+"This measure is often used in early-stopping of algorithms, and is therefore of interest in the current context.",3,0.875,3
+We do not report test error since our main focus is algorithmic.,2,0.8461538461538461,2
+"Models were trained for various values of the regularization parameter C. specically, we tried values of C equal to 1000, 100, 10, 1, 0.1, and 0.01.",4,0.8636363636363636,3
+"Convergence of the EG algorithm for low values of C (i.e., 0.1 and 0.01) was found to be slow; we discuss this issue more in Section 7.1.1, arguing that it is not a serious problem.",4,0.8658536585365854,3
+"Figure 4 shows plots of the validation error versus computation for C equal to 1000, 100, 10, and 1, when using the EG algorithm.",3,0.9137931034482759,3
+"For C equal to 10 or more, convergence is fast.",3,1.0,1
+For C = 1 convergence is somewhat slower.,2,0.7222222222222222,1
+Note that there is little to choose between C = 10 and C = 1 in terms of validation error.,2,1.2619047619047619,3
+"Figure 5 shows plots of the primal and dual objective functions for different values of C. To obtain the primal objective values, we used the EG weight vector 1 C w(ut).",5,0.6666666666666666,3
+"Note that EG does not explicitly minimize the primal objective function, so the EG primal will not necessarily decrease at every iteration.",3,0.6041666666666666,3
+"Nevertheless, our experiments show that the EG primal decreases quite quickly.",2,0.6538461538461539,2
+Figure 6 shows how the duality gap decreases with the amount of computation spent (the duality gap is the difference between the primal and dual values at each iteration).,3,0.8125,3
+"The log of the duality gap decreases more-or-less linearly with the amount of computation spent, as predicted by the O(log( 1 e )) bounds on the rate of convergence.12  Finally, we compare the deterministic and randomized versions of the EG algorithm.",4,0.8367346938775511,4
+Figure 7 shows the primal and dual objectives for both algorithms.,2,0.625,2
+It can be seen that the randomized algorithm is clearly much faster to converge.,2,1.2333333333333334,2
+"This is even more evident when plotting the duality gap, which converges much faster to zero in the case of the randomized algorithm.",2,1.12,2
+"These results give empirical evidence that the randomized strategy is to be preferred over a xed ordering of the training examples (note that we have been able to prove bounds on convergence rate for the randomized algorithm, but have not been able to prove similar bounds for the deterministic case).",3,1.0185185185185186,4
+"As mentioned in the previous section, convergence of the EG algorithm for low values of C can be very slow.",3,0.9090909090909091,2
+"This is to be expected from the bounds on convergence, which predict that convergence time should scale linearly with 1 C (other algorithms, e.g., see Shalev-Shwartz et al., 2007, also require O( 1 C ) time for convergence).",3,1.0851063829787233,3
+"This is however, not a serious problem on the MNIST data, where validation error has reached a minimum point for around C = 10 or C = 1.",3,0.9032258064516129,3
+"If convergence for small values of C is required, one strategy we have found effective is to start C at a higher value, then anneal it towards the target value.",3,1.1363636363636365,3
+"For example, see Figure 8 for results for C = 1 using one such annealing scheme.",2,1.0,3
+"For this experiment, if we take t to be the number of iterations over the training set, where for any t we have processed t (cid.2) n training examples, we set C = 10 for t (cid.20) 5, and set C = 1 + 9 (cid.2) 0.7t(cid.0)5 for t > 5.",5,1.0140845070422535,4
+"Thus C starts at 10, then decays exponentially quickly towards the target value of 1.",3,1.0294117647058822,2
+It can be seen that convergence is signicantly faster for the annealed method.,2,1.0,2
+The intuition behind this method is that the solution to the dual problem for  12.,2,0.78125,2
+"The rate results presented in this paper are for dual accuracy, but it is straightforward to obtain an O(log( 1e )) for the  duality gap in the log-linear case.",3,0.7,3
+Figure 4.,1,1,1
+Validation error results on the MNIST learning task for log-linear models trained using the EG randomized online algorithm.,2,1.0789473684210527,2
+The X axis shows the number of effective iterations over the entire data set.,2,0.7,2
+The Y axis shows validation error percentages.,2,0.5625,1
+"The left gure shows plots for values of C equal to 1, 10, 100, and 1000.",2,0.85,2
+The right gure shows plots for C equal to 1 and 10 at a larger scale.,2,0.7941176470588235,2
+"C = 10 is a reasonable approximation to the solution for C = 1, and is considerably easier to solve; in the annealing strategy we start with an easier problem and then gradually move towards the harder problem of C = 1.",4,0.8555555555555555,3
+"In practice, when estimating parameters using either regularized log-likelihood or hinge-loss, a range of values for C are tested, with cross-validation or validation on a held-out set being used to choose the optimal value of C. In the previously described experiments, we independently optimized log-likelihood-based models for different values of C. In this section we describe a highly efcient method for training a sequence of models for a range of values of C.  The method is as follows.",3,0.9,6
+"We pick some maximum value for C; as in our previous experiments, we will choose a maximum value of C = 1000.",3,0,3
+"We also pick a tolerance value e , and a parameter 0 < v < 1.",3,0,2
+"We then optimize C using the randomized online algorithm, until the duality gap is less than e (cid.2) p, where p is the primal value.",2,1.032258064516129,3
+"Once the duality gap has converged to within this e tolerance, we reduce C by a factor of v, and again optimize to within an e tolerance.",4,1.1166666666666667,3
+"We continue this strategyfor each value of C optimizing to within a factor of e , then reducing C by a factor of vuntil C has reached a low enough value.",3,1.078125,5
+"At the end of the sequence, this method recovers a series of models for different values of C, each optimized to within a tolerance of e .",3,1.0344827586206897,2
+"It is crucial that each time we decrease C, we take our initial dual values to be the nal dual values resulting from optimization for the previous value of C. In practice, if C does not decrease too quickly, the previous dual values are a very good starting point for the new value of C; this corresponds to a warm start in optimizing values of C that are less than the maximum value.",3,0.84375,7
+Figure 5.,1,1,1
+Primal and dual objective values on the MNIST learning task for log-linear models trained using the EG randomized online algorithm.,3,0.8571428571428571,2
+The dual values have been negated so that the primal and dual problems have the same optimal value.,2,0.5789473684210527,3
+The X axis shows the number of effective iterations over the entire data set.,2,0.7,2
+The Y axis shows the value of the primal or dual objective functions.,2,0.5357142857142857,2
+"The left gure shows plots for values of C equal to 1000 and 100; the right gure shows plots for C equal to 10, and 1.",3,0.8448275862068966,2
+"In all cases the primal and dual objectives converge to the same value, with faster convergence for larger values of C.  similar initialization method is used in Koh et al.",3,0.6875,3
+(2007) in the context of 1 regularized logistic regression.,2,0.9583333333333334,2
+"As one example of this approach, we trained models in this way with the starting (maximum) value of C set to 1000, e set to 0.001 (i.e., 0.1%), and v set to 0.7.",4,0.872093023255814,4
+Table 2 shows the number of iterations of training required for each value of C. The benets of using the previous dual values at each new value of C are clear.,2,1.09375,3
+for 13.84 (cid.20) C (cid.20) 700 at most 5 iterations are required for convergence; even for C = 0.798 only 15.24 iterations are required; a range of 25 different values of C between 1000 and 0.274 can be optimized with 211.17 effective iterations over the training set.,5,0,3
+This section compares performance of the EG algorithms to stochastic gradient descent (SGD) on the primal objective.,2,0.775,2
+In SGD the parameters w are initially set to be 0.,2,1.0,2
+"At each step an example index i is chosen at random, and the following update is performed.",4,0.8157894736842105,2
+Table 2.,1,1,1
+"Table showing number of effective iterations required to optimize a sequence of values for C for the MNIST task, using the method described in Section 7.1.2.",3,1.0535714285714286,3
+The column C shows the sequence of decreasing regularizer constants.,2,0.6818181818181818,1
+"Iterations shows the number of effective iterations over the training set required to optimized each value of C. Total iterations shows the cumulative value of Iterations, and Error shows the validation error obtained for every C value.",4,0.8461538461538461,4
+It can be seen that the optimal error is reached at C = 1.62841.,2,1.0666666666666667,2
+Figure 6.,1,1,1
+Graph showing the duality gap on the MNIST learning task for log-linear models trained using the EG randomized online algorithm.,2,0.9523809523809523,2
+The X axis shows the number of effective iterations over the entire data set.,2,0.7,2
+"The Y axis (with a log scale) shows the value of the duality gap, as a percentage of the nal optimal value.",3,0.6346153846153846,3
+Thus the learning rate decays to 0 with the number of examples that are updated.,2,1.15625,2
+This follows the approach described in LeCun et al.,2,0.95,2
+"(1998); we have consistently found that it performs better than using a single, xed learning rate.",2,0.8809523809523809,2
+"We tested SGD for C values of 1000, 100, 10, 1, 0.1 and 0.01.",4,0.7631578947368421,2
+In each case we chose the value of h 0 as follows.,2,1.0,2
+"For each value of C we rst tested values of h 0 equal to 1, 0.1, 0.01, 0.001, and 0.0001, and then chose the value of h 0 which led to the best validation error after a single iteration of SGD.",3,0.8191489361702128,4
+"This strategy resulted in a choice of h 0 = 0.01 for all values of C except C = 1000, where h 0 = 0.001 was chosen.",4,1.0,3
+"We have found this strategy to be a robust method for choosing h 0 (note that we do not want to run SGD for more than one iteration with all (C;h 0) combinations, since each iteration is costly).",3,1.0,4
+Figure 9 compares validation error rates for SGD and the randomized EG algorithm.,2,0.8928571428571429,1
+"For the initial (roughly 5) iterations of training, SGD has better validation error scores, but beyond this the EG algorithm is very competitive on this task.",5,0,3
+Note that the amount of computation for SGD does not include the iterations required to nd the optimal value of h 0; if this computation was included the SGD curves would be shifted 5 iterations to the right.,2,0.9875,3
+Figure 7.,1,1,1
+"Results on the MNIST learning task, comparing the randomized and deterministic online EG algorithms, for C = 1.",3,0,2
+The left gure shows primal and dual objective values for both algorithms.,2,0.5769230769230769,2
+The right gure shows the normalized value of the duality gap.,2,0.875,2
+"(primal(t) (cid.0) dual(t))=opt, where opt is the value of the joint optimum of the primal and dual problems, and t is the iteration number.",6,0.675,2
+The X axis counts the number of effective iterations over the entire data set.,2,0.7,2
+Figure 8.,1,1,1
+"Results on the MNIST learning task, for C = 1, comparing the regular EG randomized algorithm with an annealed version of the algorithm (see Section 7.1.1).",3,0.9193548387096774,3
+The left gure shows primal objective values calculated for C = 1; the right gure shows validation error.,3,0,1
+The annealed strategy gives signicantly faster convergence.,2,0.6875,1
+Figure 9.,1,1,1
+"Graphs showing validation error results on the MNIST learning task, comparing the EG randomized algorithm to stochastic gradient descent (SGD).",2,0.9583333333333334,3
+"The X axis shows number of effective training iterations, the Y axis shows validation error in percent.",3,0,2
+"The EG results are shown for C = 10; SGD results are shown for several values of C. For SGD for C = 1, C = 0.1, and C = 0.01 the curves were nearly identical, hence we omit the curves for C = 1 and C = 0.1.",6,0,2
+Note that the amount of computation for SGD does not include the iterations required to nd the optimal value for the learning rate h 0.  strategy for choosing h 0 does not pick the optimal value for h 0 at least when evaluating the primal objective; see the caption to the gure for more discussion.,2,0.9807692307692307,6
+EG again appears to out-perform SGD after the initial few iterations.,2,0.9166666666666666,3
+"One of the standard approaches to training log-linear models is using the L-BFGS gradient-based algorithm (Sha and Pereira, 2003).",2,0.8478260869565217,3
+"L-BFGS is a batch algorithm, in the sense that its updates require evaluating the primal objective and gradient, which involves iterating over the entire data-set.",2,0.9464285714285714,3
+"To compare L-BFGS to EG, we used the implementation based on Byrd et al.",2,0,2
+"(1995).13  For L-BFGS, a total of n training examples must be processed every time the gradient or objective function is evaluated; note that because L-BFGS uses a line search, each iteration may involve several such evaluations.14  13.",5,0.9333333333333333,4
+"Specically, we used the code by Zhu, Byrd, Lu, and Nocedal (www.ece.northwestern.edu/(cid.24)nocedal/) with L. Stewarts wrapper (www.cs.toronto.edu/(cid.24)liam/).",3,0.44642857142857145,3
+"In all the experiments, we used 10 pairs of saved gradient vectors (see also Sha and Pereira, 2003).",3,0.8695652173913043,3
+14.,0,1,0
+The implementation of L-BFGS that we use requires both the gradient and objective when performing the line-search.,2,1.0833333333333333,3
+"In some line-search variants, it is possible to use only objective evaluations.",2,0.7857142857142857,3
+"In this case, the EG line search will be somewhat more costly, since the dual objective requires evaluations of both marginals and partition function, whereas the primal objective only requires the partition function.",3,0.6081081081081081,3
+"This will have an effect on running times only if the EG line search evaluates more than one point, which happened for less than 10%.",2,0.9285714285714286,3
+Figure 10.,1,1,1
+"Graphs showing primal objective values on the MNIST learning task, comparing the EG randomized algorithm to stochastic gradient descent (SGD).",2,0.875,3
+"The X axis shows number of effective training iterations, the Y axis shows primal objective.",3,0,2
+"The graphs are for C equal to 1000, 100, 10, and 1.",2,0.71875,2
+For C = 1 we show EG results with and without the annealed strategy described in Section 7.1.1.,2,1.105263157894737,2
+"For C = 1 we also show two SGD curves, for learning rates 0.01 and 0.1. in this case h 0 = 0.01 was the best-performing learning rate after one iteration for both validation error and primal objective, however a post-hoc analysis shows that h 0 = 0.1 converges to a better value in the limit.",3,0.9444444444444444,10
+"Thus our strategy for choosing h 0 was not optimal in this case, although it is difcult to know how h 0 = 0.1 could be chosen without post-hoc analysis of the convergence for the different values of h 0.",2,1.0357142857142858,3
+For other values of C our strategy for picking h 0 was more robust.,2,1.0,2
+Figure 11.,1,1,1
+"Results on the MNIST learning task, comparing the EG algorithm to L-BFGS.",2,0.8928571428571429,3
+"The gures on the rst and second row show the primal objective for both algorithms, for various values of C. The bottom curve shows validation error for L-BFGS for various values of C and for EG with C = 10.",3,0.7954545454545454,5
+"As in Section 7.1.3, we calculated primal values for EG.",2,0.7916666666666666,2
+"Figure 11 shows the primal objective for EG, and L-BFGS.",3,0.7916666666666666,4
+It can be seen that the primal value for EG converges considerably faster than the L-BFGS one.,2,0.9444444444444444,3
+Also shown is a curve of validation error for both algorithms.,2,0,2
+Here we show the results for EG with C = 10 and L-BFGS with various C values.,2,1.0277777777777777,3
+It can be seen that L-BFGS does not outperform the EG curve for any value of C.  Parsing of natural language sentences is a challenging structured learning task.,2,0.8448275862068966,3
+"Dependency parsing (McDonald et al., 2005) is a simplied form of parsing where the goal is to map sentences x into projective directed spanning trees over the set of words in x.",2,1.1714285714285715,2
+Each label y is a set of directed arcs (dependencies) between pairs of words in the sentence.,2,0.975,2
+"Each dependency is a pair (h; m) where h is the index of the head word of the dependency, and m is the index of the modier word.",4,0.803030303030303,3
+"Assuming we have a function f(x; h; m) that assigns a feature vector to dependencies (h; m), we can use a weight vector w to score a given tree y by w (cid.1) (cid.229) (h;m)2y f(x; h; m).",4,0.9296875,2
+Dependency parsing corresponds to a structured problem where the parts r are dependencies (h; m); the approach described in Section 4 can be applied efciently to dependency structures.,3,0.803030303030303,2
+"For projective dependency trees (e.g., see Koo et al., 2007), the required marginals can be computed efciently using a variant of the inside-outside algorithm (Baker, 1979).",4,0.8428571428571429,3
+In the experiments below we use a feature set f(x; h; m) similar to that in McDonald et al.,3,0.98,2
+(2005) and Koo et al.,2,0,1
+"(2007), resulting in 2;500;554 features.",3,0,1
+"We report results on the Spanish dataset which is part of the CoNLL-X Shared Task on multilingual dependency parsing (Buchholz and Marsi, 2006).",2,1.0555555555555556,3
+The training data consists of 2;306 sentences (58;771 tokens).,2,0.71875,1
+"To evaluate validation error, we use 1;000 sentences (30;563 tokens) and report accuracy (rate of correct edges in a predicted parse tree) on these sentences.15 Since we used only sentences from the training set, results are not directly comparable to the CoNLL-X shared task results.",4,0.7543859649122807,3
+"However, our previous work on this data set (Koo et al., 2007) shows that regularized max-margin and log-linear models typically outperform the averaged perceptron, which is not explicitly regularized.",3,0.8285714285714286,5
+"As in the multi-class experiments, we compare to SGD and L-BFGS.",3,0.6538461538461539,3
+The implementation of the algorithms is similar to that described in Section 7.1.,2,0.9642857142857143,1
+"The gradients for SGD and L-BFGS were obtained by calculating the relevant marginals of the model, using the inside-outside algorithm that was also used for EG.",2,0.9821428571428571,3
+"The learning rate for SGD was chosen as in the previous section; that is, we tested several learning rates (h 0 = 1;0.1;0.001;0.0001) and chose the one that yielded the minimum validation error after one iteration.",4,0.7872340425531915,2
+Figure 12 shows results for EG and L-BFGS on the parsing task.,2,0.5769230769230769,3
+We experiment with values of C in the set f0.1;1;10;100;1000g.,2,0.775,1
+"Of these, the value that results in optimal validation error was C = 10.",2,1.0625,2
+"The performance of L-BFGS, SGD and EG is demonstrated in terms of the primal objective for a subset of the C values.",2,0.8958333333333334,2
+"L-BFGS and EG both converge to the optimal value, and EG is signicantly faster.",4,0,2
+"On the other hand, SGD does not converge to the optimum for all C values (e.g., for C = 1;10), and when it does converge to the optimum, it is slower than EG.",4,0.8809523809523809,3
+"Figure 12 also shows the validation error for EG at the optimal C value, compared to validation error for L-BFGS and SGD at various C values.",3,0.7321428571428571,3
+"Again, it can be seen that EG signicantly outperforms L-BFGS.",2,1.0833333333333333,3
+Table 3.,1,1,1
+"Table showing number of effective iterations required to optimize a sequence of values for C for the parsing task, using the method described in Section 7.1.2.",3,1.0535714285714286,3
+The column C shows the sequence of decreasing regularizer constants.,2,0.6818181818181818,1
+"Iterations shows the number of effective iterations over the training set required to optimize each value of C. Total iterations shows the cumulative value of Iterations, and Accuracy shows the validation accuracy obtained for every C value.",4,0.8461538461538461,4
+"It can be seen that the optimal accuracy is reached at C = 13.841.  in fact does not successfully optimize the primal objective for low values of C, and for higher values of C the SGD primal objective is slower to converge.",2,1.0666666666666667,9
+"As in the multi-class experiments (see Figure 10), it is possible to nd learning rates for SGD such that it converges to the primal optimum for C = 1;10.",3,0.9,2
+"However, the optimality of these rates only becomes evident after 10 iterations or more (results not shown).",2,0.8095238095238095,3
+"Thus, to nd a learning rate for SGD that actually solves the optimization problem would typically require an additional few tens of iterations, making it signicantly slower than EG.",3,0.96875,2
+"Finally, it is possible to use EG to efciently optimize over a set of regularization constants, as  in Section 7.1.2.",2,1.0217391304347827,2
+Table 3 shows results for a sequence of regularization constants.,2,0.7727272727272727,1
+Figure 12.,1,1,1
+"Results on the dependency-parsing task, comparing the EG algorithm to L-BFGS and SGD.",2,0.6333333333333333,4
+All algorithms are trained on the log-linear objective function.,2,0.65,3
+"The gures on the rst and second rows show the primal objective for the three algorithms, for various values of C. The left bottom plot shows validation accuracy (measured as the fraction of correctly predicted edges) for L-BFGS for various values of C and for EG with C = 10.",3,0.7608695652173914,8
+The right bottom plot show validation accuracy for EG (with C = 10) and SGD.,3,0.9166666666666666,3
+The max-margin loss (Eq.,2,0,2
+3) has a discontinuity in its derivative.,1,0.8333333333333334,1
+"This makes optimization of maxmargin models somewhat more involved than log-linear ones, since gradient algorithms such as L-BFGS cannot be used.",3,0.9375,4
+"This difculty is exacerbated in the case of structured prediction models, since maximization in Eq.",2,0.8529411764705882,2
+3 is potentially over an exponentially large set.,1,0.8333333333333334,2
+"In this section, we apply the EG algorithm to the max-margin problem, and compare its performance to the SVM-Struct algorithm presented in Tsochantaridis et al.",3,0.6607142857142857,4
+(2004).16 SVM-Struct is based on a cutting-plane algorithm that operates on the dual max-margin problem (D-MM) and results in monotone improvement in this dual.,3,0.8333333333333334,4
+"In this sense, it is similar to our EG algorithm.",2,0.7083333333333334,2
+"In order to facilitate a fair comparison, we report the performance of the two algorithms as a function of time.",3,0.8181818181818182,2
+"We do not report results by iteration since EG and SVM-struct involve different computation per iteration (e.g., SVM-Struct solves a QP per iteration).",2,0.9814814814814815,4
+We applied SVM-Struct and EG to the dependency parsing problem described in Section 7.2.,2,0.7,3
+"To apply SVM-Struct to this problem, we supply it with a routine that nds the y 2 Y which attains the maximum of the hinge-loss in Eq.",2,1.0,2
+3.,0,1.25,0
+This maximum can be found using a Viterbi-style algorithm.,1,0.9,2
+For the value of C we experimented with C 2 f1;10;100;1000;10000g.,4,0.775,1
+The optimal value in terms of validation error was C = 100.,2,1.0384615384615385,1
+Figure 13 shows results in terms of primal and dual objective and in terms of accuracy.,2,0.8529411764705882,2
+It can be seen that EG is considerably faster than SVM-Struct for most C values.,1,1.0625,2
+"The performance is comparable only for C = 1, where convergence is slow for both algorithms.",2,1.0555555555555556,2
+"We have presented novel algorithms for large-scale learning of log-linear and max-margin models, which provably converge to the optimal value of the respective loss functions.",2,0.7777777777777778,3
+"Although the algorithms have both batch and online variants, the online version turns out to be much more effective, both in theory and in practice.",3,0.7678571428571429,2
+Our theoretical results (see Section 5.1) suggest that the online algorithm requires a factor of n less iterations to achieve a desired accuracy e in the dual objective.,2,0.967741935483871,2
+This factor results from the fact that the online algorithm can use a learning rate h that is n times larger than the batch case to obtain updates that decrease the dual objective.,2,1.0441176470588236,3
+"Intuitively, this difference is associated with the fact that the batch algorithm updates all u values simultaneously.",2,0.8421052631578947,2
+The dual objective has a term uT Au which involves all the ui variables and second order interactions between them.,2,0.7619047619047619,2
+"It turns out that for batch updates only a relatively small change in the ui is allowed, if one still requires an improvement in the dual objective after the update.",3,0.90625,3
+It is possible that our bounds for the batch convergence rate are more conservative than those for the online case.,2,0.8571428571428571,3
+"However, we have observed in practice that the batch algorithm is much slower to converge.",2,0.9705882352941176,2
+"Furthermore, we also observed that other batch-based algorithms such as L-BFGS and conjugate gradient converge more slowly than the online EG algorithm.",2,0.6666666666666666,3
+Figure 13.,1,1,1
+"Results on the dependency-parsing task, comparing the EG algorithm to SVM-Struct.",2,0.7307692307692307,4
+Both algorithms are trained on a max-margin model.,1,0.7222222222222222,2
+"The gures on the rst and second rows show the primal objective for both algorithms, for various values of C. The bottom curve shows validation accuracy (measured as the fraction of correctly predicted edges) for SVM-Struct for various values of C and for EG with C = 100 (the value that yielded the highest validation accuracy).",3,0.7954545454545454,9
+The X axis on all curves is running time in hours.,2,0.9583333333333334,1
+Our convergence rates are with respect to accuracy in the dual objective.,2,0.8076923076923077,1
+"Some previous work (e.g., Shalev-Shwartz et al., 2007) has considered the accuracy with respect to the primal objective.",3,0.8043478260869565,3
+"It is relatively easy to show that in order to obtain e accuracy in the primal, the EG algorithms require O(log( 1 e 2 ) for the max-margin case.",3,1.0735294117647058,3
+"It is possible that a more rened analysis of the max-margin case will result in O( 1 e ) (e.g., see List et al., 2007), but we leave this for further study.",5,0.8846153846153846,5
+e )) updates for the log-linear problem and O( 1  Most of our proofs rely on a relation between BQ and the KL divergence.,3,0.8703703703703703,3
+"This relation holds for max-margin learning as well, a fact that simplies previous results in this setting (Bartlett et al., 2005).",3,0.7884615384615384,5
+We expect a similar analysis to hold for other functions Q.,1,1.0909090909090908,1
+"An interesting extension of our method is to using second order derivative information, or its approximations, as in L-BFGS (Byrd et al., 1995).",3,0.7931034482758621,2
+Such information may be used to obtain more accurate minimization for each ui and may speed up convergence.,3,0.9473684210526315,3
+Another possible improvement is to the line search method.,2,0.55,2
+"In the experiments reported here we use a crude mechanism for adapting the learning rate, and it is possible that a more careful procedure will improve convergence rates in practice.",4,0.78125,3
+Parallelization is becoming increasingly relevant as multi-core CPUs become available.,2,1.0,3
+"For the batch EG algorithm, it is straightforward to distribute the computation among k processors.",3,0.7647058823529411,1
+One method for distributing the online EG algorithm would be to update k examples in parallel on k different processors.,2,0.9285714285714286,1
+"It should be possible to analyze this setting in a similar way to our proofs for the online case, but we leave this to future work.",4,0.7321428571428571,3
+"Finally, our results show that the EG algorithms are highly competitive with state-of-the-art methods for training log-linear and max-margin models.",2,0.7727272727272727,5
+"We thus expect them to become useful as learning algorithms, particularly in the structured prediction setting.",2,0.9722222222222222,2
+The authors gratefully acknowledge the following sources of support.,2,0.85,1
+Amir Globerson was supported by a fellowship from the Rothschild Foundation - Yad Hanadiv.,2,0.6333333333333333,2
+"Terry Koo was funded by a grant from the NSF (DMS-0434222) and a grant from NTT, Agmt.",2,0.8333333333333334,3
+Dtd.,0,1,0
+6/21/1998.,0,1,0
+"Xavier Carreras was supported by the Catalan Ministry of Innovation, Universities and Enterprise, and by a grant from NTT, Agmt.",3,0.7708333333333334,3
+Dtd.,0,1,0
+6/21/1998.,0,1,0
+Michael Collins was funded by NSF grants 0347631 and DMS-0434222.,2,0.8636363636363636,1
+Peter Bartlett was funded by a grant from the NSF (DMS-0434383).,2,0.8928571428571429,2
+In this section we compare EG to SGD and L-BFGS in terms of running time.,2,1.0625,3
+"The experiments in the main text provide comparison in terms of effective iterations, which do not take into account the computational cost of processing a single example.",2,0.9482758620689655,2
+"Here we show that EG maintains its advantages over the other learning algorithms when running time is used as a performance measure, with similar relative improvements to those reported in the main text.",2,0.9285714285714286,3
+"Clearly, any timed comparison depends on the quality of the implementations being compared.",2,0.8333333333333334,2
+Data processing and gradient and objective calculations were performed using the same C++ code for all three algorithms.,3,0.6842105263157895,2
+"EG, SGD, and L-BFGS.",2,0,3
+"For L-BFGS, we used the implementation based on Byrd et al.",2,0.8846153846153846,2
+(1995).18 This code is available online and is written in Fortran.,2,1.1333333333333333,2
+The SGD update is straightforward and we implemented it ourselves in our C++ package.,2,0.9333333333333333,2
+All the timing experiments were performed on a 1.8GHz AMD OpteronTM CPU.,2,0.4642857142857143,2
+"We focus on the log-linear case here, since timing results for the max-margin case were provided  in Section 8.",2,0.8095238095238095,4
+"Figures 14 and 15 show results for the MNIST multi-class (see Section 7.1), and the parsing tasks (see Section 7.2) respectively.",3,0.8333333333333334,4
+"As in the results in the main text, it can be seen that the EG objective converges faster than the two other algorithms.",3,0.7,2
+"Also, as in the main text, SGD converges quickly in terms of accuracy, but its objective converges very slowly to the optimum.",4,0.7115384615384616,3
+Note that the timing of the EG experiments includes the time required to convert the dual parameters to the primal representation.,2,0.8863636363636364,3
+"We have found that the EG algorithm is quite fast in practice; in the MNIST task, for example, the EG algorithm requires on average only 10% more time per iteration (including the step-size search) than SGD and L-BFGS.",4,0.6555555555555556,4
+"To help explain why EG is able to run almost as fast as SGD, Figure 16 presents pseudocode for the SGD and online EG algorithms.",3,0.7962962962962963,1
+Both SGD and EG share the following operations.,2,0.5,1
+"(a) inner products between the feature vectors and the primal vector, (b) computation of part-wise marginals, and (c) addition of scaled feature vectors to the primal vector.",5,0.625,3
+"In the EG algorithm, we require two additional loops over R(xi) in order to update the dual variables and compute the dual entropy term.",3,0.6896551724137931,2
+"In practice, however, the cost of the two additional loops is dominated by the three shared operations mentioned above.",3,0.7045454545454546,3
+"Thus, processing a single example takes roughly the same time for EG and SGD.",2,0.59375,3
+Similar arguments can be used to explain why EG can run almost as fast as L-BFGS.,2,1.088235294117647,2
+Figure 15.,1,1,1
+"Timing results on the dependency-parsing task, comparing the EG algorithm to L-BFGS and SGD.",2,0.6875,4
+All algorithms are trained on the log-linear objective function with C = 10.,2,0.8928571428571429,3
+The left gure shows objective values and the right gure shows accuracy (see Figure 12).,2,0.9166666666666666,2
+The results roughly correspond to 100 effective iterations.,2,0.7222222222222222,1

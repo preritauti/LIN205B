@@ -1,0 +1,183 @@
+sentence,yngve_score,frazier_score,dependency_distance_score,count,year
+"Three Generative, Lexicalised Models for Statistical Parsing  In this paper we rst propose a new statistical parsing model, which is a generative model of lexicalised context-free grammar.",3,0.8833333333333333,2,30,1997
+We then extend the model to include a probabilistic treatment of both subcategorisation and wh-movement.,2,0.9375,2,16,1997
+"Results on Wall Street Journal text show that the parser performs at 88.1/87.5% constituent precision/recall, an average improvement of 2.3% over (Collins 96).",3,0.7419354838709677,3,31,1997
+Generative models of syntax have been central in linguistics since they were introduced in (Chomsky 57).,2,1.0,2,19,1997
+"Each sentence-tree pair (S, T ) in a language has an associated top-down derivation consisting of a sequence of rule applications of a grammar.",3,0.8333333333333334,2,27,1997
+"These models can be extended to be statistical by dening probability distributions at points of non-determinism in the derivations, thereby assigning a probability P(S, T ) to each (S, T ) pair.",3,1.0,3,39,1997
+Probabilistic context free grammar (Booth and Thompson 73) was an early example of a statistical grammar.,3,0.6578947368421053,2,19,1997
+"A PCFG can be lexicalised by associating a headword with each non-terminal in a parse tree; thus far, (Magerman 95; Jelinek et al.",4,0.8571428571428571,3,28,1997
+"94) and (Collins 96), which both make heavy use of lexical information, have reported the best statistical parsing performance on Wall Street Journal text.",4,0.7333333333333333,3,30,1997
+"Neither of these models is generative, instead they both estimate P(T | S) directly.",3,0.868421052631579,2,19,1997
+This paper proposes three new parsing models.,2,0.5625,2,8,1997
+Model 1 is essentially a generative version of the model described in (Collins 96).,2,0.7941176470588235,2,17,1997
+"In Model 2, we extend the parser to make the complement/adjunct distinction by adding probabilities over subcategorisation frames for head-words.",2,0.9318181818181818,2,22,1997
+"In Model 3 we give a probabilistic treatment of wh-movement, which  is derived from the analysis given in Generalized Phrase Structure Grammar (Gazdar et al.",2,0.9642857142857143,2,28,1997
+95).,1,0,1,3,1997
+The work makes two advances over previous models.,1,0.8333333333333334,1,9,1997
+"First, Model 1 performs signicantly better than (Collins 96), and Models 2 and 3 give further improvements  our nal results are 88.1/87.5% constituent precision/recall, an average improvement of 2.3% over (Collins 96).",4,0.6590909090909091,4,44,1997
+"Second, the parsers in (Collins 96) and (Magerman 95; Jelinek et al.",3,0,2,18,1997
+94) produce trees without information about whmovement or subcategorisation.,2,0.8636363636363636,1,11,1997
+Most NLP applications will need this information to extract predicateargument structure from parse trees.,2,0.7,2,15,1997
+"In the remainder of this paper we describe the 3 models in section 2, discuss practical issues in section 3, give results in section 4, and give conclusions in section 5.",5,0.7857142857142857,3,35,1997
+"In general, a statistical parsing model denes the conditional probability, P(T | S), for each candidate parse tree T for a sentence S. The parser itself is an algorithm which searches for the tree, Tbest, that maximises P(T | S).",3,0.55,3,30,1997
+"A generative model uses the observation that maximising P(T, S) is equivalent to maximising P(T | S).",2,0.96,3,25,1997
+"P(T, S) is then estimated by attaching probabilities to a top-down derivation of the tree.",2,1.0,2,20,1997
+"In a PCFG, for a tree derived by n applications of context-free re-write rules LHSi  RHSi, 1  i  n.  Figure 1.",3,0,4,24,1997
+"A lexicalised parse tree, and a list of the rules it contains.",4,0.6785714285714286,2,14,1997
+For brevity we omit the POS tag associated with each word.,2,0.875,2,12,1997
+"of one or more non-terminals; or lexical, where LHS is a part of speech tag and RHS is a word.",4,0.782608695652174,3,23,1997
+A PCFG can be lexicalised2 by associating a word w and a part-of-speech (POS) tag t with each nonterminal X in the tree.,2,0.8076923076923077,3,26,1997
+"Thus we write a nonterminal as X(x), where x = hw, ti, and X is a constituent label.",3,0.8,3,25,1997
+Each rule now has the form3.,2,0.7857142857142857,1,7,1997
+"H is the head-child of the phrase, which inherits the head-word h from its parent P .",2,0.8888888888888888,2,18,1997
+"L1...Ln and R1...Rm are left and right modiers of H. Either n or m may be zero, and n = m = 0 for unary rules.",3,0.9375,1,32,1997
+Figure 1 shows a tree which will be used as an example throughout this paper.,2,1.0625,2,16,1997
+"The addition of lexical heads leads to an enormous number of potential rules, making direct estimation of P(RHS | LHS) infeasible because of sparse data problems.",3,0.9032258064516129,3,31,1997
+"We decompose the generation of the RHS of a rule such as (3), given the LHS, into three steps  rst generating the head, then making the independence assumptions that the left and right modiers are generated by separate 0th-order markov processes4.",3,0.8297872340425532,5,47,1997
+1.,0,1.25,0,2,1997
+"Generate the head constituent label of the  phrase, with probability PH (H | P, h).",3,0.675,3,20,1997
+2.,0,1.25,0,2,1997
+"Generate modiers to the right of the head with probability Qi=1..m+1 PR(Ri(ri) | P, h, H).",2,1.0357142857142858,2,14,1997
+"Rm+1(rm+1) is dened as ST OP  the ST OP symbol is added to the vocabulary of nonterminals, and the model stops generating right modiers when it is generated.",4,0.9,3,35,1997
+2We nd lexical heads in Penn treebank data using rules which are similar to those used by (Magerman 95; Jelinek et al.,4,1.02,2,25,1997
+94).,1,0,1,3,1997
+"3With the exception of the top rule in the tree, which  has the form TOP  H(h).",2,0.9047619047619048,2,21,1997
+"4An exception is the rst rule in the tree, TOP   H(h), which has probability PT OP (H, h|T OP )  3.",3,0.7741935483870968,3,31,1997
+"Generate modiers to the left of the head with probability Qi=1..n+1 PL(Li(li)|P, h, H), where Ln+1(ln+1) = ST OP .",2,1.0357142857142858,2,14,1997
+"For example, the probability of the rule S(bought) -> NP(week) NP(Marks) VP(bought) would be estimated as  Ph(VP | S,bought)  Pl(NP(Marks) | S,VP,bought)  Pl(NP(week) | S,VP,bought)  Pl(STOP | S,VP,bought)   Pr(STOP | S,VP,bought)  We have made the 0th order markov assumptions  but in general the probabilities could be conditioned on any of the preceding modiers.",9,0.883177570093458,2,107,1997
+"In fact, if the derivation order is xed to be depth-rst  that is, each modier recursively generates the sub-tree below it before the next modier is generated  then the model can also condition on any structure below the preceding modiers.",4,1.0,2,43,1997
+For the moment we exploit this by making the approximations  where distancel and distancer are functions of the surface string from the head word to the edge of the constituent (see gure 2).,2,0.9166666666666666,3,36,1997
+"The distance measure is the same as in (Collins 96), a vector with the following 3 elements.",3,0.5952380952380952,2,21,1997
+(1) is the string of zero length?,2,0.75,1,10,1997
+(Allowing the model to learn a preference for rightbranching structures); (2) does the string contain a verb?,3,1.065217391304348,3,23,1997
+(Allowing the model to learn a preference for modication of the most recent verb).,4,1.0,3,17,1997
+"(3) Does the string contain 0, 1, 2 or > 2 commas?",3,0.6764705882352942,2,17,1997
+"(where a comma is anything tagged as , or .).",2,1.1666666666666667,2,12,1997
+Figure 2.,1,1,1,3,1997
+"The next child, R3(r3), is generated with probability P(R3(r3) | P, H, h, distancer(2)).",4,0.828125,3,32,1997
+"The distance is a function of the surface string from the word after h to the last word of R2, inclusive.",4,0.8478260869565217,3,23,1997
+"In principle the model could condition on any structure dominated by H, R1 or R2.",2,0.7941176470588235,2,17,1997
+The tree in gure 1 is an example of the importance of the complement/adjunct distinction.,2,0.84375,2,16,1997
+"It would be useful to identify Marks as a subject, and Last week as an adjunct (temporal modier), but this distinction is not made in the tree, as both NPs are in the same position5 (sisters to a VP under an S node).",3,0.7843137254901961,3,51,1997
+From here on we will identify complements by attaching a -C sux to non-terminals  gure 3 gives an example tree.,3,1.2727272727272727,3,22,1997
+Figure 3.,1,1,1,3,1997
+A tree with the -C sux used to identify complements.,2,1.1666666666666667,2,12,1997
+Marks and Brooks are in subject and object position respectively.,2,0.8636363636363636,2,11,1997
+Last week is an adjunct.,1,0.75,1,6,1997
+"A post-processing stage could add this detail to the parser output, but we give two reasons for making the distinction while parsing.",3,0.6458333333333334,2,24,1997
+"First, identifying complements is complex enough to warrant a probabilistic treatment.",2,0.8461538461538461,2,13,1997
+"Lexical information is needed  5Except Marks is closer to the VP, but note that Marks is also the subject in Marks last week bought Brooks.",4,1.0555555555555556,3,27,1997
+" for example, knowledge that week is likely to be a temporal modier.",2,1.0,2,14,1997
+Knowledge about subcategorisation preferences  for example that a verb takes exactly one subject  is also required.,2,1.2058823529411764,2,17,1997
+"These problems are not restricted to NPs, compare The spokeswoman said (SBAR that the asbestos was dangerous) vs. Bonds beat short-term investments (SBAR because the market is down), where an SBAR headed by that is a complement, but an SBAR headed by because is an adjunct.",6,0.9814814814814815,2,54,1997
+The second reason for making the complement/adjunct distinction while parsing is that it may help parsing accuracy.,2,1.1111111111111112,3,18,1997
+The assumption that complements are generated independently of each other often leads to incorrect parses  see gure 4 for further explanation.,3,1.0,2,22,1997
+Identifying Complements and Adjuncts in the Penn Treebank.,2,0,2,9,1997
+We add the -C sux to all non-terminals in training data which satisfy the following conditions.,2,1.0,3,18,1997
+1.,0,1.25,0,2,1997
+The non-terminal must be.,1,0.9,1,5,1997
+"(1) an NP, SBAR, or S whose parent is an S; (2) an NP, SBAR, S, or VP whose parent is a VP; or (3) an S whose parent is an SBAR.",5,0.6847826086956522,2,46,1997
+2.,0,1.25,0,2,1997
+The non-terminal must not have one of the following semantic tags.,2,0.7083333333333334,2,12,1997
+"ADV, VOC, BNF, DIR, EXT, LOC, MNR, TMP, CLR or PRP.",7,0,2,20,1997
+See (Marcus et al.,2,0,2,6,1997
+94) for an explanation of what these tags signify.,2,0.9545454545454546,2,11,1997
+"For example, the NP Last week in gure 1 would have the TMP (temporal) tag; and the SBAR in (SBAR because the market is down), would have the ADV (adverbial) tag.",4,0.7317073170731707,3,41,1997
+"In addition, the rst child following the head of a prepositional phrase is marked as a complement.",2,0.7631578947368421,3,19,1997
+"The model could be retrained on training data with the enhanced set of non-terminals, and it might learn the lexical properties which distinguish complements and adjuncts (Marks vs week, or that vs. because).",4,0.8947368421052632,5,38,1997
+"However, it would still suer from the bad independence assumptions illustrated in gure 4.",2,1.0,2,16,1997
+"To solve these kinds of problems, the generative process is extended to include a probabilistic choice of left and right subcategorisation frames.",3,0.7291666666666666,2,24,1997
+Figure 4.,1,1,1,3,1997
+Two examples where the assumption that modiers are generated independently of each other leads to errors.,2,1.1176470588235294,2,17,1997
+Each subcat frame is a multiset6 specifying the complements which the head requires in its left or right modiers.,2,0.975,2,20,1997
+3.,0,1.25,0,2,1997
+"Generate the left and right modiers with probabilities Pl(Li, li | H, P, h, distancel(i  1), LC) and Pr(Ri, ri | H, P, h, distancer(i  1), RC) respectively.",7,0.6176470588235294,5,51,1997
+Thus the subcat requirements are added to the conditioning context.,2,0.6818181818181818,2,11,1997
+As complements are generated they are removed from the appropriate subcat multiset.,2,1.1153846153846154,2,13,1997
+"Most importantly, the probability of generating the ST OP symbol will be 0 when the subcat frame is non-empty, and the probability of generating a complement will be 0 when it is not in the subcat frame; thus all and only the required complements will be generated.",5,0.8725490196078431,3,51,1997
+Another obstacle to extracting predicate-argument structure from parse trees is wh-movement.,2,1.0,2,12,1997
+This section describes a probabilistic treatment of extraction from relative clauses.,2,0.7916666666666666,2,12,1997
+"Noun phrases are most often extracted from subject position, object position, or from within PPs.",3,0.75,2,18,1997
+"Here the head initially decides to take a single NP-C (subject) to its left, and no complements 6A multiset, or bag, is a set which may contain du plicate non-terminal labels.",4,0.8648648648648649,3,37,1997
+It might be possible to write rule-based patterns which identify traces in a parse tree.,1,1.21875,2,16,1997
+"However, we argue again that this task is best integrated into the parser.",2,1.0,2,15,1997
+"the task is complex enough to warrant a probabilistic treatment, and integration may help parsing accuracy.",3,0.7777777777777778,2,18,1997
+"A couple of complexities are that modication by an SBAR does not always involve extraction (e.g., the fact (SBAR that besoboru is  Figure 5.",2,1.1607142857142858,3,28,1997
+A +gap feature can be added to non-terminals to describe NP extraction.,2,1.0714285714285714,2,14,1997
+"The top-level NP initially generates an SBAR modier, but species that it must contain an NP trace by adding the +gap feature.",2,0.86,3,25,1997
+"The gap is then passed down through the tree, until it is discharged as a T RACE complement to the right of bought.",2,0.9,2,25,1997
+"played with a ball and a bat)), and it is not uncommon for extraction to occur through several constituents, (e.g., The changes (SBAR that he said the government was prepared to make TRACE)).",3,1.0813953488372092,1,43,1997
+The second reason for an integrated treatment of traces is to improve the parameterisation of the model.,2,0.9444444444444444,2,18,1997
+"In particular, the subcategorisation probabilities are smeared by extraction.",2,0.7727272727272727,2,11,1997
+"In examples 1, 2 and 3 above bought is a transitive verb, but without knowledge of traces example 2 in training data will contribute to the probability of bought being an intransitive verb.",4,0.9861111111111112,2,36,1997
+Formalisms similar to GPSG (Gazdar et al.,2,1,2,9,1997
+"95) handle NP extraction by adding a gap feature to each non-terminal in the tree, and propagating gaps through the tree until they are nally discharged as a trace complement (see gure 5).",3,0.868421052631579,3,38,1997
+"In extraction cases the Penn treebank annotation co-indexes a TRACE with the WHNP head of the SBAR, so it is straightforward to add this information to trees in training data.",4,0.78125,1,32,1997
+"Given that the LHS of the rule has a gap, there are 3 ways that the gap can be passed down to the RHS.",3,0.9423076923076923,3,26,1997
+"Head The gap is passed to the head of the phrase,  as in rule (3) in gure 5.",2,0.9545454545454546,3,22,1997
+"Left, Right The gap is passed on recursively to one of the left or right modiers of the head, or is discharged as a trace argument to the left/right of the head.",3,0,3,35,1997
+"In rule (2) it is passed on to a right modier, the S complement.",2,0.8055555555555556,2,18,1997
+In rule (4) a trace is generated to the right of the head VB.,2,0.8529411764705882,2,17,1997
+"We specify a parameter PG(G | P, h, H) where G is either Head, Left or Right.",3,0.875,3,24,1997
+The generative process is extended to choose between these cases after generating the head of the phrase.,2,0.9722222222222222,2,18,1997
+The rest of the phrase is then generated in dierent ways depending on how the gap is propagated.,2,1.0,2,19,1997
+In the Head case the left and right modiers are generated as normal.,2,0.6785714285714286,2,14,1997
+"In the Left, Right cases a gap requirement is added to either the left or right SUBCAT variable.",3,0.625,3,20,1997
+This requirement is fullled (and removed from the subcat list) when a trace or a modier non-terminal which has the +gap feature is generated.,3,0.9107142857142857,4,28,1997
+Figure 6.,1,1,1,3,1997
+The life of a constituent in the chart.,2,0,1,9,1997
+(+) means a constituent is complete (i.e.,1,1.1,2,10,1997
+"it includes the stop probabilities), () means a constituent is incomplete.",3,0.9,2,15,1997
+(a) a new constituent is started by projecting a complete rule upwards; (b) the constituent then takes left and right modiers (or none if it is unary).,3,0.6857142857142857,2,35,1997
+"(c) nally, ST OP probabilities are added to complete the constituent.",3,0.8,2,15,1997
+Part of speech tags are generated along with the words in this model.,2,0.8928571428571429,1,14,1997
+"When parsing, the POS tags allowed for each word are limited to those which have been seen in training data for that word.",2,1.08,2,25,1997
+"For unknown words, the output from the tagger described in (Ratnaparkhi 96) is used as the single possible tag for that word.",3,0.75,2,26,1997
+A CKY style dynamic programming chart parser is used to nd the maximum probability tree for each sentence (see gure 6).,3,0.6458333333333334,2,24,1997
+The parser was trained on sections 02 - 21 of the Wall Street Journal portion of the Penn Treebank (Marcus et al.,3,0.9375,3,24,1997
+"93) (approximately 40,000 sentences), and tested on section 23 (2,416 sentences).",3,0,3,18,1997
+We use the PARSEVAL measures (Black et al.,1,1.05,2,10,1997
+91) to compare performance.,1,1.3333333333333333,1,6,1997
+Table 2.,1,1,1,3,1997
+Results on Section 23 of the WSJ Treebank.,2,0,2,9,1997
+LR/LP = labeled recall/precision.,1,0.9,2,5,1997
+CBs is the average number of crossing brackets per sentence.,2,1.1818181818181819,1,11,1997
+"0 CBs,  2 CBs are the percentage of sentences with 0 or  2 crossing brackets respectively.",2,0.8611111111111112,2,18,1997
+"For a constituent to be correct it must span the same set of words (ignoring punctuation, i.e.",1,1.0526315789473684,2,19,1997
+"all tokens tagged as commas, colons or quotes) and have the same label8 as a constituent in the treebank parse.",3,0.7608695652173914,3,23,1997
+"Table 2 shows the results for Models 1, 2 and 3.",2,0.6538461538461539,2,13,1997
+"The precision/recall of the traces found by Model 3 was 93.3%/90.1% (out of 436 cases in section 23 of the treebank), where three criteria must be met for a trace to be correct.",3,0.9634146341463414,2,41,1997
+(1) it must be an argument to the correct head-word; (2) it must be in the correct position in relation to that head word (preceding or following); (3) it must be dominated by the correct non-terminal label.,4,0,2,48,1997
+"For example, in gure 5 the trace is an argument to bought, which it follows, and it is dominated by a VP.",4,0.8653846153846154,2,26,1997
+"Of the 436 cases, 342 were string-vacuous extraction from subject position, recovered with 97.1%/98.2% precision/recall; and 94 were longer distance cases, recovered with 76%/60.6% precision/recall 9.",3,0.8205128205128205,3,39,1997
+"Model 1 is similar in structure to (Collins 96)  the major dierences being that the score for each bigram dependency is Pl(Li, li|H, P, h, distancel)  8(Magerman 95) collapses ADVP and PRT to the same label, for comparison we also removed this distinction when calculating scores.",3,0.8306451612903226,2,62,1997
+"9We exclude innitival relative clauses from these gures, for example I called a plumber TRACE to x the sink where plumber is co-indexed with the trace subject of the innitival.",2,1.0625,3,32,1997
+"The algorithm scored 41%/18% precision/recall on the 60 cases in section 23  but innitival relatives are extremely dicult even for human annotators to distinguish from purpose clauses (in this case, the innitival could be a purpose clause modifying called) (Ann Taylor, p.c.)",2,0.875,4,52,1997
+"rather than Pl(Li, P, H | li, h, distancel), and that there are the additional probabilities of generating the head and the ST OP symbols for each constituent.",4,0.7027027027027027,3,37,1997
+"However, Model 1 has some advantages which may account for the improved performance.",2,0.9333333333333333,2,15,1997
+"The model in (Collins 96) is decient, that is for most sentences S, PT P(T | S) < 1, because probability mass is lost to dependency structures which violate the hard constraint that no links may cross.",3,0.967391304347826,3,46,1997
+"For reasons we do not have space to describe here, Model 1 has advantages in its treatment of unary rules and the distance measure.",3,0.8269230769230769,2,26,1997
+The generative model can condition on any structure that has been previously generated  we exploit this in models 2 and 3  whereas (Collins 96) is restricted to conditioning on features of the surface string alone.,2,1.0263157894736843,2,38,1997
+"(Charniak 95) also uses a lexicalised generaIn our notation, he decomposes tive model.",4,0.6764705882352942,2,17,1997
+"P(RHSi | LHSi) as P(Rn...R1HL1..Lm | P, h)  Qi=1..n P(ri | P, Ri, h)  Qi=1..m P(li | P, Li, h).",3,1,2,13,1997
+"The Penn treebank annotation style leads to a very large number of context-free rules, so that directly estimating P(Rn...R1HL1..Lm | P, h) may lead to sparse data problems, or problems with coverage (a rule which has never been seen in training may be required for a test data sentence).",3,0.74,3,25,1997
+"The complement/adjunct distinction and traces increase the number of rules, compounding this problem.",3,0.8666666666666667,2,15,1997
+"(Eisner 96) proposes 3 dependency models, and gives results that show that a generative model similar to Model 1 performs best of the three.",3,0.9821428571428571,3,28,1997
+"However, a pure dependency model omits non-terminal information, which is important.",2,0.8571428571428571,2,14,1997
+"(Alshawi 96) extends a generative dependency model to include an additional state variable which is equivalent to having non-terminals  his suggestions may be close to our models 1 and 2, but he does not fully specify the details of his model, and doesnt give results for parsing accuracy.",4,0.8773584905660378,4,53,1997
+(Miller et al.,1,0.9,1,5,1997
+"96) describe a model where the RHS of a rule is generated by a Markov process, although the process is not head-centered.",3,0.86,4,25,1997
+They increase the set of non-terminals by adding semantic labels rather than by adding lexical head-words.,2,1.088235294117647,2,17,1997
+(Magerman 95; Jelinek et al.,2,0,2,8,1997
+94) describe a history-based approach which uses decision trees to estimate P(T |S).,2,1.0789473684210527,3,19,1997
+"Our models use much less sophisticated n-gram estimation methods, and might well benet from methods such as decision-tree estimation which could condition on richer history than just surface distance.",3,0.8709677419354839,3,31,1997
+"There has  recently been interest  in using dependency-based parsing models in speech recognition, for example (Stolcke 96).",2,0.9047619047619048,3,21,1997
+"It is interesting to note that Models 1, 2 or 3 could be used as language models.",2,1.0263157894736843,3,19,1997
+"The probability for any sentence can be estimated as P(S) = PT P(T, S), or (making a Viterbi approximation for eciency reasons) as P(S)  P(Tbest, S).",4,0.8863636363636364,3,44,1997
+"We intend to perform experiments to compare the perplexity of the various models, and a structurally similar pure PCFG10.",3,0.8809523809523809,3,21,1997
+"This paper has proposed a generative, lexicalised, probabilistic parsing model.",3,0.4230769230769231,3,13,1997
+"We have shown that linguistically fundamental ideas, namely subcategorisation and wh-movement, can be given a statistical interpretation.",3,0.75,3,20,1997
+"This improves parsing performance, and, more importantly, adds useful information to the parsers output.",2,0,2,18,1997
+"I would like to thank Mitch Marcus, Jason Eisner, Dan Melamed and Adwait Ratnaparkhi for many useful discussions, and comments on earlier versions of this paper.",3,0.8,4,30,1997
+This work has also beneted greatly from suggestions and advice from Scott Miller.,2,0.75,2,14,1997

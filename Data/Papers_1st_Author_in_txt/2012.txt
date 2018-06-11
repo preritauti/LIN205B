@@ -1,0 +1,186 @@
+We describe an approach to speed-up inference with latent-variable PCFGs, which
+have been shown to be highly effective for natural language parsing. Our approach
+is based on a tensor formulation recently introduced for spectral estimation of
+latent-variable PCFGs coupled with a tensor decomposition algorithm well-known
+in the multilinear algebra literature. We also describe an error bound for this
+approximation, which gives guarantees showing that if the underlying tensors are
+well approximated, then the probability distribution over trees will also be well
+approximated. Empirical evaluation on real-world natural language parsing data
+demonstrates a signiﬁcant speed-up at minimal cost for parsing performance.
+
+Latent variable models have shown great success in various ﬁelds, including computational linguis-
+tics and machine learning.
+In computational linguistics, for example, latent-variable models are
+widely used for natural language parsing using models called latent-variable PCFGs (L-PCFGs;
+[14]).
+The mainstay for estimation of L-PCFGs has been the expectation-maximization algorithm [14,
+16], though other algorithms, such as spectral algorithms, have been devised [5]. A by-product
+of the spectral algorithm presented in [5] is a tensor formulation for computing the inside-outside
+probabilities of a L-PCFG. Tensor products (or matrix-vector products, in certain cases) are used as
+the basic operation for marginalization over the latent annotations of the L-PCFG.
+The computational complexity with the tensor formulation (or with plain CKY, for that matter) is
+cubic in the number of latent states in the L-PCFG. This multiplicative factor can be prohibitive for
+a large number of hidden states; various heuristics are used in practice to avoid this problem [16].
+In this paper, we show that tensor decomposition can be used to signiﬁcantly speed-up the parsing
+performance with L-PCFGs. Our approach is also provided with a theoretical guarantee: given the
+accuracy of the tensor decomposition, one can compute how accurate the approximate parser is.
+The rest of this paper is organized as follows. We give notation and background in §2–3, and then
+present the main approach in §4. We describe experimental results in §5 and conclude in §6.
+
+This section gives a deﬁnition of the L-PCFG formalism used in this paper; we follow the deﬁnitions
+given in [5]. An L-PCFG is a 5-tuple (N, I, P, m, n) where:
+• N is the set of non-terminal symbols in the grammar. I ⊂ N is a ﬁnite set of in-terminals. P ⊂ N
+is a ﬁnite set of pre-terminals. We assume that N = I ∪ P, and I ∩ P = ∅. Hence we have
+partitioned the set of non-terminals into two subsets.
+
+Note that for any binary rule, a → b c, it holds that a ∈ I, and for any unary rule a → x, it holds
+that a ∈ P.
+The set of “skeletal rules” is deﬁned as R = {a → b c : a ∈ I, b ∈ N, c ∈ N}. The parameters of
+the model are as follows.
+
+An L-PCFG corresponds to a regular PCFG with non-terminals annotated with latent states.
+For each triplet of latent states and a rule a → b c, we have a rule probability p(a(h1) →
+b(h2) c(h3)|a(h1)) = t(a → b c, h2, h3|h1, a). Similarly, we also have parameters p(a(h) →
+x|a(h)) = q(a → x|h, a). In addition, there are initial probabilities of generating a non-terminal
+with a latent at the top of the tree, denoted by π(a, h).
+L-PCFGs induce distributions over two type of trees: skeletal trees, i.e.
+trees without values for
+latent states (these trees are observed in data), and full trees (trees with values for latent states). A
+skeletal tree consists of a sequence of rules r1 . . . rN where ri ∈ R or ri = a → x. See Figure 3.1
+for an example.
+We now turn to the problem of computing the probability of a skeletal tree, by marginalizing out
+the latent states of full trees. Let r1 . . . rN be a derivation, and let ai be the non-terminal on the left
+hand-side of rule ri. For any ri = a → b c, deﬁne h(2)
+to be the latent state associated with the left
+child of the rule ri and h(3)
+The distribution over full trees is then.
+
+• For each a ∈ P, x ∈ [n], we deﬁne Qa→x ∈ R1×m to be the vector with values q(a → x|h, a)
+• For each a ∈ I, we deﬁne the vector πa ∈ Rm where [πa]h = π(a, h).
+Parameter Estimation Several ways to estimate the parameters T a→b c, Qa→x and πa have been
+suggested in the literature. For example, vanilla EM has been used in [14], hierarchical state splitting
+EM has been suggested in [16], and a spectral algorithm is proposed in [5].
+In the rest of the paper, we assume that the parameters for these tensors have been identiﬁed, and
+focus mostly on the problem of inference – i.e. parsing unseen sentences. The reason for this is
+two-fold: (a) in real-world applications, training can be done off-line to identify a set of parameters
+once, and therefore its computational efﬁciency is of lesser interest; (b) our approach can speed-up
+the inference problems existing in the EM algorithm, but the speed-up is of lesser interest, because
+the inference problem in the EM algorithm is linear in the tree size (and not cubic, as in the case
+of parsing). The reason for this linear complexity is that the skeletal trees are observed during EM
+training. Still, EM stays cubic in the number of states.
+
+There are several ways to parse a sentence with latent-variable PCFGs. Most of these approaches are
+taken by using an inside-outside algorithm [12] which computes marginals for various non-terminals
+and spans in the sentence, and then eventually ﬁnding a parse tree which maximizes a score which
+is the sum of the marginals of the spans that appear in the tree.
+
+Given the marginals µ(a, i, j), one can use the dynamic programming algorithm described in [7] in
+order to ﬁnd this highest scoring tree.
+A key question is how to compute the marginals µ(a, i, j) using the inside-outside algorithm. Dy-
+namic programming solutions are available for this end as well. The complexity of a na¨ıve im-
+plementation of the dynamic programming algorithm for this problem is cubic in the number of
+latent states. This is where we suggest an alternative to the traditional dynamic programming solu-
+tions. Our alternative relies on an existing tensor formulation for the inside-outside algorithm [5],
+which re-formalizes the dynamic programming algorithm using tensor, matrix and vector product
+operations.
+Algorithm 2 presents the re-formulation of the inside-outside algorithm using tensors. For more
+details and proofs of correctness, refer to [5]. 
+
+As mentioned earlier, most computation for the inside-outside algorithm is spent on the tensor cal-
+culation of T a→b c on the intermediate inside/outside quantities. These computations, appearing as
+T a→b c(αb,i,k, αc,k+1,j), T b→c a
+(1,3) (βb,i,k, αc,j+1,k) output a vector of
+length m, where computation of each element in the vector is O(m2). Therefore, the inside-outside
+has a multiplicative O(m3) factor in its computational complexity, which we aim to reduce.
+For the rest of this section, ﬁx a binary grammar rule a → b c and consider the tensor T (cid:44) T a→b c
+associated with it. Consider a pair of two vectors y1, y2 ∈ Rm, associated with the distributions
+over latent-states for the left (y1) and right child (y2) of a given node in a parse tree. Our method
+for improving the speed of this tensor computation relies on a simple observation. Given an integer
+r ≥ 1, assume that the tensor T had the following special form, which is also called “Kruskal form”,
+i , i.e. it would be the sum of r tensors, each is the tensor product of three vectors.
+
+The total complexity of this computation is O(mr). We see later that our approach can be used
+effectively for r as small as 2, turning the inside-outside algorithm for latent-variable PCFGs into a
+linear algorithm in the number of hidden states.
+
+We note that it is well-known that an exact tensor decomposition can be achieved by using r = m2
+[11]. In that case, there is no computational gain. The minimal r required for an exact solution can
+be smaller than m2, but identifying that minimal r is NP-hard [9].
+
+In the general case, for a ﬁxed r, our latent-variable PCFG tensors will not have the exact decom-
+posed form from the previous section. Still, by using decomposition algorithms from multilinear
+algebra, we can approximate the latent-variable tensors, where the quality of approximation is mea-
+sured according to some norm over the set of tensors Rm×m×m.
+An example of such a decomposition is the canonical polyadic decomposition (CPD), also known
+as CANDECOMP/PARAFAC decomposition [3, 8, 10]. Given an integer r, least squares CPD
+aims to ﬁnd the nearest tensor in Kruskal form according to the analogous norm (for tensors) to the
+Frobenius norm (for matrices).
+There are various algorithms to perform CPD, such as alternating least squares, direct linear decom-
+position, alternating trilinear decomposition and pseudo alternating least squares [6]. Most of these
+implementations treat the problem of identifying the approximate tensor as an optimization prob-
+lem. These algorithms are not exact. Any of these implementations can be used in our approach.
+We note that the decomposition optimization problem is hard, and often has multiple local maxima.
+Therefore, the algorithms mentioned above are inexact.
+In our experiments, we use the alternating least squares algorithm. This method works by iteratively
+improving U, V and W from Eq. 1 (until convergence), each time solving a least squares problem.
+
+We next present a theoretical guarantee about the quality of the CP-approximated tensor formulation
+of the inside-outside algorithm. We measure the propagation of errors in probability calculations
+through a given parse tree. We derive a similar result for the marginals.
+We denote by ˆp the distribution induced over trees (skeletal and full), where we approximate each
+T a→b c using the tensor ˆT a→b c. Similarly, we denote by ˆµ(a, i, j) the approximated marginals.
+
+For the ﬁrst part, the proof is using structural induction on the structure of the test tree.
+Assume a ﬁxed skeletal tree r1, . . . , rN . The probability p(r1, . . . , rN ) can be computed by using a
+sequence of applications of T a→b c on distribution over latent states for left and right children. 
+
+Figure 3: Speed and performance of parsing with tensor decomposition for m ∈ {8, 16, 20} (left
+plots, middle plots and right plots respectively). The left y axis is running time (red circles), the
+right y axis is F1 performance of the parser (blue squares), the x axis corresponds to log t. Solid
+lines describe decomposition with r = 2, dashed lines describe decomposition with r = 8. In
+addition, we include the numerical results for various m for r = 8.
+
+As expected, the longer a sentence is, or the deeper a parse tree is, the better we need the tensor
+approximation to be (smaller γ) for the inside-outside to be more accurate.
+
+We devote this section to empirical evaluation of our approach. Our goal is to evaluate the trade-off
+between the accuracy of the tensor decomposition and the speed-up in the parsing algorithm.
+
+Whenever we report parsing accuracy, we use the
+traditional F1 measure from the Parseval metric [2]. It computes the F1 measure of spans (a, i, j)
+appearing in the gold standard and the hypothesized trees.
+The total number of tensors extracted from the training data using EM was 7,236 (corresponding
+to the number of grammar rules). Let γa→b c = ||T a→b c − ˆT a→b c||F . In our experiments, we
+vary a threshold t ∈ {0.1, 0.001, 10−5, 10−6, 10−8, 0} – an approximate tensor ˆT a→b c is used
+instead of T a→b c only if γa→b c ≤ t. The value t = 0 implies using vanilla inference, without any
+approximate tensors. We describe experiments with r ∈ {2, 8}. For the tensor approximation, we
+use the implementation provided in the Matlab tensor toolbox from [1]. The toolbox implements the
+alternating least squares method.
+As is common, we use a pruning technique to make the parser faster – items in the dynamic pro-
+gramming chart are pruned if their value according to a base vanilla maximum likelihood model is
+less than 0.00005 [4]. We report running times considering this pruning as part of the execution.
+The parser was run on a single Intel Xeon 2.67GHz CPU.
+We note that the performance of the parser improves as we add more latent states. The performance
+of the parser with vanilla PCFG (m = 1) is 70.26 F1 measure.
+
+Experimental Results Table 3 describes F1 performance and running time as we vary t. It is
+interesting to note that the speed-up, for the same threshold t, seems to be larger when using r = 8
+instead of r = 2. At ﬁrst this may sound counter-intuitive. The reason for this happening is that
+with r = 8, more of the tensors have an approximation error which is smaller than t, and therefore
+more approximate tensors are used than in the case of r = 2.
+Using t = 0.1, the speed-up is signiﬁcant over non-approximate version of the parser. More specif-
+ically, for r = 8, it takes 72% of the time (without considering the pruning phase) of the non-
+approximate parser to parse section 22 with m = 8, 24% of the time with m = 16 and 21% of the
+time with m = 20. The larger m is, the more signiﬁcant the speed-up is.
+The loss in performance because of the approximation, on the other hand, is negligible. More
+speciﬁcally, for r = 8, performance is decreased by 0.12% for m = 8, 0.11% for m = 16 and
+0.08% for m = 20.
+
+We described an approach to signiﬁcantly improve the speed of inference with latent-variable
+PCFGs. The approach approximates tensors which are used in the inside-outside algorithm. The
+approximation comes with a minimal cost to the performance of the parser. Our algorithm can be
+used in tandem with estimation algorithms such as EM or spectral algorithms [5]. We note that
+tensor formulations are used with graphical models [15], for which our technique is also applicable.
+Similarly, our technique can be applied to other dynamic programming algorithms which compute
+marginals of a given statistical model.
+

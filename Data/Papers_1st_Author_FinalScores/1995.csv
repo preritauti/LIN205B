@@ -1,0 +1,144 @@
+sentence,yngve_score,frazier_score,dependency_distance_score
+Prepositional Phrase Attachment through a Backed-O Model  Recent work has considered corpus-based or statistical approaches to the problem of prepositional phrase attachment ambiguity.,3,0.5625,3
+"Typically, ambiguous verb phrases of the form v np1 p np2 are resolved through a model which considers values of the four head words (v, n1, p and n2).",3,0.8714285714285714,2
+"This paper shows that the problem is analogous to n-gram language models in speech recognition, and that one of the most common methods for language modeling, the backed-o estimate, is applicable.",3,0.8142857142857143,6
+Results on Wall Street Journal data of 84.5% accuracy are obtained using this method.,2,1.0,2
+A surprising result is the importance of low-count events - ignoring events which occur less than 5 times in training data reduces performance to 81.6%.,3,0.8333333333333334,3
+Prepositional phrase attachment is a common cause of structural ambiguity in natural language.,2,0.75,2
+For example take the following sentence.,1,0.6428571428571429,1
+"Pierre Vinken, 61 years old, joined the board as a nonexecutive director.",3,0.6333333333333333,2
+"The PP as a nonexecutive director can either attach to the NP the board or to the VP joined, giving two alternative structures.",3,0.82,4
+(In this case the VP attachment is correct).,3,0.5909090909090909,2
+"Work by Ratnaparkhi, Reynar and Roukos [RRR94] and Brill and Resnik [BR94] has considered corpus-based approaches to this problem, using a set of examples to train a model which is then used to make attachment decisions on test data.",3,0.8586956521739131,3
+"Both papers describe methods which look at the four head words involved in the attachment - the VP head, the rst NP head, the preposition and the second NP head (in this case joined, board, as and director respectively).",5,0.6739130434782609,4
+This paper proposes a new statistical method for PP-attachment disambiguation based on the four head words.,2,0.6764705882352942,2
+"The training and test data were supplied by IBM, being identical to that used in [RRR94].",2,0.8,2
+Examples of verb phrases containing a (v np pp) sequence had been taken from the Wall Street Journal Treebank [MSM93].,3,0.76,3
+"For each such VP the head verb, rst head noun, preposition and second head noun were extracted, along with the attachment decision (1 for noun attachment, 0 for verb).",3,0.7777777777777778,3
+For example the verb phrase.,1,1.5833333333333333,1
+"The elements of this quintuple will from here on be referred to as the random variables A, V , N 1, P , and N 2.",4,0.7931034482758621,2
+"In the above verb phrase A = 0, V = joined, N 1 = board, P = as, and N 2 = director.",4,0,3
+The data consisted of training and test les of 20801 and 3097 quintuples respectively.,3,0.9666666666666667,2
+"In addition, a development set of 4039 quintuples was also supplied.",2,0.8076923076923077,2
+"This set was used during development of the attachment algorithm, ensuring that there was no implicit training of the method on the test set itself.",2,0.9814814814814815,3
+"A PP-attachment algorithm must take each quadruple (V = v, N 1 = n1, P = p, N 2 = n2) in test data and decide whether the attachment variable A = 0 or 1.",5,0.7073170731707317,2
+"The accuracy of the algorithm is then the percentage of attachments it gets correct on test data, using the A values taken from the treebank as the reference set.",2,1.064516129032258,3
+"The probability of the attachment variable A being 1 or 0 (signifying noun or verb attachment respectively) is a probability, p, which is conditional on the values of the words in the quadruple.",3,0.9210526315789473,2
+"In general a probabilistic algorithm will make an estimate, p, of this probability.",2,0.78125,2
+For brevity this estimate will be referred to from here on as.,2,1.0769230769230769,2
+"If this is true the attachment is made to the noun, if not then it is made to the verb.",3,1.0909090909090908,2
+When evaluating an algorithm it is useful to have an idea of the lower and upper bounds on its performance.,2,1.0238095238095237,2
+Some key results are summarised in the table below.,2,0.65,1
+"All results in this section are on the IBM training and test data, with the exception of the two average human results.",3,0.6458333333333334,3
+"Always noun attachment means attach to the noun regardless of (v,n1,p,n2).",2,0.725,2
+Most likely for each preposition means use the attachment seen most often in training data for the preposition seen in the test quadruple.,2,0.8125,2
+"The human performance results are taken from [RRR94], and are the average performance of 3 treebanking experts on a set of 300 randomly selected test events from the WSJ corpus, rst looking at the four head words alone, then using the whole sentence.",4,0.6224489795918368,4
+A reasonable lower bound seems to be 72.2% as scored by the Most likely for each preposition method.,2,0.9,2
+An approximate upper bound is 88.2% - it seems unreasonable to expect an algorithm to perform much better than a human.,2,0.8260869565217391,2
+We will use the symbol f to denote the number of times a particular tuple is seen in training data.,2,1.1666666666666667,2
+"For example f (1, is, revenue, f rom, research) is the number of times the quadruple (is, revenue, f rom, research) is seen with a noun attachment.",3,1.0256410256410255,2
+"Counts of lower order tuples can also be made - for example f (1, P = f rom) is the number of times (P = f rom) is seen with noun attachment in training data, f (V = is, N 2 = research) is the number of times (V = is, N 2 = research) is seen with either attachment and any value of N1 and P.  A maximum likelihood method would use the training data to give the following estimation for the conditional probability.",4,0.90625,4
+Unfortunately sparse data problems make this estimate useless.,2,0.8888888888888888,1
+A quadruple may appear in test data which has never been seen in training data.,2,1.0625,2
+ie.,0,0,0
+"f (v, n1, p, n2) = 0.",3,0.8846153846153846,3
+"The above estimate is undened in this situation, which happens extremely frequently in a large vocabulary domain such as WSJ.",2,0.8181818181818182,2
+(In this experiment about 95% of those quadruples appearing in test data had not been seen in training data).,3,0.8913043478260869,3
+"Even if f (v, n1, p, n2) > 0, it may still be very low, and this may make the above MLE estimate inaccurate.",6,0.765625,3
+Unsmoothed MLE estimates based on low counts are notoriously bad in similar problems such as n-gram language modeling [GC90].,2,0.9090909090909091,2
+However later in this paper it is shown that estimates based on low counts are surprisingly useful in the PP-attachment problem.,2,0.7954545454545454,3
+Hindle and Rooth [HR93] describe one of the rst statistical approaches to the prepositional phrase attachment problem.,3,0.525,2
+"Over 200,000 (v, n1, p) triples were extracted from 13 million words of AP news stories.",3,0.7380952380952381,2
+"The attachment decisions for these triples were unknown, so an unsupervised training method was used (section 5.2 describes the algorithm in more detail).",4,0.6481481481481481,2
+"Two human judges annotated the attachment decision for 880 test examples, and the method performed at 80% accuracy on these cases.",3,0.6875,2
+"Note that it is dicult to compare this result to results on Wall Street Journal, as the two corpora may be quite dierent.",2,0.96,3
+The Wall Street Journal Treebank [MSM93] enabled both [RRR94] and [BR94] to extract a large amount of supervised training material for the problem.,3,0.6,2
+"Both of these methods consider the second noun, n2, as well as v, n1 and p, with the hope that this additional information will improve results.",4,0.7096774193548387,3
+"[BR94] use 12,000 training and 500 test examples.",2,0,2
+A greedy search is used to learn a sequence of transformations which minimise the error rate on training data.,2,1.075,2
+"A transformation is a rule which makes an attachment decision depending on up to 3 elements of the (v, n1, p, n2) quadruple.",3,0.7931034482758621,3
+(Typical examples would be If P=of then choose noun attachment or If V=buy and P=for choose verb attachment).,4,0.9444444444444444,3
+"A further experiment incorporated word-class information from WordNet into the model, by allowing the transformations to look at classes as well as the words.",3,0.8269230769230769,3
+"(An example would be If N2 is in the time semantic class, choose verb attachment).",3,0.7368421052631579,2
+"The method gave 80.8% accuracy with words only, 81.8% with words and semantic classes, and they also report an accuracy of 75.8% for the metric of [HR93] on this data.",4,0,3
+Transformations (using words only) score 81.9%1 on the IBM data used in this paper.,2,0.868421052631579,2
+[RRR94] use the data described in section 2.1 of this paper - 20801 training and 3097 test examples from Wall Street Journal.,3,0.66,3
+They use a maximum entropy model which also considers subsets of the quadruple.,2,1.0714285714285714,2
+Each sub-tuple predicts noun or verb attachment with a weight indicating its strength of prediction - the weights are trained to maximise the likelihood of training data.,3,0.875,3
+"For example (P = of ) might have a strong weight for noun attachment, while (V = buy, P = f or) would have a strong weight for verb attachment.",4,0.9027777777777778,4
+"[RRR94] also allow the model to look at class information, this time the classes were learned automatically from a corpus.",2,0.9375,2
+Results of 77.7% (words only) and 81.6% (words and classes) are reported.,4,0.9210526315789473,2
+Crucially they ignore low-count events in training data by imposing a frequency cut-o somewhere between 3 and 5.,2,0.9736842105263158,3
+[KATZ87] describes backed-o n-gram word models for speech recognition.,2,0.625,3
+There the task is to estimate the probability of the next word in a text given the (n-1) preceding words.,2,0.8478260869565217,2
+The MLE estimate of this probability would be.,2,0.8333333333333334,1
+"But again the denominator f (w1, w2....wn1) will frequently be zero, especially for large n. The backed-o estimate is a method of combating the sparse data problem.",3,0.8863636363636364,5
+It is dened recursively as follows.,1,1.2857142857142858,1
+Else backing-o continues in the same way.,1,0.6875,2
+The idea here is to use MLE estimates based on lower order n-grams if counts are not high enough to make an accurate estimate at the current level.,2,1.0517241379310345,3
+"The cut o frequencies (c1, c2....) are thresholds  determining whether to back-o or not at each level - counts lower than ci at stage i are deemed to be too low to give an accurate estimate, so in this case backing-o continues.",5,1.09375,3
+"(1, 2,....) are normalisation constants which ensure that conditional probabilities sum to one.",3,0.9473684210526315,2
+"Note that the estimation of p(wn|w1, w2....wn1) is analogous to the estimation of p(1|v, n1, p, n2), and the above method can therefore also be applied to the PP-attachment problem.",5,0.78125,3
+"For example a simple method for estimation of p(1|v, n1, p, n2) would go from MLE estimates of p(1|v, n1, p, n2) to p(1|v, n1, p) to p(1|v, n1) to p(1|v) to p(1).",6,0.823943661971831,3
+A key observation in choosing between these tuples is that the preposition is particularly important to the attachment decision.,2,0.875,2
+For this reason only tuples which contained the preposition were used in backed o estimates - this reduces the problem to a choice between 3 triples and 3 pairs at each respective stage.,3,1.0147058823529411,2
+Section 6.2 describes experiments which show that tuples containing the preposition are much better indicators of attachment.,2,1.25,2
+The following method of combining the counts was found to work best in practice.,2,1.1,1
+Note that this method eectively gives more weight to tuples with high overall counts.,2,0.9333333333333333,2
+"Another obvious method of combination, a simple average2, gives equal weight to the three tuples regardless of their total counts and does not perform as well.",4,0.6379310344827587,3
+The cut-o frequencies must then be chosen.,2,0.6875,2
+A surprising dierence from language modeling is that a cut-o frequency of 0 is found to be optimum at all stages.,2,0.9772727272727273,3
+"This eectively means however low a count is, still use it rather than backing o a level.",2,1.131578947368421,2
+"The gure below shows the results for the method on the 3097 test sentences, also giving the total count and accuracy at each of the backed-o stages.",3,0.7413793103448276,3
+In an eort to reduce sparse data problems the following processing was run over both test and training data.,3,0.65,2
+ All 4-digit numbers were replaced with the string YEAR.,2,0.65,2
+ All other strings of numbers (including those which had commas or decimal points) were  replaced with the token NUM.,3,1.0,3
+ The verb and preposition elds were converted entirely to lower case.,2,0,2
+ In the n1 and n2 elds all words starting with a capital letter followed by one or more lower  case letters were replaced with NAME.,3,0.75,3
+ All strings NAME-NAME were then replaced by NAME.,2,1.0555555555555556,3
+ All verbs were reduced to their morphological stem using the morphological analyser described  in [KSZE94].,2,0.7777777777777778,2
+These modications are similar to those performed on the corpus used by [BR94].,2,0.90625,1
+"The result using this modied corpus was 84.5%, an improvement of 0.4% on the previous result.",2,0.775,2
+"Results from [RRR94], [BR94] and the backed-o method are shown in the table below4.",3,0.625,3
+All results are for the IBM data.,1,0.6875,1
+These gures should be taken in the context of the lower and upper bounds of 72.2%-88.2% proposed in section 2.3.,2,0.8541666666666666,2
+4Results for [BR94] with words and classes were not available on the IBM data  On the surface the method described in [HR93] looks very similar to the backed-o estimate.,2,0.7941176470588235,3
+For this reason the two methods deserve closer comparison.,2,0.65,1
+"Hindle and Rooth used a partial parser to extract head nouns from a corpus, together with a preceding verb and a following preposition, giving a table of (v, n1, p) triples.",3,0.5394736842105263,3
+"An iterative, unsupervised method was then used to decide between noun and verb attachment for each triple.",2,0.8421052631578947,2
+The decision was made as follows5.,1,0.9285714285714286,1
+"Here f (w, p) is the number of times preposition p is seen attached to word w in the table, and f (w) = Pp f (w, p).",3,1.0394736842105263,3
+"If we ignore n2 then the IBM data is equivalent to Hindle and Rooths (v, n1, p) triples, with the advantage of the attachment decision being known, allowing a supervised algorithm.",3,0.75,4
+The test used in [HR93] can then be stated as follows in our notation.,2,0.8823529411764706,2
+"This is eectively a comparison of the maximum likelihood estimates of p(p|1, n1) and p(p|0, v), a dierent measure from the backed-o estimate which gives p(1|v, p, n1).",4,0.8163265306122449,3
+"The backed-o method based on just the f (v, p) and f (n1, p) counts would be.",4,0.9583333333333334,3
+"5This ignores renements to the test such as smoothing of the estimate, and a measure of the condence of the  decision.",2,0.8913043478260869,3
+However the measure given is at the core of the algorithm.,2,0.7916666666666666,1
+An experiment was implemented to investigate the dierence in performance between these two methods.,2,0.9333333333333333,2
+"The test set was restricted to those cases where f (1, n1) > 0, f (0, v) > 0, and Hindle and Rooths method gave a denite decision.",5,0.8243243243243243,3
+the above inequality is strictly less-than or greater-than).,2,0.55,3
+This gave 1924 test cases.,1,0.75,1
+"Hindle and Rooths method scored 82.1% accuracy (1580 correct) on this set, whereas the backed-o measure scored 86.5% (1665 correct).",3,0.75,3
+"A possible criticism of the backed-o estimate is that it uses low count events without any smoothing, which has been shown to be a mistake in similar problems such as n-gram language models.",2,0.9142857142857143,3
+"In particular, quadruples and triples seen in test data will frequently be seen only once or twice in training data.",2,0.8409090909090909,3
+"An experiment was made with all counts less than 5 being put to zero,6 eectively making the algorithm ignore low count events.",2,0.8958333333333334,2
+In [RRR94] a cut-o between 3 and 5 is used for all events.,2,0.59375,3
+"The training and test data were both the unprocessed, original data sets.",3,0.4642857142857143,3
+The decrease in accuracy from 84.1% to 81.6% is clear evidence for the importance of low counts.,2,0.875,2
+We have excluded tuples which do not contain a preposition from the model.,2,1.0714285714285714,2
+This section gives results which justify this.,1,1.375,1
+The table below gives accuracies for the sub-tuples at each stage of backing-o.,2,0.8928571428571429,2
+The accuracy gure for a particular tuple is obtained by modifying the algorithm in section 4.1 to use only information from that tuple at the appropriate stage.,2,0.875,2
+"For example for (v, n1, n2), stage 2 would be modied to read  All other stages in the algorithm would be unchanged.",3,0.8392857142857143,3
+"The accuracy gure is then the percentage accuracy on the test cases where the (v, n1, n2) counts were used.",3,0.68,4
+The development set with no morphological processing was used for these tests.,2,0.8076923076923077,1
+At each stage there is a sharp dierence in accuracy between tuples with and without a preposition.,2,0.75,2
+"Moreover, if the 14 tuples in the above table were ranked by accuracy, the top 7 tuples would be the 7 tuples which contain a preposition.",4,0.8103448275862069,3
+The backed-o estimate scores appreciably better than other methods which have been tested on the Wall Street Journal corpus.,2,0.875,2
+The accuracy of 84.5% is close to the human performance gure of 88% using the 4 head words alone.,3,0.7727272727272727,2
+A particularly surprising result is the signicance of low count events in training data.,2,0.7666666666666667,2
+"The algorithm has the additional advantages of being conceptually simple, and computationally inexpensive to implement.",2,0.9117647058823529,2
+There are a few possible improvements which may raise performance further.,2,1.0833333333333333,2
+"Firstly, while we have shown the importance of low-count events, some kind of smoothing may improve performance further - this needs to be investigated.",4,0.8888888888888888,4
+Word-classes of semantically similar words may be used to help the sparse data problem - both [RRR94] and [BR94] report signicant improvements through the use of word-classes.,3,0.703125,3
+"Finally, more training data is almost certain to improve results.",2,0.8333333333333334,2

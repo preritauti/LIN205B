@@ -1,0 +1,377 @@
+Ranking Algorithms for Named–Entity Extraction:
+
+Boosting and the Voted Perceptron
+
+This paper describes algorithms which
+rerank the top N hypotheses from a
+maximum-entropy tagger,
+the applica-
+tion being the recovery of named-entity
+boundaries in a corpus of web data. The
+ﬁrst approach uses a boosting algorithm
+for ranking problems. The second ap-
+proach uses the voted perceptron algo-
+rithm. Both algorithms give compara-
+ble, signiﬁcant
+improvements over the
+maximum-entropy baseline. The voted
+perceptron algorithm can be considerably
+more efﬁcient to train, at some cost in
+computation on test examples.
+
+Recent work in statistical approaches to parsing and
+tagging has begun to consider methods which in-
+corporate global features of candidate structures.
+Examples of such techniques are Markov Random
+Fields (Abney 1997; Della Pietra et al. 1997; John-
+son et al. 1999), and boosting algorithms (Freund et
+al. 1998; Collins 2000; Walker et al. 2001). One
+appeal of these methods is their ﬂexibility in incor-
+porating features into a model: essentially any fea-
+tures which might be useful in discriminating good
+from bad structures can be included. A second ap-
+peal of these methods is that their training criterion
+is often discriminative, attempting to explicitly push
+the score or probability of the correct structure for
+each training sentence above the score of competing
+structures. This discriminative property is shared by
+the methods of (Johnson et al. 1999; Collins 2000),
+and also the Conditional Random Field methods of
+(Lafferty et al. 2001).
+
+In a previous paper (Collins 2000), a boosting al-
+gorithm was used to rerank the output from an ex-
+
+isting statistical parser, giving signiﬁcant improve-
+ments in parsing accuracy on Wall Street Journal
+data. Similar boosting algorithms have been applied
+to natural language generation, with good results, in
+(Walker et al. 2001). In this paper we apply rerank-
+ing methods to named-entity extraction. A state-of-
+the-art (maximum-entropy) tagger is used to gener-
+ate 20 possible segmentations for each input sen-
+tence, along with their probabilities. We describe
+a number of additional global features of these can-
+didate segmentations. These additional features are
+used as evidence in reranking the hypotheses from
+the max-ent tagger. We describe two learning algo-
+rithms: the boosting method of (Collins 2000), and a
+variant of the voted perceptron algorithm, which was
+initially described in (Freund & Schapire 1999). We
+applied the methods to a corpus of over one million
+words of tagged web data. The methods give signif-
+icant improvements over the maximum-entropy tag-
+ger (a 17.7% relative reduction in error-rate for the
+voted perceptron, and a 15.6% relative improvement
+for the boosting method).
+
+One contribution of this paper is to show that ex-
+isting reranking methods are useful for a new do-
+main, named-entity tagging, and to suggest global
+features which give improvements on this task. We
+should stress that another contribution is to show
+that a new algorithm, the voted perceptron, gives
+very credible results on a natural language task. It is
+an extremely simple algorithm to implement, and is
+very fast to train (the testing phase is slower, but by
+no means sluggish). It should be a viable alternative
+to methods such as the boosting or Markov Random
+Field algorithms described in previous work.
+
+Over a period of a year or so we have had over one
+million words of named-entity data annotated. The
+
+Data is drawn from web pages, the aim being to sup-
+port a question-answering system over web data. A
+number of categories are annotated: the usual peo-
+ple, organization and location categories, as well as
+less frequent categories such as brand-names, scien-
+tiﬁc terms, event titles (such as concerts) and so on.
+From this data we created a training set of 53,609
+sentences (1,047,491 words), and a test set of 14,717
+sentences (291,898 words).
+
+The task we consider is to recover named-entity
+boundaries. We leave the recovery of the categories
+of entities to a separate stage of processing.1 We
+evaluate different methods on the task through pre-
+
+cision and recall. 
+
+The problem can be framed as a tagging task – to
+tag each word as being either the start of an entity,
+a continuation of an entity, or not to be part of an
+entity at all (we will use the tags S, C and N respec-
+tively for these three cases). As a baseline model
+we used a maximum entropy tagger, very similar to
+the ones described in (Ratnaparkhi 1996; Borthwick
+et. al 1998; McCallum et al. 2000). Max-ent tag-
+gers have been shown to be highly competitive on a
+number of tagging tasks, such as part-of-speech tag-
+ging (Ratnaparkhi 1996), named-entity recognition
+(Borthwick et. al 1998), and information extraction
+tasks (McCallum et al. 2000). Thus the maximum-
+entropy tagger we used represents a serious baseline
+for the task. We used the following features (sev-
+eral of the features were inspired by the approach
+of (Bikel et. al 1999), an HMM model which gives
+excellent results on named entity extraction).
+
+
+1In initial experiments, we found that forcing the tagger to
+recover categories as well as the segmentation, by exploding the
+number of tags, reduced performance on the segmentation task,
+presumably due to sparse data problems.
+
+The parameters are trained using Generalized Iter-
+ative Scaling. Following (Ratnaparkhi 1996), we
+only include features which occur 5 times or more
+in training data. In decoding, we use a beam search
+to recover 20 candidate tag sequences for each sen-
+tence (the sentence is decoded from left to right,
+with the top 20 most probable hypotheses being
+stored at each point).
+
+As a baseline we trained a model on the full 53,609
+sentences of training data, and decoded the 14,717
+sentences of test data. This gave 20 candidates per
+
+test sentence, along with their probabilities. The
+baseline method is to take the most probable candi-
+date for each test data sentence, and then to calculate
+precision and recall ﬁgures. Our aim is to come up
+with strategies for reranking the test data candidates,
+in such a way that precision and recall is improved.
+the 53,609
+sentences of training data were split into a 41,992
+sentence training portion, and a 11,617 sentence de-
+velopment set. The training portion was split into
+5 sections, and in each case the maximum-entropy
+tagger was trained on 4/5 of the data, then used to
+decode the remaining 1/5. The top 20 hypotheses
+under a beam search, together with their log prob-
+abilities, were recovered for each training sentence.
+In a similar way, a model trained on the 41,992 sen-
+tence set was used to produce 20 hypotheses for each
+sentence in the development set.
+
+The module we describe in this section generates
+global features for each candidate tagged sequence.
+As input it takes a sentence, along with a proposed
+segmentation (i.e., an assignment of a tag for each
+word in the sentence). As output, it produces a set
+of feature strings. We will use the following tagged
+sentence as a running example in this section:
+
+An example feature type is simply to list the full
+strings of entities that appear in the tagged input. In
+this example, this would give the three features.
+
+Here WE stands for “whole entity”. Throughout
+this section, we will write the features in this format.
+The start of the feature string indicates the feature
+type (in this case WE), followed by =. Following the
+type, there are generally 1 or more words or other
+.
+symbols, which we will separate with the symbol
+implementation
+takes the strings produced by the global-feature
+
+A seperate module in our
+
+generator, and hashes them to integers. For ex-
+ample, suppose the three strings WE=Gen Xer,
+WE=The Day They Shot John Lennon,
+WE=Dougherty Arts Center were
+hashed
+to 100, 250, and 500 respectively. Conceptually,
+is represented by a large number
+is the
+number of distinct feature strings in training data.
+
+We now introduce some notation with which to de-
+scribe the full set of global features. First, we as-
+sume the following primitives of an input candidate:
+
+sequence.
+
+Each character in the word is
+
+character types are not repeated in the mapped
+string. For example, Animal would be mapped
+to Aa in this feature, G.M. would again be
+mapped to A.A..
+
+The ﬂag indi-
+cates whether or not the word appears in a dic-
+tionary of words which appeared more often
+lower-cased than capitalized in a large corpus
+of text. 
+
+Most of the features we describe are anchored on
+entity boundaries in the candidate segmentation. We
+will use “feature templates” to describe the features
+that we used. As an example, suppose that an entity.
+
+Figure 1: The full set of entity-anchored feature templates. One of these features is generated for each entity
+
+Applying this template to the three entities in the
+running example generates the three feature strings
+described in the previous section. For the full set of feature tem-
+
+plates that are anchored around entities, see ﬁgure 1.
+A second set of feature templates is anchored
+around quotation marks. In our corpus, entities (typ-
+ically with long names) are often seen surrounded
+by quotes. For example, “The Day They Shot John
+Lennon”, the name of a band, appears in the running
+to be the index of any double quo-
+to be the index of the
+next (matching) double quotation marks if they ap-
+to be
+the index of the last word beginning with a lower
+case letter, upper case letter, or digit within the quo-
+tation marks. The ﬁrst set of feature templates tracks
+
+example. 
+At this point, we have fully described the repre-
+sentation used as input to the reranking algorithms.
+The maximum-entropy tagger gives 20 proposed
+segmentations for each input sentence.
+
+This section introduces notation for the reranking
+task. The framework is derived by the transforma-
+tion from ranking problems to a margin-based clas-
+siﬁcation problem in (Freund et al. 1998). It is also
+related to the Markov Random Field methods for
+parsing suggested in (Johnson et al. 1999), and the
+boosting methods for parsing in (Collins 2000). We
+consider the following set-up:
+
+correct sequence of tags for that sentence.
+
+pairs. In tagging we would have training examples
+
+outputs from a maximum entropy tagger are used as
+the set of candidates.
+
+The features could be arbitrary
+functions of the candidates; our hope is to include
+features which help in discriminating good candi-
+dates from bad ones.
+
+This function assigns a real-valued number to a can-
+It will be taken to be a measure of the
+plausibility of a candidate, higher scores meaning
+higher plausibility. 
+
+The ﬁrst algorithm we consider is the boosting algo-
+rithm for ranking described in (Collins 2000). The
+algorithm is a modiﬁcation of the method in (Freund
+et al. 1998). 
+
+Intuitively, it is useful to
+note that this loss function is an upper bound on the
+number of “ranking errors”, a ranking error being a
+case where an incorrect candidate gets a higher value
+than a correct candidate. 
+
+Figure 2 shows an algorithm which implements
+this greedy procedure. See (Collins 2000) for a
+full description of the method, including justiﬁca-
+tion that the algorithm does in fact implement the
+update in Eq. 1 at each iteration.
+
+Figure 3 shows the training phase of the percep-
+tron algorithm, originally introduced in (Rosenblatt
+1958). The algorithm maintains a parameter vector
+, which is initially set to be all zeros. 
+In this case
+the update is very simple, involving adding the dif-
+ference of the offending examples’ representations
+in the ﬁgure). See
+(Cristianini and Shawe-Taylor 2000) chapter 2 for
+discussion of the perceptron algorithm, and theory
+justifying this method for setting the parameters.
+
+
+(Freund & Schapire 1999) describe a reﬁnement
+of the perceptron, the voted perceptron. The train-
+ing phase is identical to that in ﬁgure 3. Note, how-
+
+are stored. Thus the training phase can be thought
+different parame-
+ter settings. 
+
+We applied the voted perceptron and boosting algo-
+rithms to the data described in section 2.3. Only fea-
+tures occurring on 5 or more distinct training sen-
+tences were included in the model. This resulted
+5Note that, for reasons of explication, the decoding algo-
+rithm we present is less efﬁcient than necessary. 
+
+The two methods were
+trained on the training portion (41,992 sentences) of
+the training set. We used the development set to pick
+the best values for tunable parameters in each algo-
+rithm. For boosting, the main parameter to pick is
+. We ran the algorithm for
+a total of 300,000 rounds, and found that the op-
+timal value for F-measure on the development set
+occurred after 83,233 rounds. 
+Figure 5 shows the
+results for the three methods on the test set. Both of
+the reranking algorithms show signiﬁcant improve-
+ments over the baseline: a 15.6% relative reduction
+in error for boosting, and a 17.7% relative error re-
+duction for the voted perceptron.
+
+In our experiments we found the voted percep-
+tron algorithm to be considerably more efﬁcient in
+training, at some cost in computation on test exam-
+ples. Another attractive property of the voted per-
+ceptron is that it can be used with kernels, for exam-
+ple the kernels over parse trees described in (Collins
+and Duffy 2001; Collins and Duffy 2002). (Collins
+and Duffy 2002) describe the voted perceptron ap-
+plied to the named-entity data in this paper, but us-
+ing kernel-based features rather than the explicit fea-
+tures described in this paper. See (Collins 2002) for
+additional work using perceptron algorithms to train
+tagging models, and a more thorough description of
+the theory underlying the perceptron algorithm ap-
+plied to ranking problems.
+
+
+A question regarding the approaches in this paper
+is whether the features we have described could be
+incorporated in a maximum-entropy tagger, giving
+similar improvements in accuracy. This section dis-
+cusses why this is unlikely to be the case. The prob-
+lem described here is closely related to the label bias
+problem described in (Lafferty et al. 2001).
+
+One straightforward way to incorporate global
+features into the maximum-entropy model would be
+
+to introduce new features
+whether the tagging decision
+which indicated
+in the history   cre-
+
+ates a particular global feature. 
+
+The decision which effectively cre-
+ated the entity University for was the decision to tag
+for as C, and this has already been made. The inde-
+pendence assumptions in maximum-entropy taggers
+of this form often lead points of local ambiguity (in
+this example the tag for the word for) to create glob-
+ally implausible structures with unreasonably high
+scores. See (Collins 1999) section 8.4.2 for a dis-
+cussion of this problem in the context of parsing.
+Acknowledgements Many thanks to Jack Minisi for
+annotating the named-entity data used in the exper-
+
+iments. Thanks also to Nigel Duffy, Rob Schapire
+and Yoram Singer for several useful discussions.

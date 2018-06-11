@@ -1,0 +1,140 @@
+sentence,yngve_score,frazier_score,dependency_distance_score
+"                         Proceedings of the 40th Annual Meeting of the Association for                 Computational Linguistics (ACL), Philadelphia, July 2002, pp.",4,0,2
+263-270.,0,1,3
+This paper introduces new learning algorithms for natural language processing based on the perceptron algorithm.,2,0.84375,3
+"We show how the algorithms can be efciently applied to exponential sized representations of parse trees, such as the all subtrees (DOP) representation described by (Bod 1998), or a representation tracking all sub-fragments of a tagged sentence.",3,0.8409090909090909,4
+We give experimental results showing signicant improvements on two tasks.,2,0.9090909090909091,1
+"parsing Wall Street Journal text, and namedentity extraction from web data.",3,0.8076923076923077,2
+"The perceptron algorithm is one of the oldest algorithms in machine learning, going back to (Rosenblatt 1958).",3,0.7380952380952381,2
+"It is an incredibly simple algorithm to implement, and yet it has been shown to be competitive with more recent learning methods such as support vector machines  see (Freund & Schapire 1999) for its application to image classication, for example.",4,0.8555555555555555,4
+This paper describes how the perceptron and voted perceptron algorithms can be used for parsing and tagging problems.,2,0.9736842105263158,3
+"Crucially, the algorithms can be efciently applied to exponential sized representations of parse trees, such as the all subtrees (DOP) representation described by (Bod 1998), or a representation tracking all sub-fragments of a tagged sentence.",4,0.7558139534883721,4
+"It might seem paradoxical to be able to efciently learn and apply a model with an exponential number of features.1 The key to our algorithms is the 1Although see (Goodman 1996) for an efcient algorithm for the DOP model, which we discuss in section 7 of this paper.",3,0.9433962264150944,3
+kernel trick ((Cristianini and Shawe-Taylor 2000) discuss kernel methods at length).,4,0,3
+We describe how the inner product between feature vectors in these representations can be calculated efciently using dynamic programming algorithms.,2,1.0238095238095237,3
+This leads to polynomial time2 algorithms for training and applying the perceptron.,3,0,2
+The kernels we describe are related to the kernels over discrete structures in (Haussler 1999; Lodhi et al.,2,1.0952380952380953,2
+2001).,1,0,1
+A previous paper  (Collins and Duffy 2001) showed improvements over a PCFG in parsing the ATIS task.,2,0.8,2
+In this paper we show that the method scales to far more complex domains.,2,0.7,2
+"In parsing Wall Street Journal text, the method gives a 5.1% relative reduction in error rate over the model of (Collins 1999).",3,0.7407407407407407,2
+"In the second domain, detecting namedentity boundaries in web data, we show a 15.6% relative error reduction (an improvement in F-measure from 85.3% to 87.6%) over a state-of-the-art model, a maximum-entropy tagger.",4,0.6463414634146342,6
+"This result is derived using a new kernel, for tagged sequences, described in this paper.",2,0.7777777777777778,3
+"Both results rely on a new approach that incorporates the log-probability from a baseline model, in addition to the all-fragments features.",3,0.8695652173913043,4
+This paper focuses on the task of choosing the correct parse or tag sequence for a sentence from a group of candidates for that sentence.,2,0.8461538461538461,3
+The candidates might be enumerated by a number of methods.,1,0.9545454545454546,1
+candidates from a baseline probabilistic model.,2,0,2
+"the model of (Collins 1999) for parsing, and a maximumentropy tagger for named-entity recognition.",2,0,4
+The choice of representation is central.,2,1.0714285714285714,1
+what features should be used as evidence in choosing be tween candidates?,2,1.1153846153846154,2
+We will use a function 	   to denote a  -dimensional feature vector that represents a tree or tagged sequence possibilities for .,2,1.0227272727272727,3
+"An obvious example for parse trees is to have one component of  the counts of rules in the tree Given a representation, and two structures  for each rule in a context-free grammar that underlies the trees.",3,0.9605263157894737,3
+This is the representation used by Stochastic Context-Free Grammars.,1,0.85,2
+"The feature vector tracks , thus encoding the  and , the inner product between the structures can be  sufcient statistics for the SCFG.",3,0,2
+"The idea of inner products between feature vectors is central to learning algorithms such as Support Vector Machines (SVMs), and is also central to the ideas in this paper.",3,0.9090909090909091,3
+"Intuitively, the inner product is a similarity measure between objects.",2,0.7083333333333334,2
+structures with similar feature vectors will have high values for   .,2,0.8636363636363636,2
+"More formally, it has been observed that  many algorithms can be implemented using inner products between training examples alone, without direct access to the feature vectors themselves.",3,0.8833333333333333,3
+"As we will see in this paper, this can be crucial for the efciency of learning with certain representations.",2,1.0238095238095237,2
+This section formalizes the idea of linear models for parsing or tagging.,2,0.8076923076923077,1
+The method is related to the boosting approach to ranking problems (Freund et al.,2,0.96875,2
+"1998), the Markov Random Field methods of (Johnson et al.",2,0,3
+"1999), and the boosting approaches for parsing in (Collins 2000).",2,0,2
+In parsing the training examples are  !,2,1.1428571428571428,2
+to  to denote  tree for that sentence.,1,1.125,2
+"We discuss one method for setting the weights, the perceptron algorithm, in the next section.",2,0.8333333333333334,3
+Figure 1(a) shows the perceptron algorithm applied to the ranking task.,2,0.8666666666666667,1
+"The method assumes a training set as described in section 3.1, and a representation   of parse trees.",3,0.8947368421052632,3
+"The algorithm maintains a parameter vector1  , which is initially set to be all zeros.",2,1.03125,2
+"The algorithm then makes a pass over the training set, only updating the parameter vector when a mistake is made on an example.",2,0.82,3
+"The parameter vector update is very simple, involving adding the difference of the offending examples representations Intuitively, this update has the effect of increasing the parameter values for features in the correct tree, and downweighting the parameter values for features in the competitor.",4,0.9148936170212766,3
+"See (Cristianini and Shawe-Taylor 2000) for discussion of the perceptron algorithm, including an overview of various theorems justifying this way of setting the parameters.",3,1.0178571428571428,4
+"Briey, the perceptron algorithm is guaranteed3 to nd a hyperplane that correctly classies all training points, if such a hyperplane exists (i.e., the data is separable).",3,0.921875,3
+"Moreover, the number of mistakes made will be low, providing that the data is separable with large margin, and  3To nd such a hyperplane the algorithm must be run over the training set repeatedly until no mistakes are made.",2,0.9651162790697675,4
+The algorithm in gure 1 includes just a single pass over the training set.,2,0.7,2
+Figure 1. a) The perceptron algorithm for ranking problems.,1,1,5
+b) The algorithm in dual form.,2,0,1
+"(Freund & Schapire 1999) describe a renement of the perceptron algorithm, the voted perceptron.",4,0,3
+They give theory which suggests that the voted perceptron is preferable in cases of noisy or unseparable data.,2,1.131578947368421,2
+The training phase of the algorithm is unchanged  the change is in how the method is applied to test examples.,2,1.1428571428571428,2
+(Freund & Schapire 1999) give theorems showing that the voted perceptron (a variant described below) generalizes well even given non-separable data.,3,0.9807692307692307,3
+"Figure 1(b) shows an equivalent algorithm to the perceptron, an algorithm which we will call the dual form of the perceptron.",2,0.8846153846153846,2
+The dual-form algorithm does not store a parameter vector 1  .,2,0.5,2
+Figure 2. a) An example parse tree.,1,1,3
+b) The sub-trees of the NP covering the man.,2,0,1
+"The tree in (a) contains all of these subtrees, as well as many others.",2,0.8611111111111112,2
+"Because of this the voted perceptron can be implemented with the same number of kernel calculations, and hence roughly the same computational complexity, as the original perceptron.",3,0.5833333333333334,3
+"We now consider a representation that tracks all subtrees seen in training data, the representation studied extensively by (Bod 1998).",2,1.0,2
+See gure 2 for an example.,1,0.9285714285714286,1
+Figure 3. a) A tagged sequence.,1,1,2
+b) Example fragments of the tagged sequence.,2,0,2
+the tagging kernel is sensitive to the counts of all such fragments.,2,0.7307692307692307,1
+"The second problem we consider is tagging, where each word in a sentence is mapped to one of a nite set of tags.",2,1.1,3
+"The tags might represent part-of-speech tags, named-entity boundaries, base noun-phrases, or other structures.",4,0.5588235294117647,4
+In the experiments in this paper we consider named-entity recognition.,2,0.8636363636363636,2
+The particular representation we consider is similar to the all sub-trees representation for trees.,2,1.0666666666666667,2
+"A taggedsequence fragment is a subgraph that contains a subsequence of state labels, where each label may or may not contain the word below it.",2,0.8703703703703703,2
+See gure 3 for an example.,1,0.9285714285714286,1
+Each tagged sequence is represented  respectively.,2,0.7857142857142857,1
+Each state has an associated label and an associated word.,2,0.5909090909090909,2
+We dene  The inner product under this representation can be calculated using dynamic programming in a very similar way to the tree algorithm.,2,0.9375,3
+Figure 4.,1,1,1
+Results on Section 23 of the WSJ Treebank.,2,0,2
+LR/LP = labeled recall/precision.,1,0.9,3
+CBs = average number of crossing  model 2 of (Collins 1999).,2,0.75,2
+VP is the voted perceptron with the tree kernel.,1,1.2,2
+We used the same data set as that described in (Collins 2000).,2,0.9,2
+The Penn Wall Street Journal treebank (Marcus et al.,2,0,2
+1993) was used as training and test data.,2,0.65,1
+"Sections 2-21 inclusive (around 40,000 sentences) were used as training data, section 23 was used as the nal test set.",4,0,3
+"Of the 40,000 training sentences, the rst 36,000 were used to train the perceptron.",3,0.8125,2
+"The remaining 4,000 sentences were used as development data, and for tuning parameters of the algorithm.",2,0.6944444444444444,2
+"Model 2 of (Collins 1999) was used to parse both the training and test data, producing multiple hypotheses for each sentence.",3,0.86,3
+"In order to gain a representative set of training data, the  The algorithm in 1(b)  runs in approximately quadratic time in the number of training examples.",3,0.8387096774193549,2
+"This made it somewhat expensive to run the algorithm over all 36,000 training sentences in one pass.",2,0.8333333333333334,2
+"Instead, we broke the training set into 6 chunks of roughly equal size, and trained 6 separate perceptrons on these data sets.",3,0.74,3
+"This has the advantage of reducing training time, both because of the quadratic dependence on training set size, and also because it is easy to train the 6 models in parallel.",4,0.9411764705882353,3
+The outputs from the 6 runs on test examples were combined through the voting procedure described in section 3.4.,2,0.825,2
+The boosting method of (Collins 2000) showed 89.6%/89.9% recall and precision on reranking approaches for the same datasets (sentences less than 100 words in length).,3,0.8088235294117647,3
+"(Bod 2001) describes experiments giving 90.6%/90.8% recall and precision for sentences of less than 40 words in length, using the all-subtrees representation, but using very different algorithms and parameter estimation methods from the perceptron algorithms in this paper (see section 7 for more discussion).",4,0.8454545454545455,5
+Over a period of a year or so we have had over one million words of named-entity data annotated.,2,0.925,2
+"The data is drawn from web pages, the aim being to support a question-answering system over web data.",2,0.85,2
+A number of categories are annotated.,2,1.0714285714285714,1
+"the usual people, organization and location categories, as well as less frequent categories such as brand-names, scientic terms, event titles (such as concerts) and so on.",4,0,3
+"As a result, we created a training set of 53,609 sentences (1,047,491 words), and a test set of 14,717 sentences (291,898 words).",3,0.7068965517241379,3
+The task we consider is to recover named-entity boundaries.,2,1.35,2
+We leave the recovery of the categories of entities to a separate stage of processing.,2,0.96875,2
+"We evaluate different methods on the task through precision and recall.7 The problem can be framed as a tagging task  to tag each word as being either the start of an entity, a continuation of an entity, or not to be part of an entity at all.",3,0.9215686274509803,2
+"As a baseline model we used a maximum entropy tagger, very similar to the one described in (Ratnaparkhi 1996).",2,0.717391304347826,2
+"Maximum entropy taggers have been shown to be highly competitive on a number of tagging tasks, such as partof-speech tagging (Ratnaparkhi 1996), and namedentity recognition (Borthwick et.",2,0.8181818181818182,3
+al 1998).,1,0,1
+Thus the maximum-entropy tagger we used represents a serious baseline for the task.,2,1.0,2
+"We used a feature set which included the current, next, and previous word; the previous two tags; various capitalization and other features of the word being tagged (the full feature set is described in (Collins 2002a)).",4,0.6777777777777778,3
+Figure 5.,1,1,1
+Results for the max-ent and voted perceptron methods.,2,0.9444444444444444,4
+Imp. is the relative error reduction given by using the  which keeps the top 20 hypotheses at each stage of a left-to-right search.,0,0,48
+"In training the voted perceptron we split the training data into a 41,992 sentence training set, and a 11,617 sentence development set.",3,0.7291666666666666,3
+"The training set was split into 5 portions, and in each case the maximum-entropy tagger was trained on 4/5 of the data, then used to decode the remaining 1/5.",3,0.734375,3
+In this way the whole training data was decoded.,2,0.65,2
+"The top 20 hypotheses under a beam search, together with their log probabilities, were recovered for each training sentence.",4,0.6590909090909091,2
+"In a similar way, a model trained on the 41,992 sentence set was used to produce 20 hypotheses for each sentence in the development set.",2,0.7777777777777778,3
+"As in the parsing experiments, the nal kernel incorporates the probability from the maximum entropy tagger, i.e.",2,0.6052631578947368,2
+"Figure 5 shows results on the test data  for the baseline maximum-entropy tagger, and the voted perceptron.",4,0,5
+The results show a 15.6% relative improvement in F-measure.,2,0.8636363636363636,2
+(Bod 1998) describes quite different parameter estimation and parsing methods for the DOP representation.,3,0.6176470588235294,2
+"The methods explicitly deal with the parameters associated with subtrees, with sub-sampling of tree fragments making the computation manageable.",2,1.0238095238095237,3
+"Even after this, Bods method is left with a huge grammar.",2,0.6538461538461539,2
+over 5 million sub-structures.,1,0,2
+"The method requires search for the 1,000 most probable derivations under this grammar, using beam search, presumably a challenging computational task given the size of the grammar.",3,0.8333333333333334,3
+"In spite of these problems, (Bod 2001) gives excellent results for the method on parsing Wall Street Journal text.",3,0.8260869565217391,2
+"The algorithms in this paper have a different avor, avoiding the need to explicitly deal with feature vectors that track all subtrees, and also avoiding the need to sum over an exponential number of derivations underlying a given tree.",3,0.8809523809523809,3
+(Goodman 1996) gives a polynomial time conversion of a DOP model into an equivalent PCFG whose size is linear in the size of the training set.,2,0.8275862068965517,2
+The method uses a similar recursion to the common sub-trees recursion described in this paper.,2,0.65625,3
+"Goodmans method still leaves exact parsing under the model intractable (because of the need to sum over multiple derivations underlying the same tree), but he gives an approximation to nding the most probable tree, which can be computed efciently.",4,0.8522727272727273,4
+"From a theoretical point of view, it is difcult to nd motivation for the parameter estimation methods used by (Bod 1998)  see (Johnson 2002) for discussion.",3,1.0,3
+"In contrast, the parameter estimation methods in this paper have a strong theoretical basis (see (Cristianini and Shawe-Taylor 2000) chapter 2 and (Freund & Schapire 1999) for statistical theory underlying the perceptron).",4,0.8125,4
+"For related work on the voted perceptron algorithm applied to NLP problems, see (Collins 2002a) and (Collins 2002b).",3,0.8125,3
+"(Collins 2002a) describes experiments on the same named-entity dataset as in this paper, but using explicit features rather than kernels.",4,0,4
+"(Collins 2002b) describes how the voted perceptron can be used to train maximum-entropy style taggers, and also gives a more thorough discussion of the theory behind the perceptron algorithm applied to ranking tasks.",4,0.8783783783783784,4
+Acknowledgements Many thanks to Jack Minisi for annotating the named-entity data used in the experiments.,2,0.9375,2
+Thanks to Rob Schapire and Yoram Singer for many useful discussions.,2,0,2
