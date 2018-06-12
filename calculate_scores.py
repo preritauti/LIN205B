@@ -13,21 +13,16 @@ tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 def dependency_distance(input):
 	doc = nlp_spacy(input)
-	# for token in doc:
-	#     print(token.text, token.dep_, token.head.text, token.head.pos_,
-	#           [child for child in token.children])
-
-	sum = 0
-
+	total = 0
 	for token in doc:
 		parent_pos = get_pos(token,doc)
 		for child in token.children:
 			child_pos = get_pos(child,doc)
 			arc_length = abs(parent_pos - child_pos)
-			sum = sum + arc_length
+			total = total + arc_length
 
 	length = len(doc)
-	return sum/length
+	return float(total)/length
 
 
 
@@ -67,7 +62,7 @@ def yngve_scoring(t, current):
 
 
 def print_results(results):
-	with open("Data/Papers_only_him_FinalScores/sample.csv", "w") as csvFile:
+	with open("Data/Papers_only_him_FinalScores/2005.csv", "w") as csvFile:
 		fieldnames = ['sentence', 'yngve_score', 'frazier_score', 'dependency_distance_score', 'count', 'year']
 		writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
 		writer.writeheader()
@@ -79,7 +74,7 @@ def print_results(results):
 				'frazier_score' : item[2], 
 				'dependency_distance_score': item[3],
 				'count': item[4],
-				'year' : 1996
+				'year' : 2005
 				})
 
 def count_words(input_tree):
@@ -110,8 +105,8 @@ def calculate_scores(list_of_sents):
 		dependency_distance_score = dependency_distance(item)
 		#print item.encode('ascii','ignore'), yngve_score, frazier_score, dependency_distance_score
 		local_result.append(item.encode('ascii','ignore'))
-		local_result.append(yngve_score/count)
-		local_result.append(frazier_score/count)
+		local_result.append(float(yngve_score)/count)
+		local_result.append(float(frazier_score)/count)
 		local_result.append(dependency_distance_score)
 		local_result.append(count)
 		final_results.append(local_result)
@@ -121,7 +116,7 @@ def calculate_scores(list_of_sents):
 
 def get_sentences():
 	print "Inside get_sentences function"
-	with io.open("Data/Papers_only_him_in_txt/1996.txt", "r", encoding="utf-8") as my_file:
+	with io.open("Data/Papers_only_him_in_txt/2005.txt", "r", encoding="utf-8") as my_file:
 		my_unicode_string = my_file.read() 
 
 	my_unicode_string = my_unicode_string.replace(":", ".")
