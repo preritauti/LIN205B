@@ -1,0 +1,1 @@
+pdf2txt.py -t text -o Data/Papers_only_him_in_txt/2005.txt Data/Papers_only_him/2005.pdf
